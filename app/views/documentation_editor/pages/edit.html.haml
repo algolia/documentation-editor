@@ -3,19 +3,19 @@
     .editor-header
       %ul.list-inline.pull-right
         %li
-          %a.pull-right.btn.btn-default{href: '/doc/admin'}
+          %a.pull-right.btn.btn-default.btn-sm{href: '/doc/admin'}
             %i.fa.fa-chevron-left
             Back
         %li
-          %a.pull-right.btn.btn-success{href: '#', 'ng-click' => 'preview($event)'}
+          %a.pull-right.btn.btn-success.btn-sm{href: '#', 'ng-click' => 'preview($event)'}
             %i.fa.fa-eye
-            Preview
+            Save & Preview
         %li
-          %a.pull-right.btn.btn-danger{href: '#', 'ng-click' => 'publish($event)'}
+          %a.pull-right.btn.btn-danger.btn-sm{href: '#', 'ng-click' => 'publish($event)'}
             %i.fa.fa-save
-            Publish
+            Save & Publish
         %li
-          %a.pull-right.btn.btn-warning{href: '#', 'ng-click' => 'undo($event)', 'ng-disabled' => 'undoRedo.length === 0'}
+          %a.pull-right.btn.btn-warning.btn-sm{href: '#', 'ng-click' => 'undo($event)', 'ng-disabled' => 'undoRedo.length === 0'}
             %i.fa.fa-undo
             Undo
       %h1
@@ -61,27 +61,29 @@
             %pre.tab-pane{contenteditable: true, "ng-repeat" => "code in section.content.codes track by $index", "ng-class" => "{ 'in active': ($index === 0) }", id: 'snippet_{{section.id}}_{{code.language}}', 'ng-model' => 'sections[sectionIndex].content.codes[$index].code'}
 
         .insert-sections
-          %a.btn.btn-danger{href: '#', 'ng-click' => 'deleteSection($event, section.id)'}
-            %i.fa.fa-trash
-            Delete {{ section.type }}
-          %a.btn.btn-default{href: '#', 'ng-click' => 'addText($event, section.id)'}
-            %i.fa.fa-bold
-            Add text
-          %a.btn.btn-default{href: '#', 'ng-click' => 'addCode($event, section.id)'}
-            %i.fa.fa-align-justify
-            Add code
-          %a.btn.btn-default{href: '#', 'ng-click' => 'addImage($event, section.id)'}
-            %i.fa.fa-image
-            Add image
-          %a.btn.btn-info{href: '#', 'ng-click' => 'addCallout($event, "info", section.id)'}
-            %i.fa.fa-info-circle
-            Add info
-          %a.btn.btn-warning{href: '#', 'ng-click' => 'addCallout($event, "warning", section.id)'}
-            %i.fa.fa-warning
-            Add warning
-          %a.btn.btn-danger{href: '#', 'ng-click' => 'addCallout($event, "danger", section.id)'}
-            %i.fa.fa-exclamation-triangle
-            Add danger
+          .pull-right
+            %a.btn.btn-danger{href: '#', 'ng-click' => 'deleteSection($event, section.id)'}
+              %i.fa.fa-trash
+              Delete {{ section.type }}
+          .pull-left
+            %a.btn.btn-default{href: '#', 'ng-click' => 'addText($event, section.id)'}
+              %i.fa.fa-bold
+              Add text
+            %a.btn.btn-default{href: '#', 'ng-click' => 'addCode($event, section.id)'}
+              %i.fa.fa-align-justify
+              Add code
+            %a.btn.btn-default{href: '#', 'ng-click' => 'addImage($event, section.id)'}
+              %i.fa.fa-image
+              Add image
+            %a.btn.btn-info{href: '#', 'ng-click' => 'addCallout($event, "info", section.id)'}
+              %i.fa.fa-info-circle
+              Add info
+            %a.btn.btn-warning{href: '#', 'ng-click' => 'addCallout($event, "warning", section.id)'}
+              %i.fa.fa-warning
+              Add warning
+            %a.btn.btn-danger{href: '#', 'ng-click' => 'addCallout($event, "danger", section.id)'}
+              %i.fa.fa-exclamation-triangle
+              Add danger
 
   :javascript
     $('#edit-doc .code .nav-tabs a').click(function(e) {

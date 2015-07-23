@@ -4,7 +4,8 @@ DocumentationEditor::Engine.routes.draw do
   get "source/:id", :controller => 'pages', :action => 'source'
   post 'source', :controller => 'pages', :action => 'create'
   post 'source/:id', :controller => 'pages', :action => 'save'
+  delete 'source/:id', as: :delete_page, :controller => 'pages', :action => 'destroy'
   post 'update', controller: 'pages', :action => 'update'
-  get "preview/:id", :controller => 'pages', :action => 'preview'
+  get "preview/:id", as: :preview_page, :controller => 'pages', :action => 'preview'
   get ':slug', :controller => 'pages', :action => 'show', constraints: { slug: /.*/ }
 end

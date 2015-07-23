@@ -7,14 +7,32 @@
 
   .editor-content
     %h3 Pages
-    %ul
-      - DocumentationEditor::Page.group('slug').having('MAX(created_at)').order('id ASC').each do |p|
-        %li
-          = link_to "#{request.path.split('/admin').first}/#{p.slug}", edit_page_path(p.id)
-          - if published_at = DocumentationEditor::Page.where(slug: p.slug).where(preview: false).order('id DESC').first.try(:created_at)
-            %small.text-muted
-              Published:
-              = l published_at, format: :long
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Slug
+          %th Last modification
+          %th Published at
+          %th Published by
+          %th.text-right Actions
+      %tbody
+        - DocumentationEditor::Page.group('slug').having('MAX(created_at)').order('id ASC').each do |p|
+          %tr
+            %td= link_to "#{request.path.split('/admin').first}/#{p.slug}", edit_page_path(p.id)
+            %td= l p.created_at, format: :short
+            - published = DocumentationEditor::Page.where(slug: p.slug).where(preview: false).order('id DESC').first
+            %td= published ? l(published.created_at, format: :long) : ''
+            %td= published ? published.author_id : ''
+            %td.text-right
+              = link_to edit_page_path(p.id), class: 'btn btn-default btn-sm' do
+                %i.fa.fa-edit
+                Edit
+              = link_to preview_page_path(p.id), class: 'btn btn-default btn-sm' do
+                %i.fa.fa-eye
+                Preview
+              = link_to delete_page_path(p.id), class: 'btn btn-danger btn-sm', data: { confirm: 'Are you sure you want to delete this page?', method: :delete } do
+                %i.fa.fa-trash
+                Delete
 
     .spacer50
     .line

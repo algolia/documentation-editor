@@ -40,5 +40,10 @@ module DocumentationEditor
       @page = Page.where(preview: false).where(slug: params[:slug]).order('id DESC').first!
       render :preview
     end
+
+    def destroy
+      Page.find(params[:id]).destroy
+      redirect_to :admin
+    end
   end
 end
