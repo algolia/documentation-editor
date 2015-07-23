@@ -16,12 +16,19 @@ module DocumentationEditor
     end
 
     def save
-      p = Page.create!(author_id: (respond_to?(:current_user) ? current_user.id : nil), slug: Page.find(params[:id]).slug, preview: params[:preview], content: params[:data])
+      p = Page.new
+      p.author_id = respond_to?(:current_user) ? current_user.id : nil
+      p.slug = Page.find(params[:id]).slug
+      p.preview = params[:preview]
+      p.content = params[:data]
+      p.save!
       render json: { id: p.id, slug: p.slug }
     end
 
     def create
-      p = Page.create!(params[:page])
+      p = Page.new
+      p.slug = params[:page][:slug]
+      p.save!
       redirect_to edit_page_path(p)
     end
 
