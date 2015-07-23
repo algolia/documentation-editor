@@ -1,3 +1,4 @@
+require "documentation_editor/configuration"
 require "documentation_editor/engine"
 
 # markdown parsing
