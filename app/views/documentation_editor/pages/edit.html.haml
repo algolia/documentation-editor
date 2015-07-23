@@ -1,0 +1,90 @@
+%div{"ng-app" => "documentationEditorApp"}
+  %section#documentation-editor{"ng-controller" => 'EditorController', "ng-init" => "init(#{@page.id}, '/doc')"}
+    .editor-header
+      %ul.list-inline.pull-right
+        %li
+          %a.pull-right.btn.btn-default{href: '/doc/admin'}
+            %i.fa.fa-chevron-left
+            Back
+        %li
+          %a.pull-right.btn.btn-success{href: '#', 'ng-click' => 'preview($event)'}
+            %i.fa.fa-eye
+            Preview
+        %li
+          %a.pull-right.btn.btn-danger{href: '#', 'ng-click' => 'publish($event)'}
+            %i.fa.fa-save
+            Publish
+        %li
+          %a.pull-right.btn.btn-warning{href: '#', 'ng-click' => 'undo($event)', 'ng-disabled' => 'undoRedo.length === 0'}
+            %i.fa.fa-undo
+            Undo
+      %h1
+        Edit
+        %small= "/doc/#{@page.slug}"
+
+    .editor-content
+      .section{"ng-repeat" => "section in sections track by $index", "ng-init" => "sectionIndex = $index"}
+        %pre.markdown{contenteditable: true, "ng-if" => "section.type === 'text'", "ng-model" => 'sections[sectionIndex].content' }
+        .alert{contenteditable: true, "ng-if" => "section.type === 'callout'", class: 'alert-{{ section.content.type }}', 'ng-model' => 'sections[sectionIndex].content.body' }
+        %img.img-responsive.m-l-r-auto{"ng-if" => "section.type === 'image'", src: "{{ section.content.images[0].image[0].indexOf('http') === 0 ? '' : 'https://d3ibatyzauff7b.cloudfront.net/assets/' }}{{ section.content.images[0].image[0] }}"}
+        %table.table.parameters{"ng-if" => "section.type === 'parameters'"}
+          %thead
+            %tr
+              %th{contenteditable: true, "ng-repeat" => "col in getIntegerIterator(section.content.cols)", 'ng-model' => "sections[sectionIndex].content.data['h-' + col]"}
+              %th.text-right
+                Cols:
+                %a{href: '#', 'ng-click' => 'addColumn($event, section.id)'}>
+                  %i.fa.fa-plus-circle
+                %a{href: '#', 'ng-click' => 'deleteColumn($event, section.id)'}>
+                  %i.fa.fa-minus-circle
+          %tbody
+            %tr{"ng-repeat" => "row in getIntegerIterator(section.content.rows)"}
+              %td{"ng-repeat" => "col in getIntegerIterator(section.content.cols)"}
+                %pre.markdown{contenteditable: true, 'ng-model' => "sections[sectionIndex].content.data[row + '-' + col]"}
+            %tr
+              %td.text-right{"colspan" => "{{ section.content.cols }}"}
+                Rows:
+                %a{href: '#', 'ng-click' => 'addRow($event, section.id)'}>
+                  %i.fa.fa-plus-circle
+                %a{href: '#', 'ng-click' => 'deleteRow($event, section.id)'}>
+                  %i.fa.fa-minus-circle
+        .code{"ng-if" => "section.type === 'code'"}
+          %ul.nav.nav-tabs
+            %li.pull-right
+              %a{href: '#', 'ng-click' => 'addLanguage($event, section.id)'}>
+                %i.fa.fa-plus-circle
+            %li{"ng-repeat" => "code in section.content.codes track by $index", "ng-class" => "{ active: ($index === 0) }"}
+              %a{href: '#', 'ng-click' => 'deleteLanguage($event, section.id, $index)'}>
+                %i.fa.fa-remove>
+              %a{contenteditable: true, href: '#snippet_{{section.id}}_{{ code.language }}', 'data-toggle' => 'tab', 'ng-model' => 'sections[sectionIndex].content.codes[$index].language' }>
+          .tab-content
+            %pre.tab-pane{contenteditable: true, "ng-repeat" => "code in section.content.codes track by $index", "ng-class" => "{ 'in active': ($index === 0) }", id: 'snippet_{{section.id}}_{{code.language}}', 'ng-model' => 'sections[sectionIndex].content.codes[$index].code'}
+
+        .insert-sections
+          %a.btn.btn-danger{href: '#', 'ng-click' => 'deleteSection($event, section.id)'}
+            %i.fa.fa-trash
+            Delete {{ section.type }}
+          %a.btn.btn-default{href: '#', 'ng-click' => 'addText($event, section.id)'}
+            %i.fa.fa-bold
+            Add text
+          %a.btn.btn-default{href: '#', 'ng-click' => 'addCode($event, section.id)'}
+            %i.fa.fa-align-justify
+            Add code
+          %a.btn.btn-default{href: '#', 'ng-click' => 'addImage($event, section.id)'}
+            %i.fa.fa-image
+            Add image
+          %a.btn.btn-info{href: '#', 'ng-click' => 'addCallout($event, "info", section.id)'}
+            %i.fa.fa-info-circle
+            Add info
+          %a.btn.btn-warning{href: '#', 'ng-click' => 'addCallout($event, "warning", section.id)'}
+            %i.fa.fa-warning
+            Add warning
+          %a.btn.btn-danger{href: '#', 'ng-click' => 'addCallout($event, "danger", section.id)'}
+            %i.fa.fa-exclamation-triangle
+            Add danger
+
+  :javascript
+    $('#edit-doc .code .nav-tabs a').click(function(e) {
+      e.preventDefault()
+      $(this).tab('show')
+    });

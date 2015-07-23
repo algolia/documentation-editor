@@ -1,0 +1,19 @@
+- @no_live_help = true
+- @no_footer = true
+
+%section#edit-doc
+  .editor-header
+    %h1 Edit documentation
+
+  .editor-content
+    %h3 Pages
+    %ul
+      - DocumentationEditor::Page.group('slug').having('MAX(created_at)').order('id ASC').each do |p|
+        %li= link_to "/doc/#{p.slug}", edit_page_path(p.id)
+
+    .spacer50
+    .line
+    %h3 Create a new page
+    = simple_form_for DocumentationEditor::Page.new, url: '/doc/source' do |f|
+      = f.input :slug, placeholder: 'tutorials/my-tutorial', hint: 'Will be appended to /doc/'
+      = f.submit 'Create', class: 'btn btn-success'

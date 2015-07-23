@@ -1,0 +1,66 @@
+#documentation-editor
+  .editor-header
+    background-color: white
+    display: block
+    padding: 1.5em 2em 0
+    border-bottom: 1px solid #DDD
+    position: fixed
+    width: 100%
+    z-index: 10
+    h1
+      margin: 0
+      padding: 0
+      display: inline-block
+
+  .editor-content
+    z-index: 1
+    background: white
+    padding: 20px
+    padding-top: 90px
+    .insert-sections
+      text-align: right
+      border-top: 1px solid #ddd
+      padding: 0 0 40px 0
+      .btn
+        font-size: 0.6em
+        padding: 0px 4px
+    .markdown
+      color: black
+      border-left: 4px solid #DDD !important
+      background: white
+      padding: 5px 10px
+      margin: 0
+      &:focus
+        outline: none
+    .alert
+      &:focus
+        outline: none
+    .parameters
+      pre.markdown
+        max-width: 600px
+    .code
+      ul.nav.nav-tabs
+        li
+          a
+            display: inline-block
+            background: #333
+            color: white
+            padding: 2px 6px
+            margin: 0
+            border-radius: 0
+            font-size: 0.8em
+            border: 0
+          &.active
+            a
+              border: 0
+              background: #DDD
+      .tab-content
+        pre
+          color: white
+          background: #DDD
+          border: none
+          border-radius: 0
+          padding: 5px 10px
+          margin: 0
+          &:focus
+            outline: none
