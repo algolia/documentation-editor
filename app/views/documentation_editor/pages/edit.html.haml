@@ -22,7 +22,7 @@
         Edit
         %small= "/doc/#{@page.slug}"
 
-    .editor-content
+    .editor-content{"ng-cloak" => true}
       .section{"ng-repeat" => "section in sections track by $index", "ng-init" => "sectionIndex = $index"}
         %pre.markdown{contenteditable: true, "ng-if" => "section.type === 'text'", "ng-model" => 'sections[sectionIndex].content' }
         .alert{contenteditable: true, "ng-if" => "section.type === 'callout'", class: 'alert-{{ section.content.type }}', 'ng-model' => 'sections[sectionIndex].content.body' }
