@@ -314,12 +314,13 @@ angular.module('documentationEditorApp', [])
       }
     }
 
-  }]).directive('contenteditable', function() {
+  }]).directive('contenteditable', ['$document', function($document) {
     return {
       require: 'ngModel',
       link: function(scope, element, attrs, ngModel) {
         function read() {
-          ngModel.$setViewValue(element.html().replace(/<div>/g, '').replace(/<\/div>/g, "\n").replace(/<br>/g, "\n").replace(/\n{3,}/g, "\n\n"));
+          var text = element.text().replace(/<div>/g, '').replace(/<\/div>/g, "\n").replace(/<br>/g, "\n").replace(/\n{3,}/g, "\n\n");
+          ngModel.$setViewValue(text);
         }
 
         ngModel.$render = function() {
@@ -329,7 +330,14 @@ angular.module('documentationEditorApp', [])
         element.bind("blur keyup change", function() {
           scope.$apply(read);
         });
+
+        // force every copy/paste to be plain/text
+        element.bind('paste', function(e) {
+          e.preventDefault();
+          var text = (e.originalEvent || e).clipboardData.getData('text/plain') || '';
+          $document[0].execCommand("insertHTML", false, text);
+        });
       }
     };
-  })
+  }])
 ;
