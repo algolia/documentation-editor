@@ -1,5 +1,5 @@
 %div{"ng-app" => "documentationEditorApp"}
-  %section#documentation-editor{"ng-controller" => 'EditorController', "ng-init" => "init(#{@page.id}, '/doc')"}
+  %section#documentation-editor{"ng-controller" => 'EditorController', "ng-init" => "init(#{@page.id}, '#{request.path.split('/edit/').first}')"}
     .editor-header
       %ul.list-inline.pull-right
         %li
