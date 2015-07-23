@@ -303,6 +303,26 @@ angular.module('documentationEditorApp', [])
       });
     };
 
+    $scope.addTable = function($event, id) {
+      $event.preventDefault();
+      add(id, {
+        id: getNextID(),
+        type: 'parameters',
+        content: {
+          cols: 2,
+          rows: 2,
+          data: {
+            'h-0': 'FIXME 1',
+            'h-1': 'FIXME 2',
+            '0-0': '',
+            '0-1': '',
+            '1-0': '',
+            '1-1': ''
+          }
+        }
+      });
+    };
+
     function save(preview) {
       var data = [];
       $.each($scope.sections, function(i, section) {
