@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = DocumentationEditor::VERSION
   s.authors     = ["Sylvain UTARD"]
   s.email       = ["sylvain.utard@gmail.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of DocumentationEditor."
-  s.description = "TODO: Description of DocumentationEditor."
+  s.homepage    = "https://www.algolia.com"
+  s.summary     = "Markdown documentation editor"
+  s.description = "Markdown documentation editor"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
@@ -28,7 +28,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "angularjs-rails"
   s.add_development_dependency "less-rails-bootstrap"
   s.add_development_dependency "jquery-rails"
-  s.add_development_dependency "sass-rails"
   s.add_development_dependency "therubyracer"
   s.add_development_dependency "font-awesome-rails"
 end
