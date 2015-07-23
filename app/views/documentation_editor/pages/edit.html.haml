@@ -51,10 +51,11 @@
                 %a{href: '#', 'ng-click' => 'deleteRow($event, section.id)'}>
                   %i.fa.fa-minus-circle
         .code{"ng-if" => "section.type === 'code'"}
+          .pull-right
+            Language:
+            %a{href: '#', 'ng-click' => 'addLanguage($event, section.id)'}>
+              %i.fa.fa-plus-circle
           %ul.nav.nav-tabs
-            %li.pull-right
-              %a{href: '#', 'ng-click' => 'addLanguage($event, section.id)'}>
-                %i.fa.fa-plus-circle
             %li{"ng-repeat" => "code in section.content.codes track by $index", "ng-class" => "{ active: ($index === 0) }"}
               %a{href: '#', 'ng-click' => 'deleteLanguage($event, section.id, $index)'}>
                 %i.fa.fa-remove>
