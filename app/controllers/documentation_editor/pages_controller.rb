@@ -21,7 +21,7 @@ module DocumentationEditor
     end
 
     def create
-      p = Page.create!(params[:markdown_page])
+      p = Page.create!(params[:page])
       redirect_to edit_page_path(p)
     end
 
