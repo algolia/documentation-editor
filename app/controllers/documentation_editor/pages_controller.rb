@@ -33,11 +33,11 @@ module DocumentationEditor
     end
 
     def preview
-      @html = Kramdown::Document.new(Page.find(params[:id]).content, :input => 'ReadmeIOKramdown').to_html
+      @page = Page.find(params[:id])
     end
 
     def show
-      @html = Kramdown::Document.new(Page.where(preview: true).where(slug: params[:slug]).order('id DESC').first!.content, :input => 'ReadmeIOKramdown').to_html
+      @page = Page.where(preview: false).where(slug: params[:slug]).order('id DESC').first!
       render :preview
     end
   end

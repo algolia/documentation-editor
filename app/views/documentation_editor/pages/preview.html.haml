@@ -2,4 +2,4 @@
   .panel.panel-default
     .panel-body
       = find_and_preserve do
-        = @html.html_safe
+        = @page.to_html.html_safe
