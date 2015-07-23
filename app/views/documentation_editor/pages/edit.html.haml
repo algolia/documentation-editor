@@ -26,6 +26,8 @@
       .section{"ng-repeat" => "section in sections track by $index", "ng-init" => "sectionIndex = $index"}
         %pre.markdown{contenteditable: true, "ng-if" => "section.type === 'text'", "ng-model" => 'sections[sectionIndex].content' }
         .alert{contenteditable: true, "ng-if" => "section.type === 'callout'", class: 'alert-{{ section.content.type }}', 'ng-model' => 'sections[sectionIndex].content.body' }
+        .if{contenteditable: true, "ng-if" => "section.type === 'if'", 'ng-model' => 'sections[sectionIndex].content.condition' }
+        .endif{"ng-if" => "section.type === 'endif'"} } //endif
         %img{"ng-if" => "section.type === 'image'", src: "{{ section.content.images[0].image[0].indexOf('http') === 0 ? '' : 'https://d3ibatyzauff7b.cloudfront.net/assets/' }}{{ section.content.images[0].image[0] }}"}
         %table.table.parameters{"ng-if" => "section.type === 'parameters'"}
           %thead
@@ -84,6 +86,12 @@
             %a.btn.btn-danger{href: '#', 'ng-click' => 'addCallout($event, "danger", section.id)'}
               %i.fa.fa-exclamation-triangle
               Add danger
+            %a.btn.btn-default{href: '#', 'ng-click' => 'addIf($event, section.id)'}
+              %i.fa.fa-scissors
+              IF
+            %a.btn.btn-default{href: '#', 'ng-click' => 'addEndIf($event, section.id)'}
+              %i.fa.fa-scissors
+              \/IF
 
   :javascript
     $('#edit-doc .code .nav-tabs a').click(function(e) {

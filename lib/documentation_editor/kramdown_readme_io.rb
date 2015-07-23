@@ -27,6 +27,10 @@ class Kramdown::Parser::ReadmeIOKramdown < Kramdown::Parser::Kramdown
       @tree.children << callout
     when 'image'
       @tree.children << Element.new(:img, nil, { src: content['images'][0]['image'][0] }, { })
+    when 'if'
+      @tree.children << Element.new(:comment, "if #{content['condition']}")
+    when 'endif'
+      @tree.children << Element.new(:comment, '/if')
     when 'parameters'
       table = Element.new(:html_element, 'table', { class: 'table' })
       thead = Element.new(:html_element, 'thead')

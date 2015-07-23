@@ -42,6 +42,22 @@
     .parameters
       pre.markdown
         max-width: 600px
+    .if
+      border-top: 2px solid black
+      background: #DDD
+      color: black
+      text-align: center
+    .if:before
+      content: 'if ( '
+      font-weight: bold
+    .if:after
+      content: ' ) {'
+      font-weight: bold
+    .endif
+      background: #DDD
+      font-weight: bold
+      text-align: center
+      border-bottom: 2px solid black
     .code
       ul.nav.nav-tabs
         li

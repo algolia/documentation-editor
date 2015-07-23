@@ -283,6 +283,26 @@ angular.module('documentationEditorApp', [])
       section.content.rows = section.content.rows - 1;
     };
 
+    $scope.addIf = function($event, id) {
+      $event.preventDefault();
+      add(id, {
+        id: getNextID(),
+        type: 'if',
+        content: {
+          condition: 'FIXME'
+        }
+      });
+    };
+
+    $scope.addEndIf = function($event, id) {
+      $event.preventDefault();
+      add(id, {
+        id: getNextID(),
+        type: 'endif',
+        content: {}
+      });
+    };
+
     function save(preview) {
       var data = [];
       $.each($scope.sections, function(i, section) {
