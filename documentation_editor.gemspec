@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency "sass-rails"
 
   s.add_development_dependency "sqlite3"
-  s.add_development_dependency "angularjs-rails"
+  s.add_development_dependency "angularjs-rails", '~> 1.4.3'
   s.add_development_dependency "less-rails-bootstrap"
   s.add_development_dependency "jquery-rails"
   s.add_development_dependency "therubyracer"
