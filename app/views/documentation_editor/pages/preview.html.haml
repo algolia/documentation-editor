@@ -1,5 +1,7 @@
-%section
-  .panel.panel-default
-    .panel-body
-      = find_and_preserve do
-        = @page.to_html.html_safe
+%section.row
+  .col-sm-3.hidden-xs
+    #page-toc{"data-spy" => "affix"}
+      = render partial: 'menu_items', object: @page.to_menu
+  .col-sm-9
+    = find_and_preserve do
+      = @page.to_html.html_safe
