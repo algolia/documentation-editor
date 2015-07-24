@@ -1,10 +1,11 @@
 angular.module('documentationEditorApp', [])
   .controller('EditorController', ['$scope', '$http', '$window', function($scope, $http, $window) {
     $scope.sections = [];
-    $scope.nextID = 0;
     $scope.undoRedo = [];
+    $scope.source = '';
     $scope.id = 0;
 
+    $scope.nextID = 0;
     function getNextID() {
       return $scope.nextID++;
     }
@@ -15,37 +16,45 @@ angular.module('documentationEditorApp', [])
 
       $http.get($scope.path + '/source/' + id).then(function(content) {
         $scope.source = content.data;
+      });
+    };
 
-        var lines = $scope.source.split("\n");
-        var currentBlock = null, blockContent = '';
-
-        for (var i = 0; i < lines.length; ++i) {
-          var line = lines[i];
-          if (line.indexOf('[block:') === 0) {
-            currentBlock = line.substring(7, line.length - 1);
-          } else if (line.indexOf('[/block]') === 0) {
+    $scope.$watch('source', function(source) {
+      var lines = source.split("\n");
+      var currentBlock = null, blockContent = '';
+      $scope.sections = [];
+      $scope.undoRedo = [];
+      for (var i = 0; i < lines.length; ++i) {
+        var line = lines[i];
+        if (line.indexOf('[block:') === 0) {
+          currentBlock = line.substring(7, line.length - 1);
+        } else if (line.indexOf('[/block]') === 0) {
+          $scope.sections.push({
+            id: getNextID(),
+            type: currentBlock,
+            content: JSON.parse(blockContent)
+          });
+          currentBlock = null;
+          blockContent = '';
+        } else if (currentBlock != null) {
+          blockContent = blockContent + line + '\n';
+        } else {
+          if ($scope.sections.length > 0 && $scope.sections[$scope.sections.length - 1].type === 'text') {
+            $scope.sections[$scope.sections.length - 1].content = $scope.sections[$scope.sections.length - 1].content + "\n" + line;
+          } else if (line) {
             $scope.sections.push({
               id: getNextID(),
-              type: currentBlock,
-              content: JSON.parse(blockContent)
+              type: 'text',
+              content: line
             });
-            currentBlock = null;
-            blockContent = '';
-          } else if (currentBlock != null) {
-            blockContent = blockContent + line + '\n';
-          } else {
-            if ($scope.sections.length > 0 && $scope.sections[$scope.sections.length - 1].type === 'text') {
-              $scope.sections[$scope.sections.length - 1].content = $scope.sections[$scope.sections.length - 1].content + "\n" + line;
-            } else if (line) {
-              $scope.sections.push({
-                id: getNextID(),
-                type: 'text',
-                content: line
-              });
-            }
           }
         }
-      });
+      }
+    });
+
+    $scope.rawView =  false;
+    $scope.toggleView = function($event) {
+      $scope.rawView = !$scope.rawView;
     };
 
     $scope.undo = function($event) {
@@ -331,7 +340,7 @@ angular.module('documentationEditorApp', [])
         } else {
           data.push('[block:' + section.type + ']');
           data.push(JSON.stringify(section.content));
-          data.push('[/block]');
+          data.push("[/block]\n");
         }
       });
       return $http.post($scope.path + '/source/' + $scope.id, { data: data.join("\n"), preview: preview });

@@ -3,9 +3,9 @@
     .editor-header
       %ul.list-inline.pull-right
         %li
-          %a.pull-right.btn.btn-default.btn-sm{href: '/doc/admin'}
-            %i.fa.fa-chevron-left
-            Back
+          %a.pull-right.btn.btn-default.btn-sm{href: '#', 'ng-click' => 'toggleView($event)'}
+            %i.fa.fa-arrows-h
+            Switch View
         %li
           %a.pull-right.btn.btn-success.btn-sm{href: '#', 'ng-click' => 'preview($event)'}
             %i.fa.fa-eye
@@ -19,11 +19,15 @@
             %i.fa.fa-undo
             Undo
       %h1
+        %a.btn.btn-default.btn-sm{href: '/doc/admin'}
+          %i.fa.fa-chevron-left
+          Back
         Edit
         %small= "/doc/#{@page.slug}"
 
     .editor-content{"ng-cloak" => true}
-      .section{"ng-repeat" => "section in sections track by $index", "ng-init" => "sectionIndex = $index"}
+      %textarea.markdown{"ng-if" => "rawView", "ng-model" => "$parent.source"}
+      .section{"ng-repeat" => "section in sections track by $index", "ng-init" => "sectionIndex = $index", "ng-if" => "!rawView"}
         %pre.markdown{contenteditable: true, "ng-if" => "section.type === 'text'", "ng-model" => 'sections[sectionIndex].content' }
         .alert{contenteditable: true, "ng-if" => "section.type === 'callout'", class: 'alert-{{ section.content.type }}', 'ng-model' => 'sections[sectionIndex].content.body' }
         .if{contenteditable: true, "ng-if" => "section.type === 'if'", 'ng-model' => 'sections[sectionIndex].content.condition' }
