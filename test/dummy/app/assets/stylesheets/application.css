@@ -16,3 +16,14 @@
  *= require_tree .
  *= require_self
  */
+
+#page-toc > ul > li.active > a, #page-toc > ul > li > ul > li.active a {
+  background: #DDD;
+}
+#page-toc ul > li > ul {
+  display: none;
+}
+#page-toc ul > li.active > ul {
+  display: block;
+}
+
