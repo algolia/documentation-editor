@@ -6,6 +6,11 @@ module DocumentationEditor
       # apply the /if filtering keeping only the matching conditions
       conditions = (options[:condition] || '').split(/[, ]+/)
       html = html.gsub(/<!-- ((?!#{conditions.join('|')}).)*? -->.*?<!-- \/((?!#{conditions.join('|')}).)*? -->/m, '')
+      # apply the code comments
+      html = html.gsub(/<code>\{(\{.+?\})\}<\/code>/m) do |m|
+        code = JSON.parse($1)[options[:language]] rescue nil
+        "<code>#{code || m}</code>"
+      end
       # add anchor links before headers
       html.gsub(/<h[1-6] id="([^"]+)">/) { |m| "#{m}<a href=\"##{$1}\" class=\"anchor\"><i class=\"fa fa-link\"></i></a>"  }
     end
