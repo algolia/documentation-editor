@@ -109,6 +109,16 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
           type: 'parameters',
           content: o.data.content
         };
+      } else if (o.type === 'moveDown') {
+        var index = getIndex(o.data.id);
+        var before = $scope.sections[index - 1];
+        $scope.sections[index - 1] = $scope.sections[index];
+        $scope.sections[index] = before;
+      } else if (o.type === 'moveUp') {
+        var index = getIndex(o.data.id);
+        var after = $scope.sections[index + 1];
+        $scope.sections[index + 1] = $scope.sections[index];
+        $scope.sections[index] = after;
       }
     }
 
@@ -120,6 +130,38 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
       }
       return -1;
     }
+
+    $scope.moveUp = function($event, id) {
+      $event.preventDefault();
+      var index = getIndex(id);
+      if (index > 0) {
+        $scope.undoRedo.push({
+          type: 'moveUp',
+          data: {
+            id: id
+          }
+        });
+        var before = $scope.sections[index - 1];
+        $scope.sections[index - 1] = $scope.sections[index];
+        $scope.sections[index] = before;
+      }
+    };
+
+    $scope.moveDown = function($event, id) {
+      $event.preventDefault();
+      var index = getIndex(id);
+      if (index < $scope.sections.length - 1) {
+        $scope.undoRedo.push({
+          type: 'moveDown',
+          data: {
+            id: id
+          }
+        });
+        var after = $scope.sections[index + 1];
+        $scope.sections[index + 1] = $scope.sections[index];
+        $scope.sections[index] = after;
+      }
+    };
 
     function add(id, obj) {
       $scope.undoRedo.push({

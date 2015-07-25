@@ -70,6 +70,12 @@
 
         .insert-sections
           .pull-right
+            %a.btn.btn-default{href: '#', 'ng-click' => 'moveUp($event, section.id)', 'ng-if' => 'sectionIndex > 0'}
+              %i.fa.fa-arrow-circle-o-up
+              Up
+            %a.btn.btn-default{href: '#', 'ng-click' => 'moveDown($event, section.id)', 'ng-if' => 'sectionIndex < sections.length - 1'}
+              %i.fa.fa-arrow-circle-o-down
+              Down
             %a.btn.btn-danger{href: '#', 'ng-click' => 'deleteSection($event, section.id)'}
               %i.fa.fa-trash
               Delete {{ section.type }}
