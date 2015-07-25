@@ -1,5 +1,8 @@
 angular.module('documentationEditorApp', [])
-  .controller('EditorController', ['$scope', '$http', '$window', function($scope, $http, $window) {
+  .config(['$locationProvider', function($locationProvider) {
+    $locationProvider.html5Mode({ enabled: true, requireBase: false });
+  }])
+  .controller('EditorController', ['$scope', '$http', '$window', '$location', function($scope, $http, $window, $location) {
     $scope.sections = [];
     $scope.undoRedo = [];
     $scope.id = 0;
@@ -362,6 +365,7 @@ angular.module('documentationEditorApp', [])
       $event.preventDefault();
       save(true).then(function(content) {
         $window.open($scope.path + '/preview/' + content.data.id);
+        $location.path($scope.path + '/edit/' + content.data.id).replace();
       });
     };
 
