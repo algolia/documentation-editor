@@ -20,7 +20,7 @@ class Kramdown::Parser::ReadmeIOKramdown < Kramdown::Parser::Kramdown
       @tree.children.last.children << Element.new(:text, content['title'])
     when 'code'
       if @language
-        code = content['codes'].detect { |code| code['language'] == @language || code['language'].start_with?("#{@language}|") || code['language'].end_with?("|#{@language}") }
+        code = content['codes'].detect { |code| code['language'] == @language || code['language'].end_with?("|#{@language}") || code['language'].end_with?('|*') }
         @tree.children << Element.new(:html_element, 'pre')
         @tree.children.last.children << Element.new(:raw, code ? Simplabs::Highlight.highlight(code['language'].split('|').first, code['code']) : "FIXME:#{@language}")
       else
