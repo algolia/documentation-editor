@@ -412,7 +412,12 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
       require: 'ngModel',
       link: function(scope, element, attrs, ngModel) {
         function read() {
-          var text = element.html().replace(/<div>/g, '').replace(/<\/div>/g, "\n").replace(/<br>/g, "\n").replace(/\n{2,}$/, '');
+          // use the HTML form to keep the new lines
+          var text = element.html();
+          // replace the HTML newlines by \n
+          text = text.replace(/<div>/g, '').replace(/<\/div>/g, "\n").replace(/<br>/g, "\n").replace(/\n{2,}$/, '');
+          // replace also all HTML entities
+          text = $('<div />').html(text).text();
           ngModel.$setViewValue(text);
         }
 
