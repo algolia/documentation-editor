@@ -82,6 +82,10 @@ class Kramdown::Parser::ReadmeIOKramdown < Kramdown::Parser::Kramdown
 
   private
   def generate_id(str)
-    str.gsub(/<\/?[^>]+>/, '').strip.gsub(/[^a-zA-Z0-9]+/, '-')
+    id = str.gsub(/<\/?[^>]+>/, '').strip.gsub(/[^a-zA-Z0-9]+/, '-')
+    @ids ||= {}
+    @ids[id] ||= 0
+    @ids[id] += 1
+    @ids[id] == 1 ? id : "#{id}-#{@ids[id]}"
   end
 end
