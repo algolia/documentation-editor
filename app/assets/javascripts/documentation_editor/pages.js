@@ -20,7 +20,7 @@ angular.module('documentationEditorApp', [])
     };
 
     $scope.$watch('source', function(source) {
-      var lines = source.split("\n");
+      var lines = source.replace(/\n{3,}/g, "\n\n").split("\n");
       var currentBlock = null, blockContent = '';
       $scope.sections = [];
       $scope.undoRedo = [];

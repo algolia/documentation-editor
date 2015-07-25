@@ -34,10 +34,12 @@ module DocumentationEditor
 
     def preview
       @page = Page.find(params[:id])
+      @options = params
     end
 
     def show
       @page = Page.where(preview: false).where(slug: params[:slug]).order('id DESC').first!
+      @options = params
       render :preview
     end
 

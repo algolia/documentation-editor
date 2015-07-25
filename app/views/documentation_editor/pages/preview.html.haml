@@ -1,5 +1,5 @@
 - content_for :page_menu do
-  = render partial: 'menu_items', object: @page.to_menu
+  = render partial: 'menu_items', object: @page.to_toc(@options)
 
 = find_and_preserve do
-  = @page.to_html.html_safe
+  = @page.to_html(@options).html_safe
