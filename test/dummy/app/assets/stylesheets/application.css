@@ -17,6 +17,10 @@
  *= require_self
  */
 
+body {
+  font-family: 'Open Sans';
+}
+
 #page-toc > ul > li.active > a, #page-toc > ul > li > ul > li.active a {
   background: #DDD;
 }
