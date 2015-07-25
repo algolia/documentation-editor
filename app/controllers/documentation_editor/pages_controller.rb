@@ -53,7 +53,10 @@ module DocumentationEditor
     end
 
     def upload_image
-      image = Image.create(caption: params[:caption], image: params[:file])
+      image = Image.new
+      image.caption = params[:caption]
+      image.image = params[:file]
+      image.save!
       render json: { id: image.id, url: image.image.url }
     end
   end
