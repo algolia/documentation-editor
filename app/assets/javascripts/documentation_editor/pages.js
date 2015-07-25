@@ -208,7 +208,7 @@ angular.module('documentationEditorApp', [])
           codes: $scope.sections[index].content.codes
         }
       });
-      $scope.sections[index].content.codes = [].concat($scope.sections[index].content.codes, [{ language: 'fixme', code: '// FIXME' }]);
+      $scope.sections[index].content.codes = [].concat($scope.sections[index].content.codes, [{ language: 'FIXME:language|label', code: '// FIXME' }]);
     };
 
     $scope.addImage = function($event, id) {
@@ -323,7 +323,7 @@ angular.module('documentationEditorApp', [])
         id: getNextID(),
         type: 'if',
         content: {
-          condition: 'FIXME'
+          condition: 'FIXME:language'
         }
       });
     };
