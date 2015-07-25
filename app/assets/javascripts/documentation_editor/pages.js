@@ -2,34 +2,24 @@ angular.module('documentationEditorApp', [])
   .controller('EditorController', ['$scope', '$http', '$window', function($scope, $http, $window) {
     $scope.sections = [];
     $scope.undoRedo = [];
-    $scope.source = '';
     $scope.id = 0;
+    $scope.source = '';
 
     $scope.nextID = 0;
     function getNextID() {
       return $scope.nextID++;
     }
 
-    $scope.init = function(id, path) {
-      $scope.id = id;
-      $scope.path = path;
-
-      $http.get($scope.path + '/source/' + id).then(function(content) {
-        $scope.source = content.data;
-      });
-    };
-
-    $scope.$watch('source', function(source) {
+    function parse(source) {
       var lines = source.replace(/\n{3,}/g, "\n\n").split("\n");
       var currentBlock = null, blockContent = '';
-      $scope.sections = [];
-      $scope.undoRedo = [];
+      var sections = [];
       for (var i = 0; i < lines.length; ++i) {
         var line = lines[i];
         if (line.indexOf('[block:') === 0) {
           currentBlock = line.substring(7, line.length - 1);
         } else if (line.indexOf('[/block]') === 0) {
-          $scope.sections.push({
+          sections.push({
             id: getNextID(),
             type: currentBlock,
             content: JSON.parse(blockContent)
@@ -39,10 +29,10 @@ angular.module('documentationEditorApp', [])
         } else if (currentBlock != null) {
           blockContent = blockContent + line + '\n';
         } else {
-          if ($scope.sections.length > 0 && $scope.sections[$scope.sections.length - 1].type === 'text') {
-            $scope.sections[$scope.sections.length - 1].content = $scope.sections[$scope.sections.length - 1].content + "\n" + line;
+          if (sections.length > 0 && sections[sections.length - 1].type === 'text') {
+            sections[sections.length - 1].content = sections[sections.length - 1].content + "\n" + line;
           } else if (line) {
-            $scope.sections.push({
+            sections.push({
               id: getNextID(),
               type: 'text',
               content: line
@@ -50,10 +40,42 @@ angular.module('documentationEditorApp', [])
           }
         }
       }
-    });
+      return sections;
+    }
+
+    function serialize(sections) {
+      var data = [];
+      $.each(sections, function(i, section) {
+        if (section.type === 'text') {
+          data.push(section.content + "\n");
+        } else {
+          data.push('[block:' + section.type + ']');
+          data.push(JSON.stringify(section.content));
+          data.push("[/block]\n");
+        }
+      });
+      return data.join("\n");
+    }
+
+    $scope.init = function(id, path) {
+      $scope.id = id;
+      $scope.path = path;
+
+      $http.get($scope.path + '/source/' + id).then(function(content) {
+        $scope.source = content.data;
+        $scope.sections = parse($scope.source);
+      });
+    };
 
     $scope.rawView =  false;
     $scope.toggleView = function($event) {
+      $event.preventDefault();
+      $scope.undoRedo = [];
+      if ($scope.rawView) {
+        $scope.sections = parse(this.source);
+      } else {
+        $scope.source = serialize($scope.sections);
+      }
       $scope.rawView = !$scope.rawView;
     };
 
@@ -333,17 +355,7 @@ angular.module('documentationEditorApp', [])
     };
 
     function save(preview) {
-      var data = [];
-      $.each($scope.sections, function(i, section) {
-        if (section.type === 'text') {
-          data.push(section.content + "\n");
-        } else {
-          data.push('[block:' + section.type + ']');
-          data.push(JSON.stringify(section.content));
-          data.push("[/block]\n");
-        }
-      });
-      return $http.post($scope.path + '/source/' + $scope.id, { data: data.join("\n"), preview: preview });
+      return $http.post($scope.path + '/source/' + $scope.id, { data: $scope.getSource(), preview: preview });
     }
 
     $scope.preview = function($event) {
