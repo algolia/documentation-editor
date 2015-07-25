@@ -355,7 +355,7 @@ angular.module('documentationEditorApp', [])
     };
 
     function save(preview) {
-      return $http.post($scope.path + '/source/' + $scope.id, { data: $scope.getSource(), preview: preview });
+      return $http.post($scope.path + '/source/' + $scope.id, { data: serialize($scope.sections), preview: preview });
     }
 
     $scope.preview = function($event) {
