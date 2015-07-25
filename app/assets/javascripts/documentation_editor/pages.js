@@ -1,6 +1,6 @@
 angular.module('documentationEditorApp', [])
   .config(['$locationProvider', function($locationProvider) {
-    $locationProvider.html5Mode({ enabled: true, requireBase: false });
+    $locationProvider.html5Mode({ enabled: true, requireBase: false, rewriteLinks: false });
   }])
   .controller('EditorController', ['$scope', '$http', '$window', '$location', function($scope, $http, $window, $location) {
     $scope.sections = [];
