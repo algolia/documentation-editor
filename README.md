@@ -1,12 +1,22 @@
 # Documentation Editor
 
-This is the mountable Rails app providing the documentation editor of Algolia.com
+This is the mountable Rails application providing the documentation editor of [Algolia.com](https://www.algolia.com/doc).
+
+It requires your project to depend on:
+
+ * Angular.js & ng-file-upload.js,
+ * Bootstrap 3,
+ * and Fontawesome 4.
 
 It depends on:
-
- * Angular.js & ng-file-upload.js
- * Bootstrap 3
- * Fontawesome 4
+ * rails (>4.0),
+ * haml-rails,
+ * sass-rails,
+ * kramdown,
+ * highlight,
+ * simple_form,
+ * sass-rails,
+ * and paperclip.
 
 ## Installation
 
@@ -49,7 +59,7 @@ Create a `config/initializers/documentation_editor.rb` file to configure the edi
 
 ```ruby
 # to use a custom layout
-DocumentationEditor::Config.layout = 'my_layout'
+DocumentationEditor::Config.layout = 'my_custom_layout'
 
 # to protect the access to the edition pages to admin
 DocumentationEditor::Config.is_admin_before_filter = :method_checking_if_admin
@@ -62,7 +72,14 @@ DocumentationEditor::Config.paperclip_options = {
   url: ':s3_alias_url',
   path: ':attachment/:id/:style.:extension'
 }
+
+# to wrap your h1 sections with `<section>` tags
+DocumentationEditor::Config.wrap_h1_with_sections = true
 ```
+
+## Usage
+
+FIXME
 
 ## Development
 

@@ -48,7 +48,7 @@ module DocumentationEditor
     end
 
     def destroy
-      Page.find(params[:id]).destroy
+      Page.where(slug: Page.find(params[:id]).slug).destroy_all
       redirect_to :admin
     end
 

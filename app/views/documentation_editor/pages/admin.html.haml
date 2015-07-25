@@ -16,7 +16,7 @@
           %th Published by
           %th.text-right Actions
       %tbody
-        - DocumentationEditor::Page.group('slug').having('MAX(created_at)').order('id ASC').each do |p|
+        - DocumentationEditor::Page.group('slug').having('MAX(created_at)').order('id DESC').each do |p|
           %tr
             %td= link_to "#{request.path.split('/admin').first}/#{p.slug}", edit_page_path(p.id)
             %td= l p.created_at, format: :short
@@ -33,10 +33,8 @@
               = link_to delete_page_path(p.id), class: 'btn btn-danger btn-sm', data: { confirm: 'Are you sure you want to delete this page?', method: :delete } do
                 %i.fa.fa-trash
                 Delete
-
-    .spacer50
-    .line
     %h3 Create a new page
-    = simple_form_for DocumentationEditor::Page.new, url: '/doc/source' do |f|
-      = f.input :slug, placeholder: 'tutorials/my-tutorial', hint: "Will be appended to #{request.path.split('/admin').first}/"
+    = form_for DocumentationEditor::Page.new, url: '/doc/source', html: { class: 'form form-inline' } do |f|
+      = f.text_field :slug, placeholder: 'tutorials/my-tutorial', class: 'form-control'
       = f.submit 'Create', class: 'btn btn-success'
+      %p.text-muted Will be appended to #{request.path.split('/admin').first}/

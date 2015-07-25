@@ -6,10 +6,9 @@ require 'documentation_editor/kramdown_readme_io'
 
 # views
 require 'haml'
-require 'simple_form'
 require 'sass-rails'
 
-# images
+# images upload
 require 'paperclip'
 
 module DocumentationEditor

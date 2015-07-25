@@ -21,7 +21,6 @@ Gem::Specification.new do |s|
   s.add_dependency "haml-rails"
   s.add_dependency "kramdown"
   s.add_dependency "highlight"
-  s.add_dependency "simple_form"
   s.add_dependency "sass-rails"
   s.add_dependency "paperclip", "~> 4.3"
 

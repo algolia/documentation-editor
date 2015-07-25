@@ -8,7 +8,6 @@ PATH
       paperclip (~> 4.3)
       rails (> 4.0)
       sass-rails
-      simple_form
 
 GEM
   remote: https://rubygems.org/
@@ -147,9 +146,6 @@ GEM
       sprockets-rails (>= 2.0, < 4.0)
       tilt (~> 1.1)
     sexp_processor (4.6.0)
-    simple_form (3.1.0)
-      actionpack (~> 4.0)
-      activemodel (~> 4.0)
     sprockets (3.2.0)
       rack (~> 1.0)
     sprockets-rails (2.3.2)
