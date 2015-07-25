@@ -26,7 +26,7 @@ end
  * Add the following dependency in your `application.js`:
 
 ```js
-// Make sure you've required `angular` and `jquery` before
+// Make sure you've required `jquery`, `angular` and `ng-file-upload` before
 //
 //= require documentation_editor/pages
 ```
@@ -35,7 +35,7 @@ end
 
  ```css
 /*
- * Make sure you've require `bootstrap` before
+ * Make sure you've required `bootstrap` before
  *
  *= require documentation_editor/pages
  */
@@ -53,6 +53,15 @@ DocumentationEditor::Config.layout = 'my_layout'
 
 # to protect the access to the edition pages to admin
 DocumentationEditor::Config.is_admin_before_filter = :method_checking_if_admin
+
+# to use custom options for paperclip
+DocumentationEditor::Config.paperclip_options = {
+  storage: 's3',
+  s3_credentials: { bucket: 'xxx', access_key_id: 'xxx', secret_access_key: 'xxx' },
+  s3_host_alias: 'xxxxxxxxxx.cloudfront.net',
+  url: ':s3_alias_url',
+  path: ':attachment/:id/:style.:extension'
+}
 ```
 
 ## Development
