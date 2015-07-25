@@ -51,6 +51,7 @@ module DocumentationEditor
           end
           current_section << child
         end
+        sections << current_section unless current_section.empty?
         doc.root.children = sections.map do |nested_sections|
           section = Kramdown::Element.new(:html_element, 'section')
           section.children = nested_sections
