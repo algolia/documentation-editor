@@ -6,6 +6,7 @@ It depends on:
 
  * Angular.js
  * Bootstrap 3
+ * Fontawesome 4
 
 ## Usage
 
@@ -50,5 +51,5 @@ $ cd test/dummy
 $ rake documentation_editor:install:migrations
 $ rake db:migrate
 $ rails server
-$ open http://localhost:3000
+$ open http://localhost:3000/doc/admin
 ```
