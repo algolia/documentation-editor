@@ -3,12 +3,11 @@ module DocumentationEditor
 
     def to_html(options = {})
       html = parse_document(options).to_html
-      # apply the /if filtering keeping only the matching conditions
-      conditions = (options[:condition] || '').split(/[, ]+/)
+      # resolve the code condition block
       html = html.gsub(/\[\[ *(.+?) *\]\](.+?)\[\[ *\/.+? *\]\]/m) do |m|
-        conditions.include?($1) ? $2 : ''
+        options[:language] == $1 ? $2 : ''
       end
-      # apply the code comments
+      # resolve the inlined code conditions
       html = html.gsub(/<code>\{(\{.+?\})\}<\/code>/m) do |m|
         code = JSON.parse($1)[options[:language]] rescue nil
         "<code>#{code || m}</code>"
@@ -42,14 +41,13 @@ module DocumentationEditor
       doc = Kramdown::Document.new(content, options.merge(input: 'ReadmeIOKramdown'))
 
       # apply the /if filtering
-      conditions = (options[:condition] || '').split(/[, ]+/)
       conditions_stack = []
       doc.root.children = doc.root.children.map do |child|
         if child.type == :comment || (child.type == :p && child.children.length == 1 && child.children[0].type == :comment)
           comment = child.type == :comment ? child : child.children[0]
           if comment.options[:start] == true
             all = (comment.options[:condition] || '').split(/[, ]+/)
-            pass = all.select { |condition| conditions.include?(condition) }.size == all.size
+            pass = !all.detect { |condition| options[:language] == condition }.nil?
             conditions_stack << pass
             nil
           elsif comment.options[:start] == false
