@@ -3,10 +3,6 @@
     .editor-header
       %ul.list-inline.pull-right
         %li
-          %a.pull-right.btn.btn-default.btn-sm{href: '#', 'ng-click' => 'toggleView($event)'}
-            %i.fa.fa-arrows-h
-            Switch View
-        %li
           %a.pull-right.btn.btn-success.btn-sm{href: '#', 'ng-click' => 'preview($event)'}
             %i.fa.fa-eye
             Save & Preview
@@ -14,6 +10,10 @@
           %a.pull-right.btn.btn-danger.btn-sm{href: '#', 'ng-click' => 'publish($event)'}
             %i.fa.fa-save
             Save & Publish
+        %li
+          %a.pull-right.btn.btn-default.btn-sm{href: '#', 'ng-click' => 'toggleView($event)'}
+            %i.fa.fa-arrows-h
+            Switch View
         %li
           %a.pull-right.btn.btn-warning.btn-sm{href: '#', 'ng-click' => 'undo($event)', 'ng-disabled' => 'undoRedo.length === 0'}
             %i.fa.fa-undo
