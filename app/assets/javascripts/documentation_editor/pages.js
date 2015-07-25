@@ -246,7 +246,7 @@ angular.module('documentationEditorApp', [])
       });
 
       var col = section.content.cols;
-      section.content.data['h-' + col] = section.content.data['h-' + col] || '';
+      section.content.data['h-' + col] = section.content.data['h-' + col] || 'FIXME';
       section.content.cols = section.content.cols + 1;
       for (var i = 0; i < section.content.rows; ++i) {
         section.content.data[i + '-' + col] = section.content.data[i + '-' + col] || '';
