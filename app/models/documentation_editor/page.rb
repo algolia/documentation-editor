@@ -5,7 +5,9 @@ module DocumentationEditor
       html = parse_document(options).to_html
       # apply the /if filtering keeping only the matching conditions
       conditions = (options[:condition] || '').split(/[, ]+/)
-      html = html.gsub(/<!-- ((?!#{conditions.join('|')}).)*? -->.*?<!-- \/((?!#{conditions.join('|')}).)*? -->/m, '')
+      html = html.gsub(/\[\[ *(.+?) *\]\](.+?)\[\[ *\/.+? *\]\]/m) do |m|
+        conditions.include?($1) ? $2 : ''
+      end
       # apply the code comments
       html = html.gsub(/<code>\{(\{.+?\})\}<\/code>/m) do |m|
         code = JSON.parse($1)[options[:language]] rescue nil
