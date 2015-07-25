@@ -1,11 +1,13 @@
 - content_for :page_menu do
-  = render partial: 'menu_items', object: @page.to_toc(@options)
+  - cache("page-#{@page.slug}-#{@page.id}-toc") do
+    = render partial: 'menu_items', object: @page.to_toc(@options)
 
 .markdown-page
-  = find_and_preserve do
-    - if DocumentationEditor::Config.is_admin_before_filter
-      .text-right
-        = link_to edit_page_path(@page), class: 'btn btn-danger' do
-          %i.fa.fa-edit
-          Edit
-    = @page.to_html(@options).html_safe
+  - if DocumentationEditor::Config.is_admin_before_filter
+    .text-right
+      = link_to edit_page_path(@page), class: 'btn btn-warning' do
+        %i.fa.fa-edit
+        Edit
+  - cache("page-#{@page.slug}-#{@page.id}-content") do
+    = find_and_preserve do
+      = @page.to_html(@options).html_safe
