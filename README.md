@@ -8,7 +8,7 @@ It depends on:
  * Bootstrap 3
  * Fontawesome 4
 
-## Usage
+## Installation
 
 To use it in your own Rails project, do the following steps:
 
@@ -42,6 +42,18 @@ end
  ```
 
  * Go to `/doc/admin` to create your first page
+
+## Configuration
+
+Create a `config/initializers/documentation_editor.rb` file to configure the editor:
+
+```ruby
+# to use a custom layout
+DocumentationEditor::Config.layout = 'my_layout'
+
+# to protect the access to the edition pages to admin
+DocumentationEditor::Config.is_admin_before_filter = :method_checking_if_admin
+```
 
 ## Development
 
