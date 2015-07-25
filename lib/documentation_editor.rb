@@ -9,5 +9,8 @@ require 'haml'
 require 'simple_form'
 require 'sass-rails'
 
+# images
+require 'paperclip'
+
 module DocumentationEditor
 end

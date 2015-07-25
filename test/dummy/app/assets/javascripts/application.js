@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require angular
+//= require ng-file-upload.min.js
 //= require documentation_editor/pages
 //= require_tree .

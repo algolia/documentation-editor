@@ -32,7 +32,7 @@
         .alert{contenteditable: true, "ng-if" => "section.type === 'callout'", class: 'alert-{{ section.content.type }}', 'ng-model' => 'sections[sectionIndex].content.body' }
         .if{contenteditable: true, "ng-if" => "section.type === 'if'", 'ng-model' => 'sections[sectionIndex].content.condition' }
         .endif{"ng-if" => "section.type === 'endif'"} } //endif
-        %img{"ng-if" => "section.type === 'image'", src: "{{ section.content.images[0].image[0].indexOf('http') === 0 ? '' : 'https://d3ibatyzauff7b.cloudfront.net/assets/' }}{{ section.content.images[0].image[0] }}"}
+        %img.image{"ng-if" => "section.type === 'image'", src: "{{ section.content.images[0].image[0] }}"}
         %table.table.parameters{"ng-if" => "section.type === 'parameters'"}
           %thead
             %tr
@@ -82,7 +82,7 @@
             %a.btn.btn-default{href: '#', 'ng-click' => 'addTable($event, section.id)'}
               %i.fa.fa-table
               Add table
-            %a.btn.btn-default{href: '#', 'ng-click' => 'addImage($event, section.id)'}
+            %a.btn.btn-default{href: '#', "data-toggle" => "modal", "data-target" => "#editor-images", "ng-click" => "saveImagePosition(section.id)"}
               %i.fa.fa-image
               Add image
             %a.btn.btn-info{href: '#', 'ng-click' => 'addCallout($event, "info", section.id)'}
@@ -100,3 +100,27 @@
             %a.btn.btn-default{href: '#', 'ng-click' => 'addEndIf($event, section.id)'}
               %i.fa.fa-scissors
               \/IF
+
+    #editor-images.modal.fade{"ng-controller" => "ImageUploaderController"}
+      .modal-dialog
+        .modal-content
+          .modal-header
+            %button.close{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
+              %span{"aria-hidden" => true} &times;
+            %h4 Upload a new image or use an existing one
+
+          .modal-body
+            - if DocumentationEditor::Image.count > 0
+              %h3 Existing images:
+              .images
+                - DocumentationEditor::Image.limit(100).order('id DESC').each do |image|
+                  %a{href: '#', 'ng-click' => "addImage('#{image.image.url}')"}= image_tag image.image.url
+              %hr
+            %h3 Upload a new image
+            .form
+              .row.form-group
+                .col-sm-3.text-right Caption
+                .col-sm-9
+                  %input.form-control{type: 'text', 'ng-model' => 'caption', placeholder: 'Optional caption'}
+              .text-center.form-group
+                .btn.btn-success{"ngf-select" => true, "ng-model" => 'files'} Select image

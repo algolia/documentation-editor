@@ -1,4 +1,6 @@
 DocumentationEditor::Engine.routes.draw do
+  post "images", as: :upload_image, :controller => 'pages', :action => 'upload_image'
+
   get "admin", :controller => 'pages', :action => 'admin'
   get "edit/:id", as: :edit_page, :controller => 'pages', :action => 'edit'
   get "source/:id", :controller => 'pages', :action => 'source'

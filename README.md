@@ -4,7 +4,7 @@ This is the mountable Rails app providing the documentation editor of Algolia.co
 
 It depends on:
 
- * Angular.js
+ * Angular.js & ng-file-upload.js
  * Bootstrap 3
  * Fontawesome 4
 

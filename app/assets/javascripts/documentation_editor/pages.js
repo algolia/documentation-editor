@@ -1,4 +1,4 @@
-angular.module('documentationEditorApp', [])
+angular.module('documentationEditorApp', ['ngFileUpload'])
   .config(['$locationProvider', function($locationProvider) {
     $locationProvider.html5Mode({ enabled: true, requireBase: false, rewriteLinks: false });
   }])
@@ -211,21 +211,22 @@ angular.module('documentationEditorApp', [])
       $scope.sections[index].content.codes = [].concat($scope.sections[index].content.codes, [{ language: 'FIXME:language|label', code: '// FIXME' }]);
     };
 
-    $scope.addImage = function($event, id) {
-      $event.preventDefault();
-      var url = prompt("Image URL (absolute or from after /assets/)", "algolia256x80.png");
-      if (url) {
-        add(id, {
-          type: 'image',
-          content: {
-            images: [
-              {
-                image: [url]
-              }
-            ]
-          }
-        });
-      }
+    $scope.imageToAddAfter = 0;
+    $scope.saveImagePosition = function(id) {
+      $scope.imageToAddAfter = id;
+    };
+    $scope.addImage = function(url) {
+      $('#editor-images').modal('hide');
+      add($scope.imageToAddAfter, {
+        type: 'image',
+        content: {
+          images: [
+            {
+              image: [url]
+            }
+          ]
+        }
+      });
     };
 
     $scope.addColumn = function($event, id) {
@@ -378,6 +379,33 @@ angular.module('documentationEditorApp', [])
         });
       }
     }
+
+  }]).controller('ImageUploaderController', ['$scope', 'Upload', function($scope, Upload) {
+    $scope.caption = ''
+    $scope.files = [];
+
+    $scope.$watch('files', function () {
+      $scope.upload($scope.files);
+    });
+
+    $scope.upload = function(files) {
+      if (files && files.length) {
+        for (var i = 0; i < files.length; i++) {
+          var file = files[i];
+          Upload.upload({
+            url: '/doc/images',
+            fields: { caption: $scope.caption },
+            file: file
+          }).success(function (data, status, headers, config) {
+            console.log('uploaded', data);
+            $scope.$parent.addImage(data.url);
+          }).error(function (data, status, headers, config) {
+            console.log('error', data);
+            alert('Error status: ' + status);
+          })
+        }
+      }
+    };
 
   }]).directive('contenteditable', ['$document', function($document) {
     return {

@@ -51,5 +51,10 @@ module DocumentationEditor
       Page.find(params[:id]).destroy
       redirect_to :admin
     end
+
+    def upload_image
+      image = Image.create(caption: params[:caption], image: params[:file])
+      render json: { id: image.id, url: image.image.url }
+    end
   end
 end
