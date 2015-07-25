@@ -14,7 +14,7 @@ angular.module('documentationEditorApp', [])
     }
 
     function parse(source) {
-      var lines = source.replace(/\n{3,}/g, "\n\n").split("\n");
+      var lines = source.split("\n");
       var currentBlock = null, blockContent = '';
       var sections = [];
       for (var i = 0; i < lines.length; ++i) {
@@ -33,7 +33,7 @@ angular.module('documentationEditorApp', [])
           blockContent = blockContent + line + '\n';
         } else {
           if (sections.length > 0 && sections[sections.length - 1].type === 'text') {
-            sections[sections.length - 1].content = sections[sections.length - 1].content + "\n" + line;
+            sections[sections.length - 1].content = (sections[sections.length - 1].content + "\n" + line).replace(/\n{2,}$/, "\n\n");
           } else if (line) {
             sections.push({
               id: getNextID(),
@@ -384,7 +384,7 @@ angular.module('documentationEditorApp', [])
       require: 'ngModel',
       link: function(scope, element, attrs, ngModel) {
         function read() {
-          var text = element.text().replace(/<div>/g, '').replace(/<\/div>/g, "\n").replace(/<br>/g, "\n").replace(/\n{3,}/g, "\n\n");
+          var text = element.html().replace(/<div>/g, '').replace(/<\/div>/g, "\n").replace(/<br>/g, "\n").replace(/\n{2,}$/, '');
           ngModel.$setViewValue(text);
         }
 
