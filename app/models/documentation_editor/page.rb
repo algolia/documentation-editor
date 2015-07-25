@@ -19,7 +19,7 @@ module DocumentationEditor
     def to_toc(options = {})
       roots = []
       levels = []
-      doc = parse_document(options)
+      doc = parse_document(options.merge(no_wrap: true))
       doc.root.children.each do |child|
         next if child.type != :header
         item = { label: child.options[:raw_text], id: generate_id(doc, child.options[:raw_text]), children: [], level: child.options[:level] }
@@ -39,6 +39,24 @@ module DocumentationEditor
     private
     def parse_document(options)
       doc = Kramdown::Document.new(content, options.merge(input: 'ReadmeIOKramdown'))
+
+      # wrap in sections
+      if !options[:no_wrap] && DocumentationEditor::Config.wrap_h1_with_sections
+        sections = []
+        current_section = []
+        doc.root.children.each do |child|
+          if child.type == :header && child.options[:level] == 1 && !current_section.empty?
+            sections << current_section
+            current_section = []
+          end
+          current_section << child
+        end
+        doc.root.children = sections.map do |nested_sections|
+          section = Kramdown::Element.new(:html_element, 'section')
+          section.children = nested_sections
+          section
+        end
+      end
 
       # apply the /if filtering
       conditions_stack = []
