@@ -89,3 +89,34 @@
           margin: 0
           &:focus
             outline: none
+
+
+.markdown-page
+  h1, h2, h3, h4, h5, h6
+    position: relative
+    a:hover
+      text-decoration: none
+    a.anchor
+      display: none
+      position: absolute
+      top: 0
+      left: 0
+      margin-left: -1.2em
+      padding: 0.5em 1em 0 0
+      font-size: 0.5em
+      color: inherit
+    &:hover
+      a.anchor
+        display: block
+  tbody
+    tr
+      td:first-child
+        a.anchor
+          color: inherit
+          visibility: hidden
+        p
+          white-space: nowrap
+          &:hover
+            a.anchor
+              visibility: visible
+

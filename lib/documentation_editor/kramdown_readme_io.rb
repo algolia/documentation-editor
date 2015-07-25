@@ -62,8 +62,12 @@ class Kramdown::Parser::ReadmeIOKramdown < Kramdown::Parser::Kramdown
       1.upto(content['rows']) do |row|
         tbody.children << Element.new(:html_element, 'tr')
         1.upto(content['cols']) do |col|
-          tbody.children.last.children << Element.new(:html_element, 'td')
-          tbody.children.last.children.last.children << Element.new(:raw, Kramdown::Document.new(content['data']["#{row - 1}-#{col - 1}"], input: 'ReadmeIOKramdown').to_html)
+          md = content['data']["#{row - 1}-#{col - 1}"]
+          id = generate_id(md)
+          anchor = col == 1 ? "\n<a href=\"##{id}\" class=\"anchor\"><i class=\"fa fa-link\"></i></a>" : ''
+          html = Kramdown::Document.new("#{md}#{anchor}", input: 'ReadmeIOKramdown').to_html
+          tbody.children.last.children << Element.new(:html_element, 'td', col == 1 ? { id: id } : nil)
+          tbody.children.last.children.last.children << Element.new(:raw, html)
         end
       end
       table.children << tbody
@@ -75,4 +79,9 @@ class Kramdown::Parser::ReadmeIOKramdown < Kramdown::Parser::Kramdown
 
   README_IO_TAGS_START = /\[block:(.+?)\](.+?)\[\/block\]/m
   define_parser(:readme_io_tags, README_IO_TAGS_START)
+
+  private
+  def generate_id(str)
+    str.gsub(/<\/?[^>]+>/, '').strip.gsub(/[^a-zA-Z0-9]+/, '-')
+  end
 end

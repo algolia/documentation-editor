@@ -5,7 +5,9 @@ module DocumentationEditor
       html = parse_document(options).to_html
       # apply the /if filtering keeping only the matching conditions
       conditions = (options[:condition] || '').split(/[, ]+/)
-      html.gsub(/<!-- ((?!#{conditions.join('|')}).)*? -->.*?<!-- \/((?!#{conditions.join('|')}).)*? -->/m, '')
+      html = html.gsub(/<!-- ((?!#{conditions.join('|')}).)*? -->.*?<!-- \/((?!#{conditions.join('|')}).)*? -->/m, '')
+      # add anchor links before headers
+      html.gsub(/<h[1-6] id="([^"]+)">/) { |m| "#{m}<a href=\"##{$1}\" class=\"anchor\"><i class=\"fa fa-link\"></i></a>"  }
     end
 
     def to_toc(options = {})
