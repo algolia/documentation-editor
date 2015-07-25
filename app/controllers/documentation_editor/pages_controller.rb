@@ -2,7 +2,11 @@ require_dependency "documentation_editor/application_controller"
 
 module DocumentationEditor
   class PagesController < ApplicationController
-    skip_before_action :verify_authenticity_token
+    skip_before_filter :verify_authenticity_token
+
+    if DocumentationEditor::Config.is_admin_before_filter
+      before_filter DocumentationEditor::Config.is_admin_before_filter, except: [:show]
+    end
 
     def admin
     end
