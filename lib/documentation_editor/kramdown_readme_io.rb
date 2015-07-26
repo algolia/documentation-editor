@@ -44,7 +44,20 @@ class Kramdown::Parser::ReadmeIOKramdown < Kramdown::Parser::Kramdown
       callout.children << Element.new(:raw, Kramdown::Document.new(content['body']).to_html)
       @tree.children << callout
     when 'image'
-      @tree.children << Element.new(:img, nil, { src: content['images'][0]['image'][0] }, { })
+      clazz = case content['float']
+      when 'left'
+        'pull-left'
+      when 'right'
+        'pull-right'
+      else
+        nil
+      end
+      @tree.children << Element.new(:html_element, 'figure', { class: clazz })
+      @tree.children.last.children << Element.new(:img, nil, { src: content['images'][0]['image'][0] })
+      unless content['images'][0]['caption'].blank?
+        @tree.children.last.children << Element.new(:html_element, 'figcaption')
+        @tree.children.last.children.last.children << Element.new(:raw, Kramdown::Document.new(content['images'][0]['caption'], input: 'ReadmeIOKramdown').to_html)
+      end
     when 'if'
       @tree.children << Element.new(:comment, "if #{content['condition']}", { }, { start: true, condition: content['condition'] })
     when 'endif'

@@ -33,7 +33,18 @@
         .alert{contenteditable: true, "ng-if" => "section.type === 'callout'", class: 'alert-{{ section.content.type }}', 'ng-model' => 'sections[sectionIndex].content.body' }
         .if{contenteditable: true, "ng-if" => "section.type === 'if'", 'ng-model' => 'sections[sectionIndex].content.condition' }
         .endif{"ng-if" => "section.type === 'endif'"} } //endif
-        %img.image{"ng-if" => "section.type === 'image'", src: "{{ section.content.images[0].image[0] }}"}
+        .image{"ng-if" => "section.type === 'image'"}
+          %img{"ng-src" => "{{ section.content.images[0].image[0] }}"}
+          .text-center
+            %p
+              Caption:
+              %span.markdown{contenteditable: true, 'ng-model' => 'sections[sectionIndex].content.images[0].caption'}
+            %p
+              Float:
+              %select{"ng-model" => "sections[sectionIndex].content.float"}
+                %option{value: ''} None
+                %option{value: 'left'} Left
+                %option{value: 'right'} Right
         %table.table.parameters{"ng-if" => "section.type === 'parameters'"}
           %thead
             %tr
