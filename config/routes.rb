@@ -1,13 +1,16 @@
 DocumentationEditor::Engine.routes.draw do
-  post "images", as: :upload_image, :controller => 'pages', :action => 'upload_image'
+  scope path: '/admin' do
+    get '/', as: :admin, :controller => 'pages', :action => 'index'
+    post '/', :controller => 'pages', :action => 'create'
 
-  get "admin", :controller => 'pages', :action => 'admin'
-  get "edit/:id", as: :edit_page, :controller => 'pages', :action => 'edit'
-  get "source/:id", :controller => 'pages', :action => 'source'
-  post 'source', :controller => 'pages', :action => 'create'
-  post 'source/:id', :controller => 'pages', :action => 'save'
-  delete 'source/:id', as: :delete_page, :controller => 'pages', :action => 'destroy'
-  post 'update', controller: 'pages', :action => 'update'
-  get "preview/:id", as: :preview_page, :controller => 'pages', :action => 'preview'
-  get ':slug', :controller => 'pages', :action => 'show', constraints: { slug: /.*/ }
+    get '/:id', :controller => 'pages', :action => 'source'
+    get '/:id/edit', as: :edit_page, :controller => 'pages', :action => 'edit'
+    post '/:id', :controller => 'pages', :action => 'update'
+    delete '/:id', as: :delete_page, :controller => 'pages', :action => 'destroy'
+    get '/:id/preview', as: :preview_page, :controller => 'pages', :action => 'preview'
+
+    post '/images', as: :upload_image, :controller => 'pages', :action => 'upload_image'
+  end
+
+  get '/:slug', as: :page, :controller => 'pages', :action => 'show', constraints: { slug: /.*/ }
 end

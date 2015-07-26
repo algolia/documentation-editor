@@ -8,7 +8,7 @@ module DocumentationEditor
       before_filter DocumentationEditor::Config.is_admin_before_filter, except: [:show]
     end
 
-    def admin
+    def index
     end
 
     def edit
@@ -16,10 +16,10 @@ module DocumentationEditor
     end
 
     def source
-      render json: (Page.find(params[:id]).content || 'FIXME').to_json
+      render json: { source: (Page.find(params[:id]).content || 'FIXME') }.to_json
     end
 
-    def save
+    def update
       p = Page.new
       p.author_id = respond_to?(:current_user) ? current_user.id : nil
       p.slug = Page.find(params[:id]).slug

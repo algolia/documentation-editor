@@ -64,8 +64,8 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
       $scope.id = id;
       $scope.path = path;
 
-      $http.get($scope.path + '/source/' + id).then(function(content) {
-        $scope.source = content.data;
+      $http.get($scope.path + '/admin/' + id).then(function(content) {
+        $scope.source = content.data.source;
         $scope.sections = parse($scope.source);
       });
     };
@@ -401,14 +401,14 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
     };
 
     function save(preview) {
-      return $http.post($scope.path + '/source/' + $scope.id, { data: serialize($scope.sections), preview: preview });
+      return $http.post($scope.path + '/admin/' + $scope.id, { data: serialize($scope.sections), preview: preview });
     }
 
     $scope.preview = function($event) {
       $event.preventDefault();
       save(true).then(function(content) {
-        $window.open($scope.path + '/preview/' + content.data.id);
-        $location.path($scope.path + '/edit/' + content.data.id).replace();
+        $window.open($scope.path + '/admin/' + content.data.id + '/preview');
+        $location.path($scope.path + '/admin/' + content.data.id + '/edit').replace();
       });
     };
 

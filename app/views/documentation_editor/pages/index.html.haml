@@ -1,6 +1,3 @@
-- @no_live_help = true
-- @no_footer = true
-
 %section#documentation-editor
   .editor-header
     %h1 Edit documentation
@@ -34,7 +31,7 @@
                 %i.fa.fa-trash
                 Delete
     %h3 Create a new page
-    = form_for DocumentationEditor::Page.new, url: '/doc/source', html: { class: 'form form-inline' } do |f|
+    = form_for DocumentationEditor::Page.new, url: admin_path, html: { class: 'form form-inline' } do |f|
       = f.text_field :slug, placeholder: 'tutorials/my-tutorial', class: 'form-control'
       = f.submit 'Create', class: 'btn btn-success'
-      %p.text-muted Will be appended to #{request.path.split('/admin').first}/
+      %p.text-muted Will be appended to #{page_path('')}
