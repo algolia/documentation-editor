@@ -1,23 +1,8 @@
 # Documentation Editor
 
-This is the mountable Rails application providing the documentation editor of [Algolia.com](https://www.algolia.com/doc).
+This is the mountable Rails application providing the documentation editor of [algolia.com/doc](https://www.algolia.com/doc).
 
-It requires your project to depend on:
-
- * Angular.js,
- * ng-file-upload.js,
- * Bootstrap 3,
- * and Fontawesome 4.
-
-It depends on:
- * rails (>4.0),
- * haml-rails,
- * sass-rails,
- * kramdown,
- * highlight,
- * simple_form,
- * sass-rails,
- * and paperclip.
+The goal of this project is to provide an easy & frictionless way to edit an online documentation. The sweet spot of this editor is to be able to generate pages containing multiple snippets of highlighted code & conditional sections (which wasn't really available in any other CMS we considered). It also includes a nice image uploader storing the image to Amazon S3, a simple table editor and an automatic table of content generator.
 
 ## Features
 
@@ -37,7 +22,33 @@ It depends on:
 
 ## Installation
 
+#### Dependencies
+
+Your project needs to depend on the following libraries:
+
+ * Angular.js,
+ * ng-file-upload.js,
+ * Bootstrap 3,
+ * and Fontawesome 4.
+
+
+This project depends on:
+
+ * rails (> 4.0),
+ * haml-rails,
+ * sass-rails,
+ * kramdown,
+ * highlight,
+ * simple_form,
+ * sass-rails,
+ * and paperclip.
+
+
+#### Setup
+
 To use it in your own Rails project, do the following steps:
+
+ * Add the `documentation_editor` gem to your `Genfile`
 
  * Mount the provided routes adding the following `Engine` to your `config/routes.rb` file:
 
