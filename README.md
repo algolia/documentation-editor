@@ -4,7 +4,8 @@ This is the mountable Rails application providing the documentation editor of [A
 
 It requires your project to depend on:
 
- * Angular.js & ng-file-upload.js,
+ * Angular.js,
+ * ng-file-upload.js,
  * Bootstrap 3,
  * and Fontawesome 4.
 
@@ -17,6 +18,22 @@ It depends on:
  * simple_form,
  * sass-rails,
  * and paperclip.
+
+## Features
+
+ - Widgets
+   - Text: Full markdown support
+   - Callout: info/warning/danger
+   - Tables: customizable number of columns & rows
+   - Code: code snippet with highlighting
+   - Conditions: ability to display some sections based on some query parameters
+   - Image: image uploader + ability to store on S3
+ - Caching
+ - Automatic TOC generation (anchors are automatically generated on each title)
+ - Raw edition mode
+ - Administration restricted access
+ - Undo
+ - Versionning
 
 ## Installation
 
@@ -79,7 +96,18 @@ DocumentationEditor::Config.wrap_h1_with_sections = true
 
 ## Usage
 
-FIXME
+Create your first page from the `/doc/admin` URL.
+
+![Editor](doc/editor.png)
+
+This is what the previous code generates:
+
+![Preview](doc/preview.png)
+
+And this is what it looks like once styled:
+
+![Final](doc/final.png)
+
 
 ## Development
 
