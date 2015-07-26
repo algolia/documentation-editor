@@ -435,7 +435,7 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
         for (var i = 0; i < files.length; i++) {
           var file = files[i];
           Upload.upload({
-            url: '/doc/images',
+            url: $scope.$parent.path + '/admin/images',
             fields: { caption: $scope.caption },
             file: file
           }).success(function (data, status, headers, config) {
