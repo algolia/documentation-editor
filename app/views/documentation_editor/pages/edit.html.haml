@@ -19,6 +19,10 @@
             %i.fa.fa-arrows-h
             Switch View
         %li
+          %a.btn.btn-default.btn-sm{href: history_path(@page.slug)}
+            %i.fa.fa-history
+            History
+        %li
           %a.btn.btn-warning.btn-sm{href: '#', 'ng-click' => 'undo($event)', 'ng-disabled' => 'undoRedo.length === 0'}
             %i.fa.fa-undo
             Undo

@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     documentation_editor (0.0.1)
+      diffy
       haml-rails
       highlight
       kramdown
@@ -55,6 +56,7 @@ GEM
     cocaine (0.5.7)
       climate_control (>= 0.0.3, < 1.0)
     commonjs (0.2.7)
+    diffy (3.0.7)
     erubis (2.7.0)
     font-awesome-rails (4.3.0.0)
       railties (>= 3.2, < 5.0)

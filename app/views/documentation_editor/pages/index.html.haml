@@ -27,6 +27,9 @@
               = link_to preview_page_path(p.id), class: 'btn btn-default btn-sm' do
                 %i.fa.fa-eye
                 Preview
+              = link_to history_path(p.slug), class: 'btn btn-default btn-sm' do
+                %i.fa.fa-history
+                History
               = link_to delete_page_path(p.id), class: 'btn btn-danger btn-sm', data: { confirm: 'Are you sure you want to delete this page?', method: :delete } do
                 %i.fa.fa-trash
                 Delete

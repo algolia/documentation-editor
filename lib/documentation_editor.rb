@@ -11,5 +11,8 @@ require 'sass-rails'
 # images upload
 require 'paperclip'
 
+# diff
+require 'diffy'
+
 module DocumentationEditor
 end

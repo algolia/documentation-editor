@@ -449,6 +449,28 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
       }
     };
 
+  }]).controller('HistoryController', ['$scope', '$http', '$sce', function($scope, $http, $sce) {
+    $scope.pages = [];
+
+    $scope.init = function(slug, path) {
+      $http.get(path + '/admin/' + slug + '/versions').then(function(content) {
+        $scope.pages = content.data.pages;
+        $scope.diff = {
+          cur: 0,
+          prev: 1
+        };
+      });
+      $scope.path = path;
+    };
+
+    $scope.$watchCollection('diff', function(diff) {
+      if (!diff) {
+        return;
+      }
+      $http.get($scope.path + '/admin/' + $scope.pages[diff.prev].id + '/' + $scope.pages[diff.cur].id + '/diff').then(function(content) {
+        $scope.content = $sce.trustAsHtml(content.data);
+      });
+    });
   }]).directive('contenteditable', ['$document', function($document) {
     return {
       require: 'ngModel',

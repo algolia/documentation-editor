@@ -16,16 +16,21 @@ module DocumentationEditor
     end
 
     def source
-      render json: { source: (Page.find(params[:id]).content || 'FIXME') }.to_json
+      render json: { source: (Page.find(params[:id]).content || 'FIXME') }
     end
 
     def update
-      p = Page.new
-      p.author_id = respond_to?(:current_user) ? current_user.id : nil
-      p.slug = Page.find(params[:id]).slug
-      p.preview = params[:preview]
-      p.content = params[:data]
-      p.save!
+      current = Page.find(params[:id])
+      if current.content == params[:data]
+        p = current
+      else
+        p = Page.new
+        p.slug = current.slug
+        p.author_id = respond_to?(:current_user) ? current_user.id : nil
+        p.preview = params[:preview]
+        p.content = params[:data]
+        p.save!
+      end
       render json: { id: p.id, slug: p.slug }
     end
 
@@ -58,6 +63,18 @@ module DocumentationEditor
       image.image = params[:file]
       image.save!
       render json: { id: image.id, url: image.image.url }
+    end
+
+    def history
+      @slug = params[:slug]
+    end
+
+    def versions
+      render json: { pages: Page.where(slug: params[:slug]).select('id,created_at').order('id DESC').all }
+    end
+
+    def diff
+      render inline: Diffy::Diff.new(Page.find(params[:prev]).content, Page.find(params[:cur]).content, context: 5, include_plus_and_minus_in_html: true, include_diff_info: true).to_s(:html)
     end
   end
 end
