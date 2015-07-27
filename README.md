@@ -19,6 +19,7 @@ The goal of this project is to provide an easy & frictionless way to edit an onl
  - Administration restricted access
  - Undo
  - Versionning
+ - Diff
 
 ## Installation
 
@@ -118,6 +119,10 @@ This is what the previous code generates:
 And this is what it looks like once styled:
 
 ![Final](doc/final.png)
+
+What the history/diff looks like:
+
+![History](doc/history.png)
 
 
 ## Development
