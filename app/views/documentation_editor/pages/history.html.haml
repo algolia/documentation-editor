@@ -1,26 +1,33 @@
 :css
   #{Diffy::CSS}
 
-%div{"ng-app" => "documentationEditorApp"}
-  %h1
-    History of
-    %small= page_path(@slug)
-  .row{"ng-controller" => 'HistoryController', "ng-init" => "init('#{escape_javascript @slug}', '#{admin_path.gsub(/\/admin$/, '')}')"}
-    .col-sm-3
-      %table.table.table-striped
-        %thead
-          %tr
-            %th.text-right Revision
-            %th
-            %th
-            %th Modification date
-        %tbody
-          %tr{"ng-repeat" => "page in pages track by page.id"}
-            %td.text-right {{ pages.length - $index }}
-            %td
-              %input{type: 'radio', name: 'prev', "ng-value" => "$index", "ng-model" => "diff.prev", "ng-if" => "$index > diff.cur"}
-            %td
-              %input{type: 'radio', name: 'cur', "ng-value" => "$index", "ng-model" => "diff.cur", "ng-if" => "$index < diff.prev"}
-            %td {{ page.created_at }}
-    .col-sm-9
-      %div{"ng-bind-html" => "content"}
+%section#documentation-editor{"ng-app" => "documentationEditorApp"}
+  .editor-header
+    %ul.list-inline.pull-right
+      %li
+        %a.btn.btn-default.btn-sm{href: admin_path}
+          %i.fa.fa-chevron-left
+          Back to Admin
+    %h1
+      History of
+      %small= page_path(@slug)
+  .editor-content
+    .row{"ng-controller" => 'HistoryController', "ng-init" => "init('#{escape_javascript @slug}', '#{admin_path.gsub(/\/admin$/, '')}')"}
+      .col-sm-3
+        %table.table.table-striped
+          %thead
+            %tr
+              %th.text-right Revision
+              %th
+              %th
+              %th Modification date
+          %tbody
+            %tr{"ng-repeat" => "page in pages track by page.id"}
+              %td.text-right {{ pages.length - $index }}
+              %td
+                %input{type: 'radio', name: 'prev', "ng-value" => "$index", "ng-model" => "diff.prev", "ng-if" => "$index > diff.cur"}
+              %td
+                %input{type: 'radio', name: 'cur', "ng-value" => "$index", "ng-model" => "diff.cur", "ng-if" => "$index < diff.prev"}
+              %td {{ page.created_at }}
+      .col-sm-9
+        %div{"ng-bind-html" => "content"}
