@@ -29,7 +29,7 @@ class Kramdown::Parser::ReadmeIOKramdown < Kramdown::Parser::Kramdown
         content['codes'].each_with_index do |v, i|
           language, label = v['language'].split('|')
           label ||= language
-          id = "snippet_#{@src.pos}_#{v['language'].gsub(/[^a-zA-Z]/, '-')}"
+          id = "snippet_#{@src.pos}_#{generate_id(v['language'])}"
           ul.children << Element.new(:html_element, 'li', { class: ('active' if i == 0) })
           ul.children.last.children << Element.new(:html_element, 'a', { href: "##{id}", 'data-toggle' => 'tab' })
           ul.children.last.children.last.children << Element.new(:raw, label)
