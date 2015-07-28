@@ -59,9 +59,9 @@ class Kramdown::Parser::ReadmeIOKramdown < Kramdown::Parser::Kramdown
         @tree.children.last.children.last.children << Element.new(:raw, parse_cached(content['caption']))
       end
     when 'if'
-      @tree.children << Element.new(:comment, "if #{content['condition']}", { }, { start: true, condition: content['condition'] })
+      @tree.children << Element.new(:comment, "if #{content['condition']}", { }, { start: true, condition: content['condition'], negation: false })
     when 'ifnot'
-      @tree.children << Element.new(:comment, "if NOT #{content['condition']}", { }, { start: true, condition: content['condition'] })
+      @tree.children << Element.new(:comment, "if NOT #{content['condition']}", { }, { start: true, condition: content['condition'], negation: true })
     when 'endif'
       @tree.children << Element.new(:comment, '/if', { }, { start: false, condition: content['condition'] })
     when 'parameters'

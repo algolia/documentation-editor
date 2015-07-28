@@ -48,6 +48,7 @@ module DocumentationEditor
           if comment.options[:start] == true
             all = (comment.options[:condition] || '').split(/[, ]+/)
             pass = !all.detect { |condition| options[:language] == condition }.nil?
+            pass = !pass if comment.options[:negation]
             conditions_stack << pass
             nil
           elsif comment.options[:start] == false
