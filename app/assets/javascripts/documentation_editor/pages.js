@@ -415,6 +415,17 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
       return $http.post($scope.path + '/admin/' + $scope.id, { data: serialize($scope.sections), preview: preview });
     }
 
+    $scope.save = function($event) {
+      $event.preventDefault();
+      save(true).then(function(content) {
+        $location.path($scope.path + '/admin/' + content.data.id + '/edit').replace();
+        $http.get($scope.path + '/admin/' + content.data.id).then(function(content) {
+          $scope.source = content.data.source;
+          $scope.sections = parse($scope.source);
+        });
+      });
+    };
+
     $scope.preview = function($event) {
       $event.preventDefault();
       save(true).then(function(content) {
