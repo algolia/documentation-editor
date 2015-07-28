@@ -40,6 +40,28 @@ module DocumentationEditor
     def parse_document(options)
       doc = Kramdown::Document.new(content, options.merge(input: 'ReadmeIOKramdown'))
 
+      # apply the /if filtering
+      conditions_stack = []
+      doc.root.children = doc.root.children.map do |child|
+        if child.type == :comment || (child.type == :p && child.children.length == 1 && child.children[0].type == :comment)
+          comment = child.type == :comment ? child : child.children[0]
+          if comment.options[:start] == true
+            all = (comment.options[:condition] || '').split(/[, ]+/)
+            pass = !all.detect { |condition| options[:language] == condition }.nil?
+            conditions_stack << pass
+            nil
+          elsif comment.options[:start] == false
+            conditions_stack.pop
+            nil
+          else
+            conditions_stack.last == false ? nil : child
+          end
+        else
+          p child if conditions_stack.last == false
+          conditions_stack.last == false ? nil : child
+        end
+      end.compact
+
       # wrap in sections
       if !options[:no_wrap] && DocumentationEditor::Config.wrap_h1_with_sections
         sections = []
@@ -58,27 +80,6 @@ module DocumentationEditor
           section
         end
       end
-
-      # apply the /if filtering
-      conditions_stack = []
-      doc.root.children = doc.root.children.map do |child|
-        if child.type == :comment || (child.type == :p && child.children.length == 1 && child.children[0].type == :comment)
-          comment = child.type == :comment ? child : child.children[0]
-          if comment.options[:start] == true
-            all = (comment.options[:condition] || '').split(/[, ]+/)
-            pass = !all.detect { |condition| options[:language] == condition }.nil?
-            conditions_stack << pass
-            nil
-          elsif comment.options[:start] == false
-            conditions_stack.pop
-            nil
-          else
-            conditions_stack.last == false ? nil : child
-          end
-        else
-          conditions_stack.last == false ? nil : child
-        end
-      end.compact
 
       doc
     end
