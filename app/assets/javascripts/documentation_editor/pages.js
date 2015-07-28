@@ -501,7 +501,7 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
           // use the HTML form to keep the new lines
           var text = element.html();
           // replace the HTML newlines by \n
-          text = text.replace(/<div>/g, '').replace(/<\/div>/g, "\n").replace(/<br>/g, "\n").replace(/\n{2,}$/, '');
+          text = text.replace(/<div>/g, '<br>').replace(/<\/div>/g, '').replace(/<br>/g, "\n");
           // replace also all HTML entities
           text = $('<div />').html(text).text();
           ngModel.$setViewValue(text);
