@@ -3,14 +3,14 @@ module DocumentationEditor
 
     def to_html(options = {})
       html = parse_document(options).to_html
+      # resolve the variables
+      variables = ActiveSupport::HashWithIndifferentAccess.new(options[:variables] || {})
+      html = html.gsub(/\[\[ *variable:(.+?) *\]\]/) do |m|
+        variables[$1] || 'FIXME'
+      end
       # resolve the code condition block
       html = html.gsub(/\[\[ *(.+?) *\]\](.+?)\[\[ *\/.+? *\]\]/m) do |m|
         options[:language] == $1 ? $2 : ''
-      end
-      # resolve the inlined code conditions
-      html = html.gsub(/<code>\{(\{.+?\})\}<\/code>/m) do |m|
-        code = JSON.parse($1)[options[:language]] rescue nil
-        "<code>#{code || m}</code>"
       end
       # add anchor links before headers
       html.gsub(/<h[1-6] id="([^"]+)">/) { |m| "#{m}<a href=\"##{$1}\" class=\"anchor\"><i class=\"fa fa-link\"></i></a>"  }

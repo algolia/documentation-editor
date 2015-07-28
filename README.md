@@ -106,6 +106,44 @@ DocumentationEditor::Config.paperclip_options = {
 DocumentationEditor::Config.wrap_h1_with_sections = true
 ```
 
+## Markdown Extensions
+
+#### Language conditions
+
+You can force a page to only display a specific language. To force the language of a page, you need to set the `language` query parameter. We recommend inlining those parameters directly from your `routes.rb` file:
+
+```ruby
+Rails.application.routes.draw do
+  get '/doc/ruby', :controller => 'pages', :action => 'show', slug: 'guide', language: 'ruby'
+  mount DocumentationEditor::Engine => "/doc"
+end
+```
+
+Use `[[LANGUAGE]] ... [[/LANGUAGE]]` to only display a piece of text if this is the current language. For instance:
+
+```html
+[[ruby]]This will only be displayed if languag=ruby[[/ruby]] but this will be always displayed.
+```
+
+If you want a tab of your code snippet to be displayed whatever the language, you can use the special `*` language name. For instance, this JavaScript snippet will be displayed whatever the language specified:
+
+![star](doc/snippet-star.png)
+
+#### Variables
+
+```ruby
+Rails.application.routes.draw do
+  get '/doc/ruby', :controller => 'pages', :action => 'show', slug: 'my_page', variables: { name: 'Foo' }
+  mount DocumentationEditor::Engine => "/doc"
+end
+```
+
+Use `[[variable:VARIABLE]]` and specify any variables you want to display their values. For instance:
+
+```html
+This is the value of the `name` variable: [[variable:name]].
+```
+
 ## Usage
 
 Create your first page from the `/doc/admin` URL.
