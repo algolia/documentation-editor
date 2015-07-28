@@ -36,6 +36,7 @@
         %pre.markdown{contenteditable: true, "ng-if" => "section.type === 'text'", "ng-model" => 'sections[sectionIndex].content' }
         .alert{contenteditable: true, "ng-if" => "section.type === 'callout'", class: 'alert-{{ section.content.type }}', 'ng-model' => 'sections[sectionIndex].content.body' }
         .if{contenteditable: true, "ng-if" => "section.type === 'if'", 'ng-model' => 'sections[sectionIndex].content.condition' }
+        .if.ifnot{contenteditable: true, "ng-if" => "section.type === 'ifnot'", 'ng-model' => 'sections[sectionIndex].content.condition' }
         .endif{"ng-if" => "section.type === 'endif'"} } //endif
         .image{"ng-if" => "section.type === 'image'"}
           %img{"ng-src" => "{{ section.content.images[0].image[0] }}"}
@@ -119,6 +120,9 @@
             %a.btn.btn-default{href: '#', 'ng-click' => 'addIf($event, section.id)'}
               %i.fa.fa-scissors
               IF
+            %a.btn.btn-default{href: '#', 'ng-click' => 'addIfNot($event, section.id)'}
+              %i.fa.fa-scissors
+              IF NOT
             %a.btn.btn-default{href: '#', 'ng-click' => 'addEndIf($event, section.id)'}
               %i.fa.fa-scissors
               \/IF

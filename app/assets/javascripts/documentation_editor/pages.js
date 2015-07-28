@@ -371,6 +371,17 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
       });
     };
 
+    $scope.addIfNot = function($event, id) {
+      $event.preventDefault();
+      add(id, {
+        id: getNextID(),
+        type: 'ifnot',
+        content: {
+          condition: 'FIXME:language'
+        }
+      });
+    };
+
     $scope.addEndIf = function($event, id) {
       $event.preventDefault();
       add(id, {

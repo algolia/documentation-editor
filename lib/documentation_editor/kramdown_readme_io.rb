@@ -56,10 +56,12 @@ class Kramdown::Parser::ReadmeIOKramdown < Kramdown::Parser::Kramdown
       @tree.children.last.children << Element.new(:img, nil, { src: content['images'][0]['image'][0] })
       unless content['caption'].blank?
         @tree.children.last.children << Element.new(:html_element, 'figcaption')
-        @tree.children.last.children.last.children << Element.new(:raw, Kramdown::Document.new(content['caption'], input: 'ReadmeIOKramdown').to_html)
+        @tree.children.last.children.last.children << Element.new(:raw, parse_cached(content['caption']))
       end
     when 'if'
       @tree.children << Element.new(:comment, "if #{content['condition']}", { }, { start: true, condition: content['condition'] })
+    when 'ifnot'
+      @tree.children << Element.new(:comment, "if NOT #{content['condition']}", { }, { start: true, condition: content['condition'] })
     when 'endif'
       @tree.children << Element.new(:comment, '/if', { }, { start: false, condition: content['condition'] })
     when 'parameters'
