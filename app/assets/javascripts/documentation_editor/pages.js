@@ -6,6 +6,7 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
     $scope.sections = [];
     $scope.undoRedo = [];
     $scope.id = 0;
+    $scope.slug = '';
     $scope.source = '';
 
     $scope.nextID = 0;
@@ -60,8 +61,9 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
       return data.join("\n");
     }
 
-    $scope.init = function(id, path) {
+    $scope.init = function(id, slug, path) {
       $scope.id = id;
+      $scope.slug = slug;
       $scope.path = path;
 
       $http.get($scope.path + '/admin/' + id).then(function(content) {
@@ -417,29 +419,21 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
 
     $scope.save = function($event) {
       $event.preventDefault();
-      save(true).then(function(content) {
-        $location.path($scope.path + '/admin/' + content.data.id + '/edit').replace();
-        $http.get($scope.path + '/admin/' + content.data.id).then(function(content) {
-          $scope.source = content.data.source;
-          $scope.sections = parse($scope.source);
-        });
-      });
+      save(true);
     };
 
     $scope.preview = function($event) {
       $event.preventDefault();
       save(true).then(function(content) {
-        $window.open($scope.path + '/admin/' + content.data.id + '/preview');
-        $location.path($scope.path + '/admin/' + content.data.id + '/edit').replace();
+        $window.open($scope.path + '/admin/' + $scope.id + '/preview');
       });
     };
 
     $scope.publish = function($event) {
       $event.preventDefault();
-
       if (confirm('Are you sure you want to publish this page?')) {
         save(false).then(function(content) {
-          $window.location.href = $scope.path + '/' + content.data.slug;
+          $window.location.href = $scope.path + '/' + $scope.slug;
         });
       }
     }
@@ -474,9 +468,9 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
   }]).controller('HistoryController', ['$scope', '$http', '$sce', function($scope, $http, $sce) {
     $scope.pages = [];
 
-    $scope.init = function(slug, path) {
-      $http.get(path + '/admin/' + slug + '/versions').then(function(content) {
-        $scope.pages = content.data.pages;
+    $scope.init = function(id, path) {
+      $http.get(path + '/admin/' + id + '/versions').then(function(content) {
+        $scope.revisions = content.data.revisions;
         $scope.diff = {
           cur: 0,
           prev: 1
@@ -489,7 +483,7 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
       if (!diff) {
         return;
       }
-      $http.get($scope.path + '/admin/' + $scope.pages[diff.prev].id + '/' + $scope.pages[diff.cur].id + '/diff').then(function(content) {
+      $http.get($scope.path + '/admin/' + $scope.revisions[diff.prev].id + '/' + $scope.revisions[diff.cur].id + '/diff').then(function(content) {
         $scope.content = $sce.trustAsHtml(content.data);
       });
     });

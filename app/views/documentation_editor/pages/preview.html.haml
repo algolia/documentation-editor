@@ -1,6 +1,6 @@
 - content_for :page_menu do
-  - cache("page-#{@page.slug}-#{@page.id}-toc") do
-    = render partial: 'menu_items', object: @page.to_toc(@options)
+  - cache("page-#{@page.id}-#{@revision.id}-toc") do
+    = render partial: 'menu_items', object: @revision.to_toc(@options)
 
 .markdown-page
   - if DocumentationEditor::Config.is_admin_before_filter
@@ -8,6 +8,6 @@
       = link_to edit_page_path(@page), class: 'btn btn-warning' do
         %i.fa.fa-edit
         Edit
-  - cache("page-#{@page.slug}-#{@page.id}-content") do
+  - cache("page-#{@page.id}-#{@revision.id}-content") do
     = find_and_preserve do
-      = @page.to_html(@options).html_safe
+      = @revision.to_html(@options).html_safe

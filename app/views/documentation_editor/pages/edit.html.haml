@@ -1,5 +1,5 @@
 %div{"ng-app" => "documentationEditorApp"}
-  %section#documentation-editor{"ng-controller" => 'EditorController', "ng-init" => "init(#{@page.id}, '#{admin_path.gsub(/\/admin$/, '')}')"}
+  %section#documentation-editor{"ng-controller" => 'EditorController', "ng-init" => "init(#{@page.id}, #{@page.slug.to_json}, '#{admin_path.gsub(/\/admin$/, '')}')"}
     .editor-header
       %ul.list-inline.pull-right
         %li
@@ -23,7 +23,7 @@
             %i.fa.fa-arrows-h
             Switch View
         %li
-          %a.btn.btn-default.btn-sm{href: history_path(@page.slug)}
+          %a.btn.btn-default.btn-sm{href: history_path(@page)}
             %i.fa.fa-history
             History
         %li
