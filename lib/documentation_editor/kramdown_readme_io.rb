@@ -22,7 +22,7 @@ class Kramdown::Parser::ReadmeIOKramdown < Kramdown::Parser::Kramdown
       if @language
         code = content['codes'].detect { |code| code['language'] == @language || code['language'].end_with?("|#{@language}") || code['language'].end_with?('|*') }
         @tree.children << Element.new(:html_element, 'pre')
-        @tree.children.last.children << Element.new(:raw, code ? Simplabs::Highlight.highlight(code['language'].split('|').first, code['code']) : "FIXME:#{@language}")
+        @tree.children.last.children << Element.new(:raw, code ? highlight(code['language'].split('|').first, code['code']) : "FIXME:#{@language}")
       else
         ul = Element.new(:html_element, 'ul', { class: 'nav nav-tabs' })
         tab_content = Element.new(:html_element, 'div', { class: 'tab-content' })
@@ -34,14 +34,14 @@ class Kramdown::Parser::ReadmeIOKramdown < Kramdown::Parser::Kramdown
           ul.children.last.children << Element.new(:html_element, 'a', { href: "##{id}", 'data-toggle' => 'tab' })
           ul.children.last.children.last.children << Element.new(:raw, label)
           tab_content.children << Element.new(:html_element, 'pre', { class: "tab-pane#{' in active' if i == 0}", id: id })
-          tab_content.children.last.children << Element.new(:raw, Simplabs::Highlight.highlight(language, v['code']))
+          tab_content.children.last.children << Element.new(:raw, highlight(language, v['code']))
         end
         @tree.children << ul
         @tree.children << tab_content
       end
     when 'callout'
       callout = new_block_el(:html_element, 'div', { class: "alert alert-#{content['type']}" })
-      callout.children << Element.new(:raw, Kramdown::Document.new(content['body']).to_html)
+      callout.children << Element.new(:raw, parse_cached(content['body']))
       @tree.children << callout
     when 'image'
       clazz = case content['float']
@@ -70,7 +70,7 @@ class Kramdown::Parser::ReadmeIOKramdown < Kramdown::Parser::Kramdown
       thead.children << Element.new(:html_element, 'tr')
       1.upto(content['cols']) do |col|
         thead.children.last.children << Element.new(:html_element, 'th')
-        thead.children.last.children.last.children << Element.new(:raw, Kramdown::Document.new(content['data']["h-#{col - 1}"], input: 'ReadmeIOKramdown').to_html)
+        thead.children.last.children.last.children << Element.new(:raw, parse_cached(content['data']["h-#{col - 1}"]))
       end
       table.children << thead
       tbody = Element.new(:html_element, 'tbody')
@@ -80,7 +80,7 @@ class Kramdown::Parser::ReadmeIOKramdown < Kramdown::Parser::Kramdown
           md = content['data']["#{row - 1}-#{col - 1}"]
           id = generate_id(md)
           anchor = col == 1 ? "\n<a href=\"##{id}\" class=\"anchor\"><i class=\"fa fa-link\"></i></a>" : ''
-          html = Kramdown::Document.new("#{md}#{anchor}", input: 'ReadmeIOKramdown').to_html
+          html = parse_cached("#{md}#{anchor}")
           tbody.children.last.children << Element.new(:html_element, 'td', col == 1 ? { id: id } : nil)
           tbody.children.last.children.last.children << Element.new(:raw, html)
         end
@@ -102,5 +102,25 @@ class Kramdown::Parser::ReadmeIOKramdown < Kramdown::Parser::Kramdown
     @ids[id] ||= 0
     @ids[id] += 1
     @ids[id] == 1 ? id : "#{id}-#{@ids[id]}"
+  end
+
+  def cache(key, &block)
+    if !Rails.cache.exist?(key)
+      html = yield
+      Rails.cache.write(key, html)
+    end
+    Rails.cache.read(key)
+  end
+
+  def highlight(language, code)
+    cache "#{language.to_s}_#{code.hash}" do
+      Simplabs::Highlight.highlight(language, code)
+    end
+  end
+
+  def parse_cached(text)
+    cache "#{text.hash}" do
+      Kramdown::Document.new(text, input: 'ReadmeIOKramdown').to_html
+    end
   end
 end
