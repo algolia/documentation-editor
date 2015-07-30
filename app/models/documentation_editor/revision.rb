@@ -93,7 +93,7 @@ module DocumentationEditor
     def resolve_variables(options, text)
       variables = ActiveSupport::HashWithIndifferentAccess.new(options[:variables] || {})
       text.gsub(/\[\[ *variable:(.+?) *\]\]/) do |m|
-        variables[$1] || 'FIXME'
+        ERB::Util.html_escape(variables[$1] || 'FIXME')
       end
     end
 
