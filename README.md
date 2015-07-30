@@ -91,7 +91,7 @@ Create a `config/initializers/documentation_editor.rb` file to configure the edi
 DocumentationEditor::Config.layout = 'my_custom_layout'
 
 # to protect the access to the edition pages to admin
-DocumentationEditor::Config.is_admin_before_filter = :method_checking_if_admin
+DocumentationEditor::Config.is_admin = :method_checking_if_admin?
 
 # to use custom options for paperclip
 DocumentationEditor::Config.paperclip_options = {

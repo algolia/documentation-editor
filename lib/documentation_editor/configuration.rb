@@ -4,7 +4,7 @@ module DocumentationEditor
     attr_accessor :layout
 
     # configure the before_filter to use to identity administrators
-    attr_accessor :is_admin_before_filter
+    attr_accessor :is_admin
 
     # additional paperclip parameters
     attr_accessor :paperclip_options

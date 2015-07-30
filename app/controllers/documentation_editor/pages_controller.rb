@@ -4,8 +4,15 @@ module DocumentationEditor
   class PagesController < ApplicationController
     skip_before_filter :verify_authenticity_token
 
-    if DocumentationEditor::Config.is_admin_before_filter
-      before_filter DocumentationEditor::Config.is_admin_before_filter, except: [:show]
+    if DocumentationEditor::Config.is_admin
+      before_filter except: [:show] do |controller|
+        controller.instance_eval do
+          if !DocumentationEditor::Config.is_admin
+            redirect_to '/'
+            return false
+          end
+        end
+      end
     end
 
     before_filter :setup_page, only: [:edit, :source, :update, :preview, :destroy, :history, :versions]

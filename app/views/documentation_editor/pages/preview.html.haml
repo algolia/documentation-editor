@@ -3,7 +3,7 @@
     = render partial: 'menu_items', object: @revision.to_toc(@options)
 
 .markdown-page
-  - if DocumentationEditor::Config.is_admin_before_filter
+  - if DocumentationEditor::Config.is_admin && send(DocumentationEditor::Config.is_admin)
     .text-right
       = link_to edit_page_path(@page), class: 'btn btn-warning' do
         %i.fa.fa-edit
