@@ -68,13 +68,13 @@ module DocumentationEditor
         sections = []
         current_section = []
         doc.root.children.each do |child|
-          if child.type == :header && child.options[:level] == 1 && !current_section.empty?
+          if child.type == :header && child.options[:level] == 1 && !current_section.select { |c| c.type != :blank }.empty?
             sections << current_section
             current_section = []
           end
           current_section << child
         end
-        sections << current_section unless current_section.empty?
+        sections << current_section unless current_section.select { |c| c.type != :blank }.empty?
         doc.root.children = sections.map do |nested_sections|
           section = Kramdown::Element.new(:html_element, 'section')
           section.children = nested_sections
