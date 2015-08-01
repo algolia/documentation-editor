@@ -114,6 +114,9 @@ class Kramdown::Parser::ReadmeIOKramdown < Kramdown::Parser::Kramdown
   end
 
   def highlight(language, code)
+    language = 'js' if language.to_s == 'php' || language.to_s == 'swift'
+    language = 'java' if language.to_s == 'android'
+    language = 'c++' if language.to_s == 'go'
     cache "#{language.to_s}_#{code.hash}" do
       Simplabs::Highlight.highlight(language, code)
     end
