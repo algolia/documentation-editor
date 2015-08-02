@@ -2,15 +2,15 @@ require 'kramdown/document'
 require 'kramdown/parser/kramdown'
 require 'simplabs/highlight'
 
-class Kramdown::Parser::ReadmeIOKramdown < Kramdown::Parser::Kramdown
+class Kramdown::Parser::BlockKramdown < Kramdown::Parser::Kramdown
 
   def initialize(source, options)
     @language = options[:language] || options['language']
     super
-    @span_parsers.unshift(:readme_io_tags)
+    @span_parsers.unshift(:block_tags)
   end
 
-  def parse_readme_io_tags
+  def parse_block_tags
     block = @src[1]
     content = JSON.parse(@src[2])
     @src.pos += @src.matched_size
@@ -93,8 +93,8 @@ class Kramdown::Parser::ReadmeIOKramdown < Kramdown::Parser::Kramdown
     end
   end
 
-  README_IO_TAGS_START = /\[block:(.+?)\](.+?)\[\/block\]/m
-  define_parser(:readme_io_tags, README_IO_TAGS_START)
+  BLOCK_TAGS_START = /\[block:(.+?)\](.+?)\[\/block\]/m
+  define_parser(:block_tags, BLOCK_TAGS_START)
 
   private
   def generate_id(str)
@@ -124,7 +124,7 @@ class Kramdown::Parser::ReadmeIOKramdown < Kramdown::Parser::Kramdown
 
   def parse_cached(text)
     cache "#{text.hash}" do
-      Kramdown::Document.new(text, input: 'ReadmeIOKramdown').to_html
+      Kramdown::Document.new(text, input: 'BlockKramdown').to_html
     end
   end
 end

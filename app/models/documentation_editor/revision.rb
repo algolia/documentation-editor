@@ -38,7 +38,7 @@ module DocumentationEditor
 
     private
     def parse_document(options)
-      doc = Kramdown::Document.new(content, options.merge(input: 'ReadmeIOKramdown'))
+      doc = Kramdown::Document.new(content, options.merge(input: 'BlockKramdown'))
 
       # apply the /if filtering
       conditions_stack = []

@@ -1,17 +1,14 @@
 require "documentation_editor/configuration"
 require "documentation_editor/engine"
+require 'documentation_editor/parser'
 
-# markdown parsing
-require 'documentation_editor/kramdown_readme_io'
-
-# views
+# dependencies
+## views
 require 'haml'
 require 'sass-rails'
-
-# images upload
+## images upload
 require 'paperclip'
-
-# diff
+## diff
 require 'diffy'
 
 module DocumentationEditor

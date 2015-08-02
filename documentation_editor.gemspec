@@ -7,14 +7,14 @@ require "documentation_editor/version"
 Gem::Specification.new do |s|
   s.name        = "documentation_editor"
   s.version     = DocumentationEditor::VERSION
-  s.authors     = ["Sylvain UTARD"]
-  s.email       = ["sylvain.utard@gmail.com"]
-  s.homepage    = "https://www.algolia.com"
+  s.authors     = ["Algolia Team"]
+  s.email       = ["support@algolia.com"]
+  s.homepage    = "https://github.com/algolia/AlgoliaDocumentationEditor"
   s.summary     = "Markdown documentation editor"
   s.description = "Markdown documentation editor"
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "> 4.0"

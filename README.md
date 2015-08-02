@@ -2,7 +2,7 @@
 
 This is the mountable Rails application providing the documentation editor of [algolia.com/doc](https://www.algolia.com/doc).
 
-The goal of this project is to provide an easy & frictionless way to edit an online documentation. The sweet spot of this editor is to be able to generate pages containing multiple snippets of highlighted code & conditional sections (which wasn't really available in any other CMS we considered). It also includes a nice image uploader storing the image to Amazon S3, a simple table editor and an automatic table of content generator.
+The goal of this project is to provide an easy & frictionless way to edit an online tech documentation. The sweet spot of this editor is to be able to generate pages containing multiple snippets of highlighted code & conditional sections (which wasn't really available in any other CMS we considered). It also includes a nice image uploader storing the image to Amazon S3, a simple table editor and an automatic table of content generator.
 
 ## Features
 
@@ -79,6 +79,13 @@ end
  *= require documentation_editor/pages
  */
  ```
+
+ * Install & run the migrations:
+
+```sh
+$ rake documentation_editor:install:migrations
+$ rake db:migrate
+```
 
  * Go to `/doc/admin` to create your first page
 
@@ -173,3 +180,7 @@ $ rake db:migrate
 $ rails server
 $ open http://localhost:3000/doc/admin
 ```
+
+## Credits
+
+This has originally been inspired by the great [readme.io](http://readme.io/) service and adapted to fit [Algolia](https://www.algolia.com)'s needs.
