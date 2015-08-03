@@ -11,7 +11,10 @@ module DocumentationEditor
       r.author_id = author_id
       r.content = content
       r.save!
-      update_attributes(published_revision_id: r.id) if publish
+      if publish
+        self.published_revision_id = r.id
+        save!
+      end
       r
     end
 
