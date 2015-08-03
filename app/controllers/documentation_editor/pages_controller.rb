@@ -28,7 +28,7 @@ module DocumentationEditor
     end
 
     def update
-      @page.add_revision!(params[:data], !params[:preview], respond_to?(:current_user) ? current_user.id : nil)
+      @page.add_revision!(params[:data], params[:preview].to_s == 'false', respond_to?(:current_user) ? current_user.id : nil)
       render nothing: true
     end
 
