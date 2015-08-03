@@ -15,9 +15,6 @@ class Kramdown::Parser::BlockKramdown < Kramdown::Parser::Kramdown
     content = JSON.parse(@src[2])
     @src.pos += @src.matched_size
     case block
-    when 'api-header'
-      @tree.children << Element.new(:header, nil, { }, { raw_text: content['title'], level: 1 })
-      @tree.children.last.children << Element.new(:text, content['title'])
     when 'code'
       if @language
         code = content['codes'].detect { |code| code['language'] == @language || code['language'].end_with?("|#{@language}") }
