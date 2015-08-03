@@ -19,6 +19,7 @@ guard :minitest do
   watch(%r{^test/.+_test\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('test/test_helper.rb')  { "test" }
+  watch('test/factories.rb')    { "test" }
 
   # Rails example
   watch(%r{^app/(.+)\.rb$})                           { |m| "test/#{m[1]}_test.rb" }

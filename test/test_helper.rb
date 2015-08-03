@@ -12,6 +12,12 @@ Minitest.backtrace_filter = Minitest::BacktraceFilter.new
 require 'factory_girl_rails'
 require 'factories'
 
+require "minitest/reporters"
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+
 class ActiveSupport::TestCase
   include FactoryGirl::Syntax::Methods
 end
+
+# reinit the configuration
+DocumentationEditor::Config = DocumentationEditor::Configuration.new
