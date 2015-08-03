@@ -85,11 +85,25 @@ module DocumentationEditor
     end
 
     test "ifnot block" do
-      skip
+      html_python = build(:md_ifnot_block).to_html(language: 'python')
+      html_ruby = build(:md_ifnot_block).to_html(language: 'ruby')
+      assert html_python.include?('This is not visible in ruby')
+      assert !html_ruby.include?('This is not visible in ruby')
     end
 
     test "parameters block" do
-      skip
+      html = build(:md_parameters_block).to_html
+      assert html.include?('<th><p>Name</p>')
+      assert html.include?('<th><p>Type</p>')
+      assert html.include?('<th><p>Description</p>')
+      assert html.include?('<td id="a-name"><p>a name')
+      assert html.include?('<td><p>a type')
+      assert html.include?('<td><p>a description')
+    end
+
+    test "variable block" do
+      html = build(:md_variable_block).to_html(variables: { a_variable: 'foo' })
+      assert html.include?('<p>This is a variable foo.</p>')
     end
 
   end

@@ -96,4 +96,43 @@ This is only visible in ruby
 EOF
   end
 
+  factory :md_ifnot_block, class: DocumentationEditor::Revision do
+    content <<-EOF
+[block:ifnot]
+{
+  "condition": "ruby"
+}
+[/block]
+This is not visible in ruby
+[block:endif]
+{
+}
+[/block]
+EOF
+  end
+
+  factory :md_parameters_block, class: DocumentationEditor::Revision do
+    content <<-EOF
+[block:parameters]
+{
+  "data": {
+    "h-0": "Name",
+    "h-1": "Type",
+    "h-2": "Description",
+    "0-0": "a name",
+    "0-1": "a type",
+    "0-2": "a description"
+  },
+  "cols": 3,
+  "rows": 2
+}
+[/block]
+EOF
+  end
+
+  factory :md_variable_block, class: DocumentationEditor::Revision do
+    content <<-EOF
+This is a variable [[variable:a_variable]].
+EOF
+  end
 end

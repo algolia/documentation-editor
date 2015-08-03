@@ -95,7 +95,7 @@ class Kramdown::Parser::BlockKramdown < Kramdown::Parser::Kramdown
 
   private
   def generate_id(str)
-    id = str.gsub(/<\/?[^>]+>/, '').strip.gsub(/[^a-zA-Z0-9]+/, '-')
+    id = (str || '').gsub(/<\/?[^>]+>/, '').strip.gsub(/[^a-zA-Z0-9]+/, '-')
     @ids ||= {}
     @ids[id] ||= 0
     @ids[id] += 1
