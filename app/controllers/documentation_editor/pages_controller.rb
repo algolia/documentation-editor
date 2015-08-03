@@ -28,12 +28,7 @@ module DocumentationEditor
     end
 
     def update
-      r = @page.revisions.build
-      r.author_id = respond_to?(:current_user) ? current_user.id : nil
-      r.content = params[:data]
-      r.save!
-      @page.published_revision_id = r.id if !params[:preview]
-      @page.save!
+      @page.add_revision!(params[:data], !params[:preview], respond_to?(:current_user) ? current_user.id : nil)
       render nothing: true
     end
 
