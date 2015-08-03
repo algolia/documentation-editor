@@ -3,7 +3,7 @@ FactoryGirl.define do
     slug 'guide'
   end
 
-  factory :markdown_headers, class: DocumentationEditor::Revision do
+  factory :md_headers, class: DocumentationEditor::Revision do
     content <<-EOF
 # this is a title
 
@@ -17,7 +17,7 @@ FactoryGirl.define do
 EOF
   end
 
-  factory :duplicated_headers, class: DocumentationEditor::Revision do
+  factory :md_duplicated_headers, class: DocumentationEditor::Revision do
     content <<-EOF
 # this is a title
 
@@ -25,7 +25,7 @@ EOF
 EOF
   end
 
-  factory :info_callout, class: DocumentationEditor::Revision do
+  factory :md_info_callout_block, class: DocumentationEditor::Revision do
     content <<-EOF
 [block:callout]
 {
@@ -36,7 +36,7 @@ EOF
 EOF
   end
 
-  factory :image, class: DocumentationEditor::Revision do
+  factory :md_image_block, class: DocumentationEditor::Revision do
     content <<-EOF
 [block:image]
 {
@@ -50,4 +50,50 @@ EOF
 [/block]
 EOF
   end
+
+  factory :md_code_block, class: DocumentationEditor::Revision do
+    content <<-EOF
+[block:code]
+{
+  "codes": [
+    {
+      "language":"js",
+      "code": "// this is javascript code"
+    }
+  ]
+}
+[/block]
+EOF
+  end
+
+  factory :md_code_block_star, class: DocumentationEditor::Revision do
+    content <<-EOF
+[block:code]
+{
+  "codes": [
+    {
+      "language":"js|*",
+      "code": "// this is javascript code"
+    }
+  ]
+}
+[/block]
+EOF
+  end
+
+  factory :md_if_block, class: DocumentationEditor::Revision do
+    content <<-EOF
+[block:if]
+{
+  "condition": "ruby"
+}
+[/block]
+This is only visible in ruby
+[block:endif]
+{
+}
+[/block]
+EOF
+  end
+
 end

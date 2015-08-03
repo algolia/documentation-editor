@@ -3,7 +3,7 @@ require 'test_helper'
 module DocumentationEditor
   class RevisionTest < ActiveSupport::TestCase
     test "TOC generation" do
-      r = build(:markdown_headers)
+      r = build(:md_headers)
       toc = r.to_toc
       assert_equal 2, toc.size
 
@@ -29,18 +29,18 @@ module DocumentationEditor
     end
 
     test "TOC id generations" do
-      toc = build(:markdown_headers).to_toc
+      toc = build(:md_headers).to_toc
       assert_equal 'this-is-a-title', toc[0][:id]
     end
 
     test "TOC duplicated ids" do
-      toc = build(:duplicated_headers).to_toc
+      toc = build(:md_duplicated_headers).to_toc
       assert_equal 'this-is-a-title', toc[0][:id]
       assert_equal 'this-is-a-title-1', toc[1][:id]
     end
 
     test "simple HTML generation" do
-      html = build(:markdown_headers).to_html
+      html = build(:md_headers).to_html
       assert html.include?('<h1 id="this-is-a-title"><a href="#this-is-a-title" class="anchor"><i class="fa fa-link"></i></a>this is a title</h1>')
       assert html.include?('<h2 id="this-is-a-subtitle"><a href="#this-is-a-subtitle" class="anchor"><i class="fa fa-link"></i></a>this is a subtitle</h2>')
       assert html.include?('<h1 id="this-is-another-title"><a href="#this-is-another-title" class="anchor"><i class="fa fa-link"></i></a>this is another title</h1>')
@@ -48,22 +48,40 @@ module DocumentationEditor
       assert html.include?('<h2 id="second-subtitle"><a href="#second-subtitle" class="anchor"><i class="fa fa-link"></i></a>second subtitle</h2>')
     end
 
-    test "code block" do
-      skip
+    test "single-tab code block" do
+      html = build(:md_code_block).to_html
+      assert html.include?('<li class="active">      <a href="#snippet_120_js" data-toggle="tab">js</a>')
+      assert html.include?('<div class="tab-content">    <pre class="tab-pane in active" id="snippet_120_js"><span class="c1">// this is javascript code</span></pre>')
+    end
+
+    test "language-specific code block" do
+      html = build(:md_code_block).to_html(language: 'js')
+      assert html.include?('<pre><span class="c1">// this is javascript code</span></pre>')
+      assert !html.include?('<li')
+    end
+
+    test "language-specific code block with *" do
+      html = build(:md_code_block_star).to_html(language: 'ruby')
+      assert html.include?('<pre><span class="c1">// this is javascript code</span></pre>')
+      assert !html.include?('<li')
     end
 
     test "callout block" do
-      html = build(:info_callout).to_html
-      assert html.include?('<div class="alert alert-info"><p>This is a valuable info.</p>')
+      html = build(:md_info_callout_block).to_html
+      assert html.include?('<div class="alert alert-info">')
     end
 
     test "image block" do
-      html = build(:image).to_html
-      assert html.include?('<figure><img src="https://example.org/image.png" />    <figcaption><p>Searchable Attributes &amp; Record Popularity</p>')
+      html = build(:md_image_block).to_html
+      assert html.include?('<figure><img src="https://example.org/image.png" />')
+      assert html.include?('<figcaption><p>Searchable Attributes &amp; Record Popularity</p>')
     end
 
     test "if block" do
-      skip
+      html_python = build(:md_if_block).to_html(language: 'python')
+      html_ruby = build(:md_if_block).to_html(language: 'ruby')
+      assert !html_python.include?('This is only visible in ruby')
+      assert html_ruby.include?('This is only visible in ruby')
     end
 
     test "ifnot block" do
