@@ -5,7 +5,7 @@ require "documentation_editor/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "documentation_editor"
+  s.name        = "documentation-editor"
   s.version     = DocumentationEditor::VERSION
   s.authors     = ["Algolia Team"]
   s.email       = ["support@algolia.com"]
