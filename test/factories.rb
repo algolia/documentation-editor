@@ -35,4 +35,19 @@ EOF
 [/block]
 EOF
   end
+
+  factory :image, class: DocumentationEditor::Revision do
+    content <<-EOF
+[block:image]
+{
+  "images": [
+    {
+      "image": ["https://example.org/image.png"]
+    }
+  ],
+  "caption": "Searchable Attributes & Record Popularity"
+}
+[/block]
+EOF
+  end
 end

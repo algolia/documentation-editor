@@ -58,7 +58,8 @@ module DocumentationEditor
     end
 
     test "image block" do
-      skip
+      html = build(:image).to_html
+      assert html.include?('<figure><img src="https://example.org/image.png" />    <figcaption><p>Searchable Attributes &amp; Record Popularity</p>')
     end
 
     test "if block" do
