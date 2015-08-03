@@ -41,27 +41,7 @@ module DocumentationEditor
       doc = Kramdown::Document.new(content, options.merge(input: 'BlockKramdown'))
 
       # apply the /if filtering
-      conditions_stack = []
-      doc.root.children = doc.root.children.map do |child|
-        if child.type == :comment || (child.type == :p && child.children.length == 1 && child.children[0].type == :comment)
-          comment = child.type == :comment ? child : child.children[0]
-          if comment.options[:start] == true
-            all = (comment.options[:condition] || '').split(/[, ]+/)
-            pass = !all.detect { |condition| options[:language] == condition }.nil?
-            pass = !pass if comment.options[:negation]
-            conditions_stack << pass
-            nil
-          elsif comment.options[:start] == false
-            conditions_stack.pop
-            nil
-          else
-            conditions_stack.last == false ? nil : child
-          end
-        else
-          p child if conditions_stack.last == false
-          conditions_stack.last == false ? nil : child
-        end
-      end.compact
+      doc.root.children = apply_filtering(doc.root.children, options)
 
       # wrap in sections
       if !options[:no_wrap] && DocumentationEditor::Config.wrap_h1_with_sections
@@ -83,6 +63,29 @@ module DocumentationEditor
       end
 
       doc
+    end
+
+    def apply_filtering(children, options)
+      conditions_stack = []
+      children.map do |child|
+        if child.type == :comment
+          if child.options[:start] == true
+            all = (child.options[:condition] || '').split(/[, ]+/)
+            pass = !all.detect { |condition| options[:language] == condition }.nil?
+            pass = !pass if child.options[:negation]
+            conditions_stack << pass
+            nil
+          elsif child.options[:start] == false
+            conditions_stack.pop
+            nil
+          else
+            conditions_stack.last == false ? nil : child
+          end
+        else
+          child.children = apply_filtering(child.children, options)
+          conditions_stack.last == false ? nil : child
+        end
+      end.compact
     end
 
     def generate_id(doc, str)
