@@ -24,11 +24,4 @@ Gem::Specification.new do |s|
   s.add_dependency "sass-rails"
   s.add_dependency "paperclip", "~> 4.3"
   s.add_dependency "diffy"
-
-  s.add_development_dependency "sqlite3"
-  s.add_development_dependency "angularjs-rails", '~> 1.4.3'
-  s.add_development_dependency "less-rails-bootstrap"
-  s.add_development_dependency "jquery-rails"
-  s.add_development_dependency "therubyracer"
-  s.add_development_dependency "font-awesome-rails"
 end

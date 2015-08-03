@@ -13,3 +13,18 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
+group :development do
+  gem 'sqlite3'
+  gem 'guard'
+  gem 'guard-minitest'
+  gem 'angularjs-rails', '~> 1.4.3'
+  gem 'less-rails-bootstrap'
+  gem 'jquery-rails'
+  gem 'therubyracer'
+  gem 'font-awesome-rails'
+end
+
+group :test do
+  gem 'factory_girl_rails'
+end
+
