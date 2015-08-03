@@ -1,5 +1,6 @@
+- id = "#{@page.id}-#{@revision.id}-#{@options.reject { |k, v| %w{action controller id}.include?(k.to_s)  }.to_param}"
 - content_for :page_menu do
-  - cache("page-#{@page.id}-#{@revision.id}-toc") do
+  - cache("page-#{id}-toc") do
     = render partial: 'menu_items', object: @revision.to_toc(@options)
 
 .markdown-page
@@ -8,6 +9,6 @@
       = link_to edit_page_path(@page), class: 'btn btn-warning' do
         %i.fa.fa-edit
         Edit
-  - cache("page-#{@page.id}-#{@revision.id}-content") do
+  - cache("page-#{id}-content") do
     = find_and_preserve do
       = @revision.to_html(@options).html_safe
