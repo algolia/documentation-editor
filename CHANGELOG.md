@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.0.6 Aug 3, 2015
+
+* Ensure the cache fragments depends on the query parameters as well
+
 ### 0.0.5 Aug 3, 2015
 
 * Fixed page publication
