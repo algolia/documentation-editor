@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    documentation_editor (0.0.1)
+    documentation-editor (0.0.3)
       diffy
       haml-rails
       highlight
@@ -215,7 +215,7 @@ PLATFORMS
 
 DEPENDENCIES
   angularjs-rails (~> 1.4.3)
-  documentation_editor!
+  documentation-editor!
   factory_girl_rails
   font-awesome-rails
   guard
