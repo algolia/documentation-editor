@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.0.5 Aug 3, 2015
+
+* Fixed page publication
+
 ### 0.0.4 Aug 3, 2015
 
 * Fixed publication boolean
