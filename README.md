@@ -80,10 +80,9 @@ end
  */
  ```
 
- * Install & run the migrations:
+ * Run the underlying migrations:
 
 ```sh
-$ rake documentation_editor:install:migrations
 $ rake db:migrate
 ```
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150728041609) do
+ActiveRecord::Schema.define(version: 20150728040718) do
 
   create_table "documentation_editor_images", force: :cascade do |t|
     t.string   "caption"
