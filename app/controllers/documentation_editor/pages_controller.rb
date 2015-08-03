@@ -34,6 +34,7 @@ module DocumentationEditor
 
     def create
       p = Page.new
+      p.author_id = respond_to?(:current_user) ? current_user.id : nil
       p.slug = params[:page][:slug]
       p.save!
       redirect_to edit_page_path(p)
