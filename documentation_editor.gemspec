@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = DocumentationEditor::VERSION
   s.authors     = ["Algolia Team"]
   s.email       = ["support@algolia.com"]
-  s.homepage    = "https://github.com/algolia/AlgoliaDocumentationEditor"
-  s.summary     = "Markdown documentation editor"
-  s.description = "Markdown documentation editor"
+  s.homepage    = "https://github.com/algolia/documentation-editor"
+  s.summary     = "Mountable Rails application providing an extended Markdown documentation editor."
+  s.description = "The goal of this project is to provide an easy & frictionless way to edit an online tech documentation. The sweet spot of this editor is to be able to generate pages containing multiple snippets of highlighted code & conditional sections (which wasn't really available in any other CMS we considered). It also includes a nice image uploader storing the image to Amazon S3, a simple table editor and an automatic table of content generator."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.md"]
