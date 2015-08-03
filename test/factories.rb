@@ -24,4 +24,15 @@ EOF
 # this is a title
 EOF
   end
+
+  factory :info_callout, class: DocumentationEditor::Revision do
+    content <<-EOF
+[block:callout]
+{
+  "type": "info",
+  "body": "This is a valuable info."
+}
+[/block]
+EOF
+  end
 end
