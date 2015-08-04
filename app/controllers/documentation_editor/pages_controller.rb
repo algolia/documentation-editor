@@ -50,7 +50,7 @@ module DocumentationEditor
     end
 
     def show
-      @page = Page.find_by(slug: params[:slug])
+      @page = Page.find_by!(slug: params[:slug])
       @revision = @page.published_revision
       @options = params
       render :preview

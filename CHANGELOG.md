@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.1.1 Aug 3, 2015
+
+* Throw an ActiveRecord::RecordNotFound exception if a slug is not found
+
 ### 0.1.0 Aug 3, 2015
 
 * Ability to setup a custom before_filter on the show & preview actions
