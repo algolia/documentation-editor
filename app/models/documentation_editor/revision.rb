@@ -41,7 +41,7 @@ module DocumentationEditor
       doc = Kramdown::Document.new(content, options.merge(input: 'BlockKramdown'))
 
       # apply the /if filtering
-      doc.root.children = apply_filtering(doc.root.children, options)
+      doc.root.children = apply_filtering(doc.root.children, options, [])
 
       # wrap in sections
       if !options[:no_wrap] && DocumentationEditor::Config.wrap_h1_with_sections
@@ -65,8 +65,7 @@ module DocumentationEditor
       doc
     end
 
-    def apply_filtering(children, options)
-      conditions_stack = []
+    def apply_filtering(children, options, conditions_stack)
       children.map do |child|
         if child.type == :comment
           if child.options[:start] == true
@@ -82,8 +81,9 @@ module DocumentationEditor
             conditions_stack.last == false ? nil : child
           end
         else
-          child.children = apply_filtering(child.children, options)
-          conditions_stack.last == false ? nil : child
+          res = conditions_stack.last == false ? nil : child
+          child.children = apply_filtering(child.children, options, conditions_stack)
+          res
         end
       end.compact
     end
