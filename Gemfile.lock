@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    documentation-editor (0.0.5)
+    documentation-editor (0.0.6)
       diffy
       haml-rails
       highlight
