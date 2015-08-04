@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.1.2 Aug 4, 2015
+
+* Fixed the `is_admin` before_filter
+
 ### 0.1.1 Aug 3, 2015
 
 * Throw an ActiveRecord::RecordNotFound exception if a slug is not found
