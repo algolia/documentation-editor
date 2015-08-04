@@ -7,9 +7,9 @@ module DocumentationEditor
     if DocumentationEditor::Config.is_admin
       before_filter except: [:show] do |controller|
         controller.instance_eval do
-          if !DocumentationEditor::Config.is_admin
+          if !controller.send(DocumentationEditor::Config.is_admin)
             redirect_to '/'
-            return false
+            false
           end
         end
       end
