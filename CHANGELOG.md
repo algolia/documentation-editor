@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.1.0 Aug 3, 2015
+
+* Ability to setup a custom before_filter on the show & preview actions
+
 ### 0.0.7 Aug 3, 2015
 
 * Use a global conditions stack to handle wrongly nested children
