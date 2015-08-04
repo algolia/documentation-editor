@@ -15,6 +15,10 @@ module DocumentationEditor
       end
     end
 
+    if DocumentationEditor::Config.before_filter
+      before_filter DocumentationEditor::Config.before_filter, only: [:preview, :show]
+    end
+
     before_filter :setup_page, only: [:edit, :source, :update, :preview, :destroy, :history, :versions]
 
     def index

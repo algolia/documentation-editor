@@ -101,6 +101,9 @@ DocumentationEditor::Config.layout = 'my_custom_layout'
 # to protect the access to the edition pages to admin
 DocumentationEditor::Config.is_admin = :method_checking_if_admin?
 
+# to configure a before_filter to add on the 'show' & 'preview' actions
+DocumentationEditor::Config.before_filter = :my_before_filter
+
 # to use custom options for paperclip
 DocumentationEditor::Config.paperclip_options = {
   storage: 's3',

@@ -11,5 +11,8 @@ module DocumentationEditor
 
     # should we wrap h1's content by sections
     attr_accessor :wrap_h1_with_sections
+
+    # configure the before_filter used for the preview & show actions
+    attr_accessor :before_filter
   end
 end
