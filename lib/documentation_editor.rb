@@ -10,6 +10,8 @@ require 'sass-rails'
 require 'paperclip'
 ## diff
 require 'diffy'
+## best in place
+require 'best_in_place'
 
 module DocumentationEditor
 end

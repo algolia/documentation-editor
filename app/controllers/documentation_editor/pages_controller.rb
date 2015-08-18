@@ -19,7 +19,7 @@ module DocumentationEditor
       before_filter DocumentationEditor::Config.before_filter, only: [:preview, :show]
     end
 
-    before_filter :setup_page, only: [:edit, :source, :update, :preview, :destroy, :history, :versions]
+    before_filter :setup_page, only: [:edit, :source, :update, :commit, :preview, :destroy, :history, :versions]
 
     def index
     end
@@ -32,6 +32,13 @@ module DocumentationEditor
     end
 
     def update
+      @page.title = params[:page][:title]
+      @page.slug = params[:page][:slug]
+      @page.save!
+      render nothing: true
+    end
+
+    def commit
       @page.add_revision!(params[:data], params[:preview].to_s == 'false', respond_to?(:current_user) ? current_user.id : nil)
       render nothing: true
     end
@@ -39,6 +46,7 @@ module DocumentationEditor
     def create
       p = Page.new
       p.author_id = respond_to?(:current_user) ? current_user.id : nil
+      p.title = params[:page][:title]
       p.slug = params[:page][:slug]
       p.save!
       redirect_to edit_page_path(p)

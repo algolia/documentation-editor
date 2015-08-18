@@ -3,6 +3,8 @@
   - cache("page-#{id}-toc") do
     = render partial: 'menu_items', object: @revision.to_toc(@options)
 
+- content_for :page_title, @page.title
+
 .markdown-page
   - if DocumentationEditor::Config.is_admin && send(DocumentationEditor::Config.is_admin)
     .text-right

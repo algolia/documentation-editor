@@ -1,3 +1,9 @@
+//= require best_in_place
+
+$(document).ready(function() {
+  $(".best_in_place").best_in_place();
+});
+
 angular.module('documentationEditorApp', ['ngFileUpload'])
   .config(['$locationProvider', function($locationProvider) {
     $locationProvider.html5Mode({ enabled: true, requireBase: false, rewriteLinks: false });

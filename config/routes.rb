@@ -7,7 +7,8 @@ DocumentationEditor::Engine.routes.draw do
 
     get '/:id', :controller => 'pages', :action => 'source'
     get '/:id/edit', as: :edit_page, :controller => 'pages', :action => 'edit'
-    post '/:id', :controller => 'pages', :action => 'update'
+    put '/:id', as: :update, :controller => 'pages', :action => 'update'
+    post '/:id', :controller => 'pages', :action => 'commit'
     delete '/:id', as: :delete_page, :controller => 'pages', :action => 'destroy'
     get '/:id/preview', as: :preview_page, :controller => 'pages', :action => 'preview'
     get '/:prev/:cur/diff', :controller => 'pages', :action => 'diff'

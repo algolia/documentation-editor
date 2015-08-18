@@ -7,6 +7,7 @@
     %table.table.table-striped
       %thead
         %tr
+          %th Title
           %th Slug
           %th Last modification
           %th Published at
@@ -15,7 +16,8 @@
       %tbody
         - DocumentationEditor::Page.order('id DESC').each do |p|
           %tr
-            %td= link_to "#{request.path.split('/admin').first}/#{p.slug}", edit_page_path(p)
+            %td= best_in_place p, :title, url: update_path(p)
+            %td= best_in_place p, :slug, url: update_path(p)
             %td= l p.created_at, format: :short
             %td= p.published_revision ? l(p.published_revision.created_at, format: :long) : ''
             %td= p.published_revision ? p.published_revision.author_id : ''
@@ -34,6 +36,6 @@
                 Delete
     %h3 Create a new page
     = form_for DocumentationEditor::Page.new, url: admin_path, html: { class: 'form form-inline' } do |f|
+      = f.text_field :title, placeholder: 'Title', class: 'form-control'
       = f.text_field :slug, placeholder: 'tutorials/my-tutorial', class: 'form-control'
       = f.submit 'Create', class: 'btn btn-success'
-      %p.text-muted Will be appended to #{page_path('')}
