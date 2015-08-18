@@ -1,6 +1,6 @@
 # Documentation Editor
 
-[![Build Status](https://travis-ci.org/algolia/documentation-editor.png?branch=master)](https://travis-ci.org/algolia/documentation-editor) [![Gem Version](https://badge.fury.io/rb/documentaton-editor.png)](http://badge.fury.io/rb/documentation-editor)
+[![Build Status](https://travis-ci.org/algolia/documentation-editor.png?branch=master)](https://travis-ci.org/algolia/documentation-editor) [![Gem Version](https://badge.fury.io/rb/documentation-editor.svg)](http://badge.fury.io/rb/documentation-editor)
 
 This is the mountable Rails application providing the documentation editor of [algolia.com/doc](https://www.algolia.com/doc).
 
