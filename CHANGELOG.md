@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.2.0 Aug 18, 2015
+
+* Add page titles support
+
 ### 0.1.2 Aug 4, 2015
 
 * Fixed the `is_admin` before_filter
