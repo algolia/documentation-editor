@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.2.1 Aug 18, 2015
+
+* Only override the title & slug if set
+
 ### 0.2.0 Aug 18, 2015
 
 * Add page titles support
