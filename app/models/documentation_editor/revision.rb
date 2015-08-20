@@ -17,12 +17,16 @@ module DocumentationEditor
     def to_toc(options = {})
       roots = []
       levels = []
+      h1 = nil
       doc = parse_document(options.merge(no_wrap: true))
+      ids = id_generator(doc)
       doc.root.children.each do |child|
         next if child.type != :header
         text = child.options[:raw_text]
         text = resolve_variables(options, text)
-        item = { label: text, id: generate_id(doc, child.options[:raw_text]), children: [], level: child.options[:level] }
+        id = ids.generate_id(text)
+        h1 = id if child.options[:level] == 1
+        item = { label: text, id: id, children: [], level: child.options[:level], h1: h1 }
         while !levels.empty? && levels.last[:level] >= child.options[:level]
           levels.pop
         end
@@ -47,14 +51,20 @@ module DocumentationEditor
       if !options[:no_wrap] && DocumentationEditor::Config.wrap_h1_with_sections
         sections = []
         current_section = []
+        h1 = nil
+        ids = id_generator(doc)
+        keep = options[:section].nil?
         doc.root.children.each do |child|
           if child.type == :header && child.options[:level] == 1 && !current_section.select { |c| c.type != :blank }.empty?
-            sections << current_section
+            sections << current_section if keep
             current_section = []
+            keep = options[:section].nil? || options[:section] == ids.generate_id(resolve_variables(options, child.options[:raw_text]))
           end
           current_section << child
         end
-        sections << current_section unless current_section.select { |c| c.type != :blank }.empty?
+        if !current_section.select { |c| c.type != :blank }.empty? && keep
+          sections << current_section
+        end
         doc.root.children = sections.map do |nested_sections|
           section = Kramdown::Element.new(:html_element, 'section')
           section.children = nested_sections
@@ -88,9 +98,8 @@ module DocumentationEditor
       end.compact
     end
 
-    def generate_id(doc, str)
-      @html_converter ||= Kramdown::Converter::Html.send(:new, doc.root, {auto_id_prefix: ''})
-      @html_converter.generate_id(str)
+    def id_generator(doc)
+       Kramdown::Converter::Html.send(:new, doc.root, {auto_id_prefix: ''})
     end
 
     def resolve_variables(options, text)

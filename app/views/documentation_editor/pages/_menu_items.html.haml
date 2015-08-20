@@ -1,6 +1,6 @@
 %ul.nav
   - menu_items.each do |menu|
     %li
-      = link_to menu[:label], "##{menu[:id]}"
+      = link_to menu[:label], "#{menu[:h1] == params[:section] ? '' : @base_path}##{menu[:id]}"
       - if menu[:children].size > 0
         = render partial: 'menu_items', object: menu[:children]

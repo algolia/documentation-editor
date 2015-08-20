@@ -61,6 +61,7 @@ module DocumentationEditor
       @page = Page.find_by!(slug: params[:slug])
       @revision = @page.published_revision
       @options = params
+      @base_path = params[:section] ? request.path.split('/sections/').first : request.path
       render :preview
     end
 

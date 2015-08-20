@@ -13,4 +13,4 @@
         Edit
   - cache("page-#{id}-content") do
     = find_and_preserve do
-      = @revision.to_html(@options).html_safe
+      = @revision.to_html(@options.merge(section: params[:section])).html_safe

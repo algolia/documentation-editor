@@ -16,5 +16,6 @@ DocumentationEditor::Engine.routes.draw do
     get '/:id/versions', :controller => 'pages', :action => 'versions'
   end
 
+  get '/:slug/sections/:section', as: :section, :controller => 'pages', :action => 'show', constraints: { slug: /.*/ }
   get '/:slug', as: :page, :controller => 'pages', :action => 'show', constraints: { slug: /.*/ }
 end
