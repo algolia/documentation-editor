@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.3.2 Aug 20, 2015
+
+* Extract the section title as well
+
 ### 0.3.1 Aug 20, 2015
 
 * Fixed the way the `base_path` is computed while displaying a single section
