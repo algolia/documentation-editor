@@ -117,7 +117,7 @@ DocumentationEditor::Config.paperclip_options = {
 DocumentationEditor::Config.wrap_h1_with_sections = true
 ```
 
-## Markdown Extensions
+## Extensions
 
 #### Language conditions
 
@@ -154,6 +154,17 @@ Use `[[variable:VARIABLE]]` and specify any variables you want to display their 
 ```html
 This is the value of the `name` variable: [[variable:name]].
 ```
+
+#### Section Restriction
+
+```ruby
+Rails.application.routes.draw do
+  get '/doc/ruby(/:section)', :controller => 'pages', :action => 'show', slug: 'my_page'
+  mount DocumentationEditor::Engine => "/doc"
+end
+```
+
+If you're using the `wrap_h1_with_sections` option you can use the `:section` param to restrict the rendering to a specific section your page. The TOC will still contain everything. That's something you may want to use for SEO reasons.
 
 ## Usage
 

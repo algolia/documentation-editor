@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.3.0 Aug 20, 2015
+
+* Ability to display a single section of the page
+
 ### 0.2.1 Aug 18, 2015
 
 * Only override the title & slug if set
