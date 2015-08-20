@@ -40,6 +40,16 @@ module DocumentationEditor
       roots
     end
 
+    def section_title(options, section)
+      doc = parse_document(options.merge(no_wrap: true))
+      ids = id_generator(doc)
+      doc.root.children.each do |child|
+        text = child.options[:raw_text]
+        return text if child.type == :header && child.options[:level] == 1 && section == ids.generate_id(resolve_variables(options, text))
+      end
+      nil
+    end
+
     private
     def parse_document(options)
       doc = Kramdown::Document.new(content, options.merge(input: 'BlockKramdown'))

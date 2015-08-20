@@ -4,6 +4,7 @@
     = render partial: 'menu_items', object: @revision.to_toc(@options)
 
 - content_for :page_title, @page.title
+- content_for :section_title, @revision.section_title(@options, params[:section]) if params[:section]
 
 .markdown-page
   - if DocumentationEditor::Config.is_admin && send(DocumentationEditor::Config.is_admin)
