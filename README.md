@@ -164,7 +164,7 @@ Rails.application.routes.draw do
 end
 ```
 
-If you're using the `wrap_h1_with_sections` option you can use the `:section` param to restrict the rendering to a specific section your page. The TOC will still contain everything. That's something you may want to use for SEO reasons.
+If you're using the `wrap_h1_with_sections` option you can use the `:section` param to restrict the rendering to a specific section your page. The TOC will still contain everything. That's something you may want to use for SEO reasons. This must be the last part of your URL.
 
 ## Usage
 
