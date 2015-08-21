@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.3.3 Aug 21, 2015
+
+* Do not prepend a base_path in the menu links if we're not displaying a single section
+
 ### 0.3.2 Aug 20, 2015
 
 * Extract the section title as well
