@@ -16,6 +16,11 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.4.0 Sep 3, 2015
+
+* Do not display the language tabs if there is a single code snippet
+* Ability to attach a thumbnail to a page
+
 ### 0.3.3 Aug 21, 2015
 
 * Do not prepend a base_path in the menu links if we're not displaying a single section
