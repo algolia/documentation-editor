@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    documentation-editor (0.3.2)
+    documentation-editor (0.3.3)
       best_in_place
       diffy
       haml-rails

@@ -50,8 +50,8 @@ module DocumentationEditor
 
     test "single-tab code block" do
       html = build(:md_code_block).to_html
-      assert html.include?('<li class="active">      <a href="#snippet_120_js" data-toggle="tab">js</a>')
-      assert html.include?('<div class="tab-content">    <pre class="tab-pane in active" id="snippet_120_js"><span class="c1">// this is javascript code</span></pre>')
+      assert !html.include?('data-toggle="tab"')
+      assert html.include?('<pre><span class="c1">// this is javascript code</span></pre>')
     end
 
     test "language-specific code block" do
