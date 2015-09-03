@@ -10,7 +10,9 @@
           Back to Admin
     %h1
       History of
-      %small= page_path(@page.slug)
+      %small
+        = page_path('')
+        = @page.slug
   .editor-content
     .row{"ng-controller" => 'HistoryController', "ng-init" => "init(#{@page.id}, '#{admin_path.gsub(/\/admin$/, '')}')"}
       .col-sm-3

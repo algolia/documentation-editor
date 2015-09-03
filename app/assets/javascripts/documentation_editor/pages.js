@@ -13,6 +13,7 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
     $scope.undoRedo = [];
     $scope.id = 0;
     $scope.slug = '';
+    $scope.thumbnailUrl = null;
     $scope.source = '';
 
     $scope.nextID = 0;
@@ -67,10 +68,11 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
       return data.join("\n");
     }
 
-    $scope.init = function(id, slug, path) {
+    $scope.init = function(id, slug, thumbnailUrl, path) {
       $scope.id = id;
       $scope.slug = slug;
       $scope.path = path;
+      $scope.thumbnailUrl = thumbnailUrl;
 
       $http.get($scope.path + '/admin/' + id).then(function(content) {
         $scope.source = content.data.source;
@@ -468,6 +470,30 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
             alert('Error status: ' + status);
           })
         }
+      }
+    };
+
+  }]).controller('ThumbnailUploaderController', ['$scope', 'Upload', function($scope, Upload) {
+    $scope.file = null;
+
+    $scope.$watch('file', function () {
+      $scope.upload($scope.id, $scope.file);
+    });
+
+    $scope.upload = function(id, file) {
+      if (file && file.length === 1) {
+        file = file[0];
+        Upload.upload({
+          url: $scope.$parent.path + '/admin/' + id + '/thumbnail',
+          file: file
+        }).success(function (data, status, headers, config) {
+          console.log('uploaded', data);
+          $scope.thumbnailUrl = data.url;
+          $('#upload-thumbnail').modal('hide');
+        }).error(function (data, status, headers, config) {
+          console.log('error', data);
+          alert('Error status: ' + status);
+        })
       }
     };
 

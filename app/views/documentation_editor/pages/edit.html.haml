@@ -1,5 +1,5 @@
 %div{"ng-app" => "documentationEditorApp"}
-  %section#documentation-editor{"ng-controller" => 'EditorController', "ng-init" => "init(#{@page.id}, #{@page.slug.to_json}, '#{admin_path.gsub(/\/admin$/, '')}')"}
+  %section#documentation-editor{"ng-controller" => 'EditorController', "ng-init" => "init(#{@page.id}, #{@page.slug.to_json}, #{@page.thumbnail_url.to_json}, '#{admin_path.gsub(/\/admin$/, '')}')"}
     .editor-header
       %ul.list-inline.pull-right
         %li
@@ -23,6 +23,10 @@
             %i.fa.fa-arrows-h
             Switch View
         %li
+          %a.btn.btn-default.btn-sm{href: '#', 'data-toggle' => 'modal', "data-target" => "#upload-thumbnail"}
+            %i.fa.fa-upload
+            Thumbnail
+        %li
           %a.btn.btn-default.btn-sm{href: history_path(@page)}
             %i.fa.fa-history
             History
@@ -32,7 +36,9 @@
             Undo
       %h1
         Edit
-        %small= page_path(@page.slug)
+        %small
+          = page_path('')
+          = @page.slug
 
     .editor-content{"ng-cloak" => true}
       %textarea.markdown{"ng-if" => "rawView", "ng-model" => "$parent.source"}
@@ -154,3 +160,18 @@
                   %input.form-control{type: 'text', 'ng-model' => 'caption', placeholder: 'Optional caption'}
               .text-center.form-group
                 .btn.btn-success{"ngf-select" => true, "ng-model" => 'files'} Select image
+
+    #upload-thumbnail.modal.fade{"ng-controller" => "ThumbnailUploaderController"}
+      .modal-dialog
+        .modal-content
+          .modal-header
+            %button.close{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
+              %span{"aria-hidden" => true} &times;
+            %h4 Configure the page thumbnail
+          .modal-body
+            .text-center.images
+              %img{src: '{{ thumbnailUrl }}'}
+            .form
+              .text-center.form-group
+                .btn.btn-success{"ngf-select" => true, "ng-model" => 'file', "ngf-multiple" => false} Select thumbnail
+

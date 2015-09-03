@@ -4,9 +4,10 @@
 
   .editor-content
     %h3 Pages
-    %table.table.table-striped
+    %table.table.table-striped.pages
       %thead
         %tr
+          %th Thumbnail
           %th Title
           %th Slug
           %th Last modification
@@ -16,6 +17,9 @@
       %tbody
         - DocumentationEditor::Page.order('id DESC').each do |p|
           %tr
+            %td
+              - if p.thumbnail
+                = image_tag p.thumbnail_url
             %td= best_in_place p, :title, url: update_path(p)
             %td= best_in_place p, :slug, url: update_path(p)
             %td= l p.created_at, format: :short

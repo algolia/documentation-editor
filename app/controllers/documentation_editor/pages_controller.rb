@@ -19,7 +19,7 @@ module DocumentationEditor
       before_filter DocumentationEditor::Config.before_filter, only: [:preview, :show]
     end
 
-    before_filter :setup_page, only: [:edit, :source, :update, :commit, :preview, :destroy, :history, :versions]
+    before_filter :setup_page, only: [:edit, :source, :update, :commit, :preview, :destroy, :history, :versions, :upload_thumbnail]
 
     def index
     end
@@ -82,6 +82,13 @@ module DocumentationEditor
       image.image = params[:file]
       image.save!
       render json: { id: image.id, url: image.image.url }
+    end
+
+    def upload_thumbnail
+      thumb = @page.build_thumbnail
+      thumb.image = params[:file]
+      @page.save!
+      render json: { id: thumb.id, url: thumb.image.url }
     end
 
     def history

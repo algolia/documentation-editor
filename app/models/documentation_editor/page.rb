@@ -6,6 +6,8 @@ module DocumentationEditor
     has_many :revisions, class_name: 'Revision', dependent: :destroy
     belongs_to :published_revision, class_name: 'Revision', foreign_key: 'published_revision_id'
 
+    belongs_to :thumbnail, class_name: 'Image'
+
     def add_revision!(content, publish = false, author_id = nil)
       r = revisions.build
       r.author_id = author_id
@@ -16,6 +18,10 @@ module DocumentationEditor
         save!
       end
       r
+    end
+
+    def thumbnail_url
+      thumbnail.try(:image).try(:url)
     end
 
   end
