@@ -115,10 +115,18 @@ class Kramdown::Parser::BlockKramdown < Kramdown::Parser::Kramdown
   end
 
   def highlight(language, code)
-    language = 'js' if language.to_s == 'php' || language.to_s == 'swift' || language.to_s == 'node' || language.to_s == 'node.js'
-    language = 'java' if language.to_s == 'android'
-    language = 'c++' if language.to_s == 'go'
-    cache "#{language.to_s}_#{code.hash}" do
+    language = language.to_s.downcase
+    language = case language
+    when 'php', 'swift', 'node', 'node.js'
+      'js'
+    when 'android'
+      'java'
+    when 'go'
+      'c++'
+    else
+      language
+    end
+    cache "#{language}_#{code.hash}" do
       Simplabs::Highlight.highlight(language, code)
     end
   end
