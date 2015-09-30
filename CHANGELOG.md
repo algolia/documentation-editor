@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.5.0 Sep 30, 2015
+
+* Prefix the table anchors with param- to avoid any conflicts with the titles
+
 ### 0.4.0 Sep 3, 2015
 
 * Do not display the language tabs if there is a single code snippet
