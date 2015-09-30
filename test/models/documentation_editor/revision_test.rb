@@ -96,7 +96,7 @@ module DocumentationEditor
       assert html.include?('<th><p>Name</p>')
       assert html.include?('<th><p>Type</p>')
       assert html.include?('<th><p>Description</p>')
-      assert html.include?('<td id="a-name"><p>a name')
+      assert html.include?('<td id="param-a-name"><p>a name')
       assert html.include?('<td><p>a type')
       assert html.include?('<td><p>a description')
     end
