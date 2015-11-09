@@ -81,6 +81,17 @@
                   %i.fa.fa-plus-circle
                 %a{href: '#', 'ng-click' => 'deleteRow($event, section.id)'}>
                   %i.fa.fa-minus-circle
+        .buttons{"ng-if" => "section.type === 'buttons'"}
+          .pull-right
+            Button:
+            %a{href: '#', 'ng-click' => 'addButton($event, section.id)'}>
+              %i.fa.fa-plus-circle
+          %ul.list-inline
+            %li{"ng-repeat" => "button in section.content.buttons track by $index"}
+              %a.btn.btn-default{contenteditable: true, 'ng-model' => 'sections[sectionIndex].content.buttons[$index].label', href: '#'}
+              %input{'ng-model' => 'sections[sectionIndex].content.buttons[$index].link'}
+              %a{href: '#', 'ng-click' => 'deleteButton($event, section.id, $index)'}>
+                %i.fa.fa-remove>
         .code{"ng-if" => "section.type === 'code'"}
           .pull-right
             Language:
@@ -136,6 +147,9 @@
             %a.btn.btn-default{href: '#', 'ng-click' => 'addEndIf($event, section.id)'}
               %i.fa.fa-scissors
               \/IF
+            %a.btn.btn-default{href: '#', 'ng-click' => 'addButtons($event, section.id)'}
+              %i.fa.fa-link
+              Add buttons
 
     #editor-images.modal.fade{"ng-controller" => "ImageUploaderController"}
       .modal-dialog

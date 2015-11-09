@@ -135,4 +135,18 @@ EOF
 This is a variable [[variable:a_variable]].
 EOF
   end
+
+  factory :md_buttons_block, class: DocumentationEditor::Revision do
+    content <<-EOF
+[block:buttons]
+{
+  "buttons": [
+    { "label": "1st button", "link": "first list" },
+    { "label": "2nd button", "link": "second link" }
+  ]
+}
+[/block]
+EOF
+  end
+
 end

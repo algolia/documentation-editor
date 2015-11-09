@@ -60,6 +60,13 @@ class Kramdown::Parser::BlockKramdown < Kramdown::Parser::Kramdown
         @tree.children.last.children << Element.new(:html_element, 'figcaption')
         @tree.children.last.children.last.children << Element.new(:raw, parse_cached(content['caption']))
       end
+    when 'buttons'
+      buttons = new_block_el(:html_element, 'div', { class: "text-center" })
+      content['buttons'].each do |b|
+        buttons.children << Element.new(:html_element, 'a', { href: b['link'], class: 'btn btn-default' })
+        buttons.children.last.children << Element.new(:raw, b['label'])
+      end
+      @tree.children << buttons
     when 'if'
       @tree.children << Element.new(:comment, "if #{content['condition']}", { }, { start: true, condition: content['condition'], negation: false })
     when 'ifnot'

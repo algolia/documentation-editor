@@ -112,6 +112,16 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
           }
         };
         $scope.sections = [].concat($scope.sections.slice(0, index), [obj], $scope.sections.slice(index + 1));
+      } else if (o.type === 'deleteButton' || o.type === 'addButton') {
+        var index = getIndex(o.data.id);
+        var obj = {
+          id: $scope.sections[index].id,
+          type: 'buttonse',
+          content: {
+            buttons: o.data.buttons
+          }
+        };
+        $scope.sections = [].concat($scope.sections.slice(0, index), [obj], $scope.sections.slice(index + 1));
       } else if (o.type === 'deleteColumn' || o.type === 'addColumn' || o.type === 'addRow' || o.type === 'deleteRow') {
         var index = getIndex(o.data.id);
         $scope.sections[index] = {
@@ -218,6 +228,22 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
       });
     };
 
+    $scope.addButtons = function($event, id) {
+      $event.preventDefault();
+      add(id, {
+        id: getNextID(),
+        type: 'buttons',
+        content: {
+          buttons: [
+            {
+              label: 'FIXME',
+              link: 'http://example.org'
+            }
+          ]
+        }
+      });
+    };
+
     $scope.getIntegerIterator = function(v) {
       var a = [];
       for (var i = 0; i < v; ++i) {
@@ -261,6 +287,32 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
         }
       });
       $scope.sections[index].content.codes = [].concat($scope.sections[index].content.codes, [{ language: 'FIXME:language|label', code: '// FIXME' }]);
+    };
+
+    $scope.deleteButton = function($event, id, buttonIndex) {
+      $event.preventDefault();
+      var index = getIndex(id);
+      $scope.undoRedo.push({
+        type: 'deleteButton',
+        data: {
+          id: id,
+          buttons: $scope.sections[index].content.buttons
+        }
+      });
+      $scope.sections[index].content.buttons = $.grep($scope.sections[index].content.buttons, function(e, i) { return i !== buttonIndex; });
+    };
+
+    $scope.addButton = function($event, id) {
+      $event.preventDefault();
+      var index = getIndex(id);
+      $scope.undoRedo.push({
+        type: 'addButton',
+        data: {
+          id: id,
+          codes: $scope.sections[index].content.buttons
+        }
+      });
+      $scope.sections[index].content.buttons = [].concat($scope.sections[index].content.buttons, [{ label: 'FIXME', link: 'https://example.org' }]);
     };
 
     $scope.imageToAddAfter = 0;

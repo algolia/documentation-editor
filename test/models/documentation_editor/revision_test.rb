@@ -106,5 +106,11 @@ module DocumentationEditor
       assert html.include?('<p>This is a variable foo.</p>')
     end
 
+    test "buttons block" do
+      html = build(:md_buttons_block).to_html
+      assert html.include?('<a href="first list" class="btn btn-default">1st button</a>')
+      assert html.include?('<a href="second link" class="btn btn-default">2nd button</a>')
+    end
+
   end
 end
