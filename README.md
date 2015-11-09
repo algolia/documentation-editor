@@ -9,12 +9,13 @@ The goal of this project is to provide an easy & frictionless way to edit an onl
 ## Features
 
  - Widgets
-   - Text: Full markdown support
+   - Text: full markdown support
    - Callout: info/warning/danger
    - Tables: customizable number of columns & rows
    - Code: code snippet with highlighting
    - Conditions: ability to display some sections based on some query parameters
    - Image: image uploader + ability to store on S3
+   - Buttons: labeled buttons
  - Caching
  - Automatic TOC generation (anchors are automatically generated on each title)
  - Raw edition mode
