@@ -138,7 +138,7 @@ class Kramdown::Parser::BlockKramdown < Kramdown::Parser::Kramdown
       language
     end
     cache "#{language}_#{code.hash}" do
-      Simplabs::Highlight.highlight(language, code)
+      Simplabs::Highlight.highlight(language, CGI.unescapeHTML(code))
     end
   end
 

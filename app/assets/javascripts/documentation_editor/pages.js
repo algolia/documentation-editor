@@ -597,8 +597,6 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
           var text = element.html();
           // replace the HTML newlines by \n
           text = text.replace(/<div>/g, '<br>').replace(/<\/div>/g, '').replace(/<br>/g, "\n");
-          // replace also all HTML entities
-          text = $('<div />').html(text).text();
           if (undoable) {
             scope.undoRedo.push({
               type: 'text',
@@ -610,7 +608,14 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
         }
 
         ngModel.$render = function() {
-          element.text(ngModel.$viewValue || "");
+          var val = ngModel.$viewValue || '';
+          if (val.indexOf('<') !== -1) {
+            // backward compat: before 2015/11/9 the values were not escaped
+            //                  consider them as text values
+            element.text(val);
+          } else {
+            element.html(val);
+          }
         };
 
         element.bind("focus", function() {
@@ -629,6 +634,7 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
         element.bind('paste', function(e) {
           e.preventDefault();
           var text = (e.originalEvent || e).clipboardData.getData('text/plain') || '';
+          text = $('<div />').text(text).html(); // escape HTML entities, we're dealing with plain text here
           $document[0].execCommand("insertHTML", false, text);
         });
       }
