@@ -8,15 +8,27 @@
         %a.btn.btn-default.btn-sm{href: admin_path}
           %i.fa.fa-chevron-left
           Back to Admin
+      %li
+        %a.btn.btn-default.btn-sm{href: edit_page_path(@page)}
+          %i.fa.fa-edit
+          Edit
     %h1
       History of
       %small
         = page_path('')
         = @page.slug
   .editor-content
+    - if !@page.published_revision
+      .alert.alert-danger
+        %i.fa.fa-exclamation-triangle
+        This page has never been published
+    - elsif @page.revisions.last != @page.published_revision
+      .alert.alert-warning
+        %i.fa.fa-exclamation-triangle
+        The latest version of this page has not been published yet.
     .row{"ng-controller" => 'HistoryController', "ng-init" => "init(#{@page.id}, '#{admin_path.gsub(/\/admin$/, '')}')"}
       .col-sm-3
-        %table.table.table-striped
+        %table.table.table-striped.history
           %thead
             %tr
               %th.text-right Revision
@@ -24,7 +36,7 @@
               %th
               %th Modification date
           %tbody
-            %tr{"ng-repeat" => "revision in revisions track by revision.id"}
+            %tr{"ng-repeat" => "revision in revisions track by revision.id", 'ng-class' => "{published: (#{@page.published_revision_id.to_i} == revision.id)}"}
               %td.text-right {{ revisions.length - $index }}
               %td
                 %input{type: 'radio', name: 'prev', "ng-value" => "$index", "ng-model" => "diff.prev", "ng-if" => "$index > diff.cur"}
