@@ -61,7 +61,7 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
           data.push(section.content + "\n");
         } else {
           data.push('[block:' + section.type + ']');
-          data.push(JSON.stringify(section.content));
+          data.push(JSON.stringify(section.content, null, 2));
           data.push("[/block]\n");
         }
       });
