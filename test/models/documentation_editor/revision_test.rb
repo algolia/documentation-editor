@@ -77,6 +77,11 @@ module DocumentationEditor
       assert html.include?('<figcaption><p>Searchable Attributes &amp; Record Popularity</p>')
     end
 
+    test "image with width block" do
+      html = build(:md_image_with_width_block).to_html
+      assert html.include?('<figure><img src="https://example.org/image.png" width="100" />')
+    end
+
     test "image without caption block" do
       html = build(:md_image_without_caption_block).to_html
       assert html.include?('<figure><img src="https://example.org/image.png" />')

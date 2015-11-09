@@ -51,6 +51,21 @@ EOF
 EOF
   end
 
+  factory :md_image_with_width_block, class: DocumentationEditor::Revision do
+    content <<-EOF
+[block:image]
+{
+  "images": [
+    {
+      "image": ["https://example.org/image.png"]
+    }
+  ],
+  "width": 100
+}
+[/block]
+EOF
+  end
+
   factory :md_image_without_caption_block, class: DocumentationEditor::Revision do
     content <<-EOF
 [block:image]

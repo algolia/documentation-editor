@@ -54,8 +54,12 @@ class Kramdown::Parser::BlockKramdown < Kramdown::Parser::Kramdown
       else
         nil
       end
+      attrs = { src: content['images'][0]['image'][0] }
+      if !content['width'].blank?
+        attrs[:width] = content['width'].to_i
+      end
       @tree.children << Element.new(:html_element, 'figure', { class: clazz })
-      @tree.children.last.children << Element.new(:img, nil, { src: content['images'][0]['image'][0] })
+      @tree.children.last.children << Element.new(:img, nil, attrs)
       unless content['caption'].blank?
         @tree.children.last.children << Element.new(:html_element, 'figcaption')
         @tree.children.last.children.last.children << Element.new(:raw, parse_cached(content['caption']))
