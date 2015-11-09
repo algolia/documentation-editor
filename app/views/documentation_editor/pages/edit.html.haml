@@ -161,19 +161,21 @@
 
           .modal-body
             - if DocumentationEditor::Image.count > 0
-              %h3 Existing images:
+              %h5 Choose an existing image:
               .images
                 - DocumentationEditor::Image.limit(100).order('id DESC').each do |image|
-                  %a{href: '#', 'ng-click' => "addImage('#{image.image.url}')"}= image_tag image.image.url
+                  %a{href: '#', 'ng-click' => "addImage('#{image.image.url}', '#{escape_javascript image.caption}')"}= image_tag image.image.url
               %hr
-            %h3 Upload a new image
+              %h4.text-center Or
+              %hr
+            %h5 Upload a new one:
             .form
               .row.form-group
                 .col-sm-3.text-right Caption
                 .col-sm-9
                   %input.form-control{type: 'text', 'ng-model' => 'caption', placeholder: 'Optional caption'}
               .text-center.form-group
-                .btn.btn-success{"ngf-select" => true, "ng-model" => 'files'} Select image
+                .btn.btn-success{"ngf-select" => true, "ng-model" => 'files'} Browse & upload image
 
     #upload-thumbnail.modal.fade{"ng-controller" => "ThumbnailUploaderController"}
       .modal-dialog

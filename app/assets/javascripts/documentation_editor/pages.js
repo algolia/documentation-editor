@@ -319,11 +319,12 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
     $scope.saveImagePosition = function(id) {
       $scope.imageToAddAfter = id;
     };
-    $scope.addImage = function(url) {
+    $scope.addImage = function(url, caption) {
       $('#editor-images').modal('hide');
       add($scope.imageToAddAfter, {
         type: 'image',
         content: {
+          caption: caption,
           images: [
             {
               image: [url]
@@ -516,7 +517,7 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
             file: file
           }).success(function (data, status, headers, config) {
             console.log('uploaded', data);
-            $scope.$parent.addImage(data.url);
+            $scope.$parent.addImage(data.url, data.caption);
           }).error(function (data, status, headers, config) {
             console.log('error', data);
             alert('Error status: ' + status);

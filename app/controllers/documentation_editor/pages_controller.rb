@@ -81,7 +81,7 @@ module DocumentationEditor
       image.caption = params[:caption]
       image.image = params[:file]
       image.save!
-      render json: { id: image.id, url: image.image.url }
+      render json: { id: image.id, url: image.image.url, caption: image.caption }
     end
 
     def upload_thumbnail

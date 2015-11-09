@@ -51,6 +51,20 @@ EOF
 EOF
   end
 
+  factory :md_image_without_caption_block, class: DocumentationEditor::Revision do
+    content <<-EOF
+[block:image]
+{
+  "images": [
+    {
+      "image": ["https://example.org/image.png"]
+    }
+  ]
+}
+[/block]
+EOF
+  end
+
   factory :md_code_block, class: DocumentationEditor::Revision do
     content <<-EOF
 [block:code]
