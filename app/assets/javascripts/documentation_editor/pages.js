@@ -68,11 +68,13 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
       return data.join("\n");
     }
 
-    $scope.init = function(id, slug, thumbnailUrl, path) {
+    $scope.init = function(id, slug, thumbnailUrl, path, published_revision_id, last_revision_id) {
       $scope.id = id;
       $scope.slug = slug;
       $scope.path = path;
       $scope.thumbnailUrl = thumbnailUrl;
+      $scope.published_revision_id = published_revision_id;
+      $scope.last_revision_id = last_revision_id;
 
       $http.get($scope.path + '/admin/' + id).then(function(content) {
         $scope.source = content.data.source;
@@ -102,6 +104,9 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
         $scope.sections = $.grep($scope.sections, function(e) { return e.id !== o.data.obj.id });
       } else if (o.type === 'deleteSection') {
         $scope.sections = o.data.sections;
+      } else if (o.type === 'text') {
+        o.model.$setViewValue(o.data);
+        o.model.$render();
       } else if (o.type === 'deleteLanguage' || o.type === 'addLanguage') {
         var index = getIndex(o.data.id);
         var obj = {
@@ -474,8 +479,17 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
       });
     };
 
+    $scope.diff = function() {
+      return $scope.undoRedo.length > 0 && !$scope.undoRedo[$scope.undoRedo.length - 1].saved;
+    };
+
     function save(preview) {
-      return $http.post($scope.path + '/admin/' + $scope.id, { data: serialize($scope.sections), preview: preview });
+      return $http.post($scope.path + '/admin/' + $scope.id, { data: serialize($scope.sections), preview: preview }).then(function(content) {
+        if ($scope.undoRedo.length > 0) {
+          $scope.undoRedo[$scope.undoRedo.length - 1].saved = true;
+        }
+        $scope.last_revision_id = content.data.id;
+      });
     }
 
     $scope.save = function($event) {
@@ -573,25 +587,42 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
       });
     });
   }]).directive('contenteditable', ['$document', function($document) {
+    var before = '';
+
     return {
       require: 'ngModel',
       link: function(scope, element, attrs, ngModel) {
-        function read() {
+        function update(undoable) {
           // use the HTML form to keep the new lines
           var text = element.html();
           // replace the HTML newlines by \n
           text = text.replace(/<div>/g, '<br>').replace(/<\/div>/g, '').replace(/<br>/g, "\n");
           // replace also all HTML entities
           text = $('<div />').html(text).text();
-          ngModel.$setViewValue(text);
+          if (undoable) {
+            scope.undoRedo.push({
+              type: 'text',
+              model: ngModel,
+              data: before
+            });
+            ngModel.$setViewValue(text);
+          }
         }
 
         ngModel.$render = function() {
           element.text(ngModel.$viewValue || "");
         };
 
-        element.bind("blur keyup change", function() {
-          scope.$apply(read);
+        element.bind("focus", function() {
+          before = ngModel.$viewValue;
+        });
+
+        element.bind("blur", function() {
+          scope.$apply(update.bind(null, true));
+        });
+
+        element.bind("keyup change", function() {
+          scope.$apply(update.bind(null, false));
         });
 
         // force every copy/paste to be plain/text

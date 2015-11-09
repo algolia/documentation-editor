@@ -1,5 +1,5 @@
 %div{"ng-app" => "documentationEditorApp"}
-  %section#documentation-editor{"ng-controller" => 'EditorController', "ng-init" => "init(#{@page.id}, #{@page.slug.to_json}, #{@page.thumbnail_url.to_json}, '#{admin_path.gsub(/\/admin$/, '')}')"}
+  %section#documentation-editor{"ng-controller" => 'EditorController', "ng-init" => "init(#{@page.id}, #{@page.slug.to_json}, #{@page.thumbnail_url.to_json}, '#{admin_path.gsub(/\/admin$/, '')}', #{@page.published_revision_id.to_i}, #{@page.revisions.last.id.to_i})"}
     .editor-header
       %ul.list-inline.pull-right
         %li
@@ -7,15 +7,15 @@
             %i.fa.fa-chevron-left
             Back to Admin
         %li
-          %a.btn.btn-success.btn-sm{href: '#', 'ng-click' => 'save($event)'}
+          %a.btn.btn-default.btn-sm{href: '#', 'ng-click' => 'save($event)', 'ng-disabled' => '!diff()'}
             %i.fa.fa-save
             Save
         %li
-          %a.btn.btn-default.btn-sm{href: '#', 'ng-click' => 'preview($event)'}
+          %a.btn.btn-success.btn-sm{href: '#', 'ng-click' => 'preview($event)'}
             %i.fa.fa-eye
             Save & Preview
         %li
-          %a.btn.btn-danger.btn-sm{href: '#', 'ng-click' => 'publish($event)'}
+          %a.btn.btn-danger.btn-sm{href: '#', 'ng-click' => 'publish($event)', 'ng-disabled' => 'published_revision_id === last_revision_id'}
             %i.fa.fa-save
             Save & Publish
         %li

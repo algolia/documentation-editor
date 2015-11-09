@@ -39,8 +39,8 @@ module DocumentationEditor
     end
 
     def commit
-      @page.add_revision!(params[:data], params[:preview].to_s == 'false', respond_to?(:current_user) ? current_user.id : nil)
-      render nothing: true
+      r = @page.add_revision!(params[:data], params[:preview].to_s == 'false', respond_to?(:current_user) ? current_user.id : nil)
+      render json: { id: r.id }
     end
 
     def create
