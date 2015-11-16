@@ -112,6 +112,11 @@ module DocumentationEditor
       assert html.include?('<td><p>a description')
     end
 
+    test "html block" do
+      html = build(:md_html_block).to_html
+      assert html.include?('<center>FIXME</center>')
+    end
+
     test "variable block" do
       html = build(:md_variable_block).to_html(variables: { a_variable: 'foo' })
       assert html.include?('<p>This is a variable foo.</p>')

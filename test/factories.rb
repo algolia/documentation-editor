@@ -178,4 +178,14 @@ EOF
 EOF
   end
 
+  factory :md_html_block, class: DocumentationEditor::Revision do
+    content <<-EOF
+[block:html]
+{
+  "body": "&lt;center&gt;FIXME&lt;/center&gt;"
+}
+[/block]
+EOF
+  end
+
 end

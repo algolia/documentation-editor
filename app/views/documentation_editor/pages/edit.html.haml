@@ -108,6 +108,8 @@
               %a{contenteditable: true, href: '#snippet_{{section.id}}_{{$index}}', 'data-toggle' => 'tab', 'ng-model' => 'sections[sectionIndex].content.codes[$index].language' }>
           .tab-content
             %pre.tab-pane{contenteditable: true, "ng-repeat" => "code in section.content.codes track by $index", "ng-class" => "{ 'in active': ($index === 0) }", id: 'snippet_{{section.id}}_{{$index}}', 'ng-model' => 'sections[sectionIndex].content.codes[$index].code'}
+        .html{"ng-if" => "section.type === 'html'"}
+          %pre.tab-pane{contenteditable: true, id: 'snippet_{{section.id}}_{{$index}}', 'ng-model' => 'sections[sectionIndex].content.body'}
 
         .insert-sections
           .pull-right
@@ -133,6 +135,9 @@
             %a.btn.btn-default{href: '#', "data-toggle" => "modal", "data-target" => "#editor-images", "ng-click" => "saveImagePosition(section.id)"}
               %i.fa.fa-image
               Add image
+            %a.btn.btn-default{href: '#', 'ng-click' => 'addHTML($event, section.id)'}
+              %i.fa.fa-code
+              Add HTML
             %a.btn.btn-info{href: '#', 'ng-click' => 'addCallout($event, "info", section.id)'}
               %i.fa.fa-info-circle
               Add info

@@ -428,6 +428,17 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
       section.content.rows = section.content.rows - 1;
     };
 
+    $scope.addHTML = function($event, id) {
+      $event.preventDefault();
+      add(id, {
+        id: getNextID(),
+        type: 'html',
+        content: {
+          body: '<span>FIXME</span>'
+        }
+      });
+    };
+
     $scope.addIf = function($event, id) {
       $event.preventDefault();
       add(id, {

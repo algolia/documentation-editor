@@ -1,6 +1,7 @@
 require 'kramdown/document'
 require 'kramdown/parser/kramdown'
 require 'simplabs/highlight'
+require 'htmlentities'
 
 class Kramdown::Parser::BlockKramdown < Kramdown::Parser::Kramdown
 
@@ -45,6 +46,9 @@ class Kramdown::Parser::BlockKramdown < Kramdown::Parser::Kramdown
       callout = new_block_el(:html_element, 'div', { class: "alert alert-#{content['type']}" })
       callout.children << Element.new(:raw, parse_cached(content['body']))
       @tree.children << callout
+    when 'html'
+      coder = HTMLEntities.new
+      @tree.children << Element.new(:raw, coder.decode(content['body']))
     when 'image'
       clazz = case content['float']
       when 'left'

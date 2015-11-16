@@ -12,6 +12,8 @@ require 'paperclip'
 require 'diffy'
 ## best in place
 require 'best_in_place'
+## htmlentities
+require 'htmlentities'
 
 module DocumentationEditor
 end

@@ -24,4 +24,5 @@ Gem::Specification.new do |s|
   s.add_dependency "paperclip", "~> 4.3"
   s.add_dependency "diffy"
   s.add_dependency "best_in_place"
+  s.add_dependency "htmlentities"
 end
