@@ -16,6 +16,14 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.6.0 Nov 16, 2015
+
+* Add a new 'buttons' widget
+* Add a new 'HTML' widget
+* Improved the published revision visual feedback
+* Fixed copy/pasting HTML code
+* Prettify JSON code
+
 ### 0.5.0 Sep 30, 2015
 
 * Prefix the table anchors with param- to avoid any conflicts with the titles
