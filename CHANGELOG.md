@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.6.1 Nov 16, 2015
+
+* Ensure the first revision is created after page creation
+
 ### 0.6.0 Nov 16, 2015
 
 * Add a new 'buttons' widget
