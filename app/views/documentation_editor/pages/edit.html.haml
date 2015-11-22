@@ -109,7 +109,7 @@
           .tab-content
             %pre.tab-pane{contenteditable: true, "ng-repeat" => "code in section.content.codes track by $index", "ng-class" => "{ 'in active': ($index === 0) }", id: 'snippet_{{section.id}}_{{$index}}', 'ng-model' => 'sections[sectionIndex].content.codes[$index].code'}
         .html{"ng-if" => "section.type === 'html'"}
-          %pre.tab-pane{contenteditable: true, id: 'snippet_{{section.id}}_{{$index}}', 'ng-model' => 'sections[sectionIndex].content.body'}
+          %pre{contenteditable: true, id: 'snippet_{{section.id}}_{{$index}}', 'ng-model' => 'sections[sectionIndex].content.body'}
 
         .insert-sections
           .pull-right
