@@ -60,6 +60,8 @@ module DocumentationEditor
     def show
       @page = Page.find_by!(slug: params[:slug])
       @revision = @page.published_revision
+      raise ActiveRecord::RecordNotFound.new if @revision.nil?
+
       @options = params
       @base_path = if params[:section]
         s = request.path.split('/')
