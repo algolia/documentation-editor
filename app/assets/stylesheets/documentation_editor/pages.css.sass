@@ -22,11 +22,29 @@
     background: white
     padding: 20px
     padding-top: 90px
-    .insert-sections
-      padding: 0 0 40px 0
-      .btn
-        font-size: 0.6em
-        padding: 0px 4px
+
+    .section
+      &:hover
+        .insert-sections
+          opacity: 1
+
+      .insert-sections
+        opacity: 0
+        -webkit-transition: opacity 0.2s
+        -moz-transition: opacity 0.2s
+        -ms-transition: opacity 0.2s
+        -o-transition: opacity 0.2s
+        transition: opacity 0.2s
+
+        padding: 0 0 40px 0
+
+        &:hover
+          opacity: 1
+
+        .btn
+          font-size: 0.6em
+          padding: 0px 4px
+
     .markdown
       color: black
       border-left: 4px solid #DDD !important
