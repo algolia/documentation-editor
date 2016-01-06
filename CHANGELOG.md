@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.6.3 Jan 06, 2016
+
+* Improve legibility by hiding all sections buttons but the hovered ones
+
 ### 0.6.2 Nov 21, 2015
 
 * Ensure Chrome doesn't include extra <span> while editing contenteditables
