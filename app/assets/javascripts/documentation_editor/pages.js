@@ -597,17 +597,38 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
         $scope.content = $sce.trustAsHtml(content.data);
       });
     });
-  }]).directive('contenteditable', ['$document', function($document) {
+  }]).service('Browser', ['$window', function($window) {
+    return function() {
+      var userAgent = $window.navigator.userAgent;
+      var browsers = {chrome: /chrome/i, safari: /safari/i, firefox: /firefox/i, ie: /internet explorer/i};
+      for (var key in browsers) {
+        if (browsers[key].test(userAgent)) {
+          return key;
+        }
+      };
+      return 'unknown';
+    }
+  }]).directive('contenteditable', ['$document', 'Browser', function($document, Browser) {
     var before = '';
+
+    var browser = Browser();
+    function getContentEditableText(element) {
+      var ce = $("<pre />").html(element.html());
+      if (browser === 'chrome' || browser === 'safari') {
+        ce.find("div").replaceWith(function() { return "\n" + this.innerHTML; });
+      } else if (browser === 'ie') {
+        ce.find("p").replaceWith(function() { return this.innerHTML + "<br>"; });
+      } else if (browser === 'firefox') {
+        ce.find("br").replaceWith("\n");
+      }
+      return ce.text().replace(/^\s+|\s+$/g, '');
+    }
 
     return {
       require: 'ngModel',
       link: function(scope, element, attrs, ngModel) {
         function update(undoable) {
-          // use the HTML form to keep the new lines
-          var text = element.html();
-          // replace the HTML newlines by \n
-          text = text.replace(/<div>/g, '<br>').replace(/<\/div>/g, '').replace(/<br>/g, "\n");
+          var text = getContentEditableText(element);
           if (undoable) {
             scope.undoRedo.push({
               type: 'text',
