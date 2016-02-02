@@ -34,6 +34,8 @@ module DocumentationEditor
     def update
       @page.title = params[:page][:title] unless params[:page][:title].nil?
       @page.slug = params[:page][:slug] unless params[:page][:slug].nil?
+      @page.description = params[:page][:description] unless params[:page][:description].nil?
+      @page.languages = params[:page][:languages] unless params[:page][:languages].nil?
       @page.save!
       render nothing: true
     end
@@ -48,6 +50,8 @@ module DocumentationEditor
       p.author_id = respond_to?(:current_user) ? current_user.id : nil
       p.title = params[:page][:title]
       p.slug = params[:page][:slug]
+      p.description = params[:page][:description]
+      p.languages = params[:page][:languages]
       p.save!
       redirect_to edit_page_path(p)
     end
