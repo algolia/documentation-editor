@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160202155351) do
+ActiveRecord::Schema.define(version: 20160202164325) do
 
   create_table "documentation_editor_images", force: :cascade do |t|
     t.string   "caption"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20160202155351) do
     t.integer  "thumbnail_id"
     t.string   "languages"
     t.string   "description"
+    t.string   "section"
   end
 
   add_index "documentation_editor_pages", ["slug"], name: "index_documentation_editor_pages_on_slug"

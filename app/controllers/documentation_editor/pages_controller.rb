@@ -36,6 +36,7 @@ module DocumentationEditor
       @page.slug = params[:page][:slug] unless params[:page][:slug].nil?
       @page.description = params[:page][:description] unless params[:page][:description].nil?
       @page.languages = params[:page][:languages] unless params[:page][:languages].nil?
+      @page.section = params[:page][:section] unless params[:page][:section].nil?
       @page.save!
       render nothing: true
     end
@@ -52,6 +53,7 @@ module DocumentationEditor
       p.slug = params[:page][:slug]
       p.description = params[:page][:description]
       p.languages = params[:page][:languages]
+      p.section = params[:page][:section]
       p.save!
       redirect_to edit_page_path(p)
     end
