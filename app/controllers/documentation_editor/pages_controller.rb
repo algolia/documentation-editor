@@ -32,6 +32,7 @@ module DocumentationEditor
     end
 
     def update
+      @page.position = params[:page][:position] || 0
       @page.title = params[:page][:title] unless params[:page][:title].nil?
       @page.slug = params[:page][:slug] unless params[:page][:slug].nil?
       @page.description = params[:page][:description] unless params[:page][:description].nil?

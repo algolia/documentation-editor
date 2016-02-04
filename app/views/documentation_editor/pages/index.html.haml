@@ -8,6 +8,7 @@
       %thead
         %tr
           %th Thumbnail
+          %th Position
           %th Title
           %th Slug
           %th Description
@@ -18,11 +19,12 @@
           %th Published by
           %th.text-right Actions
       %tbody
-        - DocumentationEditor::Page.order('id DESC').each do |p|
+        - DocumentationEditor::Page.order('position ASC').each do |p|
           %tr
             %td
               - if p.thumbnail
                 = image_tag p.thumbnail_url
+            %td= best_in_place p, :position, url: update_path(p)
             %td= best_in_place p, :title, url: update_path(p)
             %td= best_in_place p, :slug, url: update_path(p)
             %td= best_in_place p, :description, url: update_path(p)
