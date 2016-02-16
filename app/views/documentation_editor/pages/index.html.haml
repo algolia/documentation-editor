@@ -8,20 +8,28 @@
       %thead
         %tr
           %th Thumbnail
+          %th Position
           %th Title
           %th Slug
+          %th Description
+          %th Languages
+          %th Section
           %th Last modification
           %th Published at
           %th Published by
           %th.text-right Actions
       %tbody
-        - DocumentationEditor::Page.order('id DESC').each do |p|
+        - DocumentationEditor::Page.order('position ASC').each do |p|
           %tr
             %td
               - if p.thumbnail
                 = image_tag p.thumbnail_url
+            %td= best_in_place p, :position, url: update_path(p)
             %td= best_in_place p, :title, url: update_path(p)
             %td= best_in_place p, :slug, url: update_path(p)
+            %td= best_in_place p, :description, url: update_path(p)
+            %td= best_in_place p, :languages, url: update_path(p)
+            %td= best_in_place p, :section, url: update_path(p)
             %td= l p.created_at, format: :short
             %td= p.published_revision ? l(p.published_revision.created_at, format: :long) : ''
             %td= p.published_revision ? p.published_revision.author_id : ''
@@ -42,4 +50,7 @@
     = form_for DocumentationEditor::Page.new, url: admin_path, html: { class: 'form form-inline' } do |f|
       = f.text_field :title, placeholder: 'Title', class: 'form-control'
       = f.text_field :slug, placeholder: 'tutorials/my-tutorial', class: 'form-control'
+      = f.text_field :description, placeholder: 'Description', class: 'form-control'
+      = f.text_field :languages, placeholder: 'ruby, php, python', class: 'form-control'
+      = f.text_field :section, placeholder: 'getting-started', class: 'form-control'
       = f.submit 'Create', class: 'btn btn-success'
