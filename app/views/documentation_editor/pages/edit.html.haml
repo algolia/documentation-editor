@@ -105,11 +105,11 @@
             %li{"ng-repeat" => "code in section.content.codes track by $index", "ng-class" => "{ active: ($index === 0) }"}
               %a{href: '#', 'ng-click' => 'deleteLanguage($event, section.id, $index)'}>
                 %i.fa.fa-remove>
-              %a{contenteditable: true, href: '#snippet_{{section.id}}_{{$index}}', 'data-toggle' => 'tab', 'ng-model' => 'sections[sectionIndex].content.codes[$index].language' }>
+              %a{contenteditable: true, 'ng-href' => '#snippet_{{section.id}}_{{$index}}', 'data-toggle' => 'tab', 'ng-model' => 'sections[sectionIndex].content.codes[$index].language' }>
           .tab-content
             %pre.tab-pane{contenteditable: true, "ng-repeat" => "code in section.content.codes track by $index", "ng-class" => "{ 'in active': ($index === 0) }", id: 'snippet_{{section.id}}_{{$index}}', 'ng-model' => 'sections[sectionIndex].content.codes[$index].code'}
         .html{"ng-if" => "section.type === 'html'"}
-          %pre{contenteditable: true, id: 'snippet_{{section.id}}_{{$index}}', 'ng-model' => 'sections[sectionIndex].content.body'}
+          %pre{contenteditable: true, 'ng-model' => 'sections[sectionIndex].content.body'}
 
         .insert-sections
           .pull-right
