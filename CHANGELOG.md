@@ -16,6 +16,11 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.7.0 Feb 16, 2016
+
+* Add languages, sections, description & position meta data
+* Fixed `ng-href` usage while editing the code snippet tables
+
 ### 0.6.3 Jan 06, 2016
 
 * Improve legibility by hiding all sections buttons but the hovered ones
