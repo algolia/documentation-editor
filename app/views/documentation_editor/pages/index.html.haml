@@ -3,20 +3,18 @@
     %h1 Edit documentation
 
   .editor-content
+    = link_to '#', class: 'btn btn-success pull-right', onclick: '$("#modal-new-page").modal("show"); return false;' do
+      %i.fa.fa-plus-circle
+      Add a new page
     %h3 Pages
     %table.table.table-striped.pages
       %thead
         %tr
           %th Thumbnail
-          %th Position
-          %th Title
-          %th Slug
-          %th Description
-          %th Languages
-          %th Section
-          %th Last modification
-          %th Published at
-          %th Published by
+          %th.nowrap Position
+          %th.nowrap Title
+          %th.nowrap Slug
+          %th Metadata
           %th.text-right Actions
       %tbody
         - DocumentationEditor::Page.order('position ASC').each do |p|
@@ -24,33 +22,55 @@
             %td
               - if p.thumbnail
                 = image_tag p.thumbnail_url
-            %td= best_in_place p, :position, url: update_path(p)
-            %td= best_in_place p, :title, url: update_path(p)
-            %td= best_in_place p, :slug, url: update_path(p)
-            %td= best_in_place p, :description, url: update_path(p)
-            %td= best_in_place p, :languages, url: update_path(p)
-            %td= best_in_place p, :section, url: update_path(p)
-            %td= l p.created_at, format: :short
-            %td= p.published_revision ? l(p.published_revision.created_at, format: :long) : ''
-            %td= p.published_revision ? p.published_revision.author_id : ''
-            %td.text-right
-              = link_to edit_page_path(p), class: 'btn btn-default btn-sm' do
+            %td.nowrap= best_in_place p, :position, url: update_path(p)
+            %td.nowrap= best_in_place p, :title, url: update_path(p)
+            %td.nowrap= best_in_place p, :slug, url: update_path(p)
+            %td
+              %ul.list-unstyled
+                %li
+                  %strong Description:
+                  = best_in_place p, :description, url: update_path(p)
+                %li
+                  %strong Languages:
+                  = best_in_place p, :languages_raw, url: update_path(p)
+                %li
+                  %strong Section:
+                  = best_in_place p, :section, url: update_path(p)
+                %li
+                  %strong Last modification:
+                  = l p.created_at, format: :short
+                %li
+                  %strong Published at:
+                  = p.published_revision ? l(p.published_revision.created_at, format: :long) : ''
+                %li
+                  %strong Published by:
+                  = p.published_revision ? p.published_revision.author_id : ''
+            %td.text-right.nowrap
+              = link_to edit_page_path(p), class: 'btn btn-default btn-xs' do
                 %i.fa.fa-edit
                 Edit
-              = link_to preview_page_path(p), class: 'btn btn-default btn-sm' do
+              = link_to preview_page_path(p), class: 'btn btn-default btn-xs' do
                 %i.fa.fa-eye
                 Preview
-              = link_to history_path(p), class: 'btn btn-default btn-sm' do
+              = link_to history_path(p), class: 'btn btn-default btn-xs' do
                 %i.fa.fa-history
                 History
-              = link_to delete_page_path(p), class: 'btn btn-danger btn-sm', data: { confirm: 'Are you sure you want to delete this page?', method: :delete } do
+              = link_to delete_page_path(p), class: 'btn btn-danger btn-xs', data: { confirm: 'Are you sure you want to delete this page?', method: :delete } do
                 %i.fa.fa-trash
                 Delete
-    %h3 Create a new page
-    = form_for DocumentationEditor::Page.new, url: admin_path, html: { class: 'form form-inline' } do |f|
-      = f.text_field :title, placeholder: 'Title', class: 'form-control'
-      = f.text_field :slug, placeholder: 'tutorials/my-tutorial', class: 'form-control'
-      = f.text_field :description, placeholder: 'Description', class: 'form-control'
-      = f.text_field :languages, placeholder: 'ruby, php, python', class: 'form-control'
-      = f.text_field :section, placeholder: 'getting-started', class: 'form-control'
-      = f.submit 'Create', class: 'btn btn-success'
+
+.modal.fade#modal-new-page
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{type: 'button', 'data-dismiss' => 'modal', 'aria-label' => 'Close'}
+          %span{'aria-hidden' => true} &times;
+        %h4.modal-title Create a new page
+      .modal-body
+        = form_for DocumentationEditor::Page.new, url: admin_path, html: { class: 'form' } do |f|
+          %p= f.text_field :title, placeholder: 'Title', class: 'form-control'
+          %p= f.text_field :slug, placeholder: 'Slug (ex: tutorials/my-tutorial)', class: 'form-control'
+          %p= f.text_field :description, placeholder: 'Description', class: 'form-control'
+          %p= f.text_field :languages_raw, placeholder: 'Languages (ex: ruby, php, python)', class: 'form-control'
+          %p= f.text_field :section, placeholder: 'Section name (ex: getting-started)', class: 'form-control'
+          %p.text-center= f.submit 'Create', class: 'btn btn-success'

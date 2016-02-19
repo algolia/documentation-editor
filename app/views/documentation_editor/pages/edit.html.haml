@@ -3,35 +3,35 @@
     .editor-header
       %ul.list-inline.pull-right
         %li
-          %a.btn.btn-default.btn-sm{href: admin_path}
+          %a.btn.btn-default.btn-xs{href: admin_path}
             %i.fa.fa-chevron-left
-            Back to Admin
+            Home
         %li
-          %a.btn.btn-default.btn-sm{href: '#', 'ng-click' => 'save($event)', 'ng-disabled' => '!diff()'}
+          %a.btn.btn-default.btn-xs{href: '#', 'ng-click' => 'save($event)', 'ng-disabled' => '!diff()'}
             %i.fa.fa-save
             Save
         %li
-          %a.btn.btn-success.btn-sm{href: '#', 'ng-click' => 'preview($event)'}
+          %a.btn.btn-success.btn-xs{href: '#', 'ng-click' => 'preview($event)'}
             %i.fa.fa-eye
             Save & Preview
         %li
-          %a.btn.btn-danger.btn-sm{href: '#', 'ng-click' => 'publish($event)', 'ng-disabled' => 'published_revision_id === last_revision_id'}
+          %a.btn.btn-danger.btn-xs{href: '#', 'ng-click' => 'publish($event)', 'ng-disabled' => 'published_revision_id === last_revision_id'}
             %i.fa.fa-save
             Save & Publish
         %li
-          %a.btn.btn-default.btn-sm{href: '#', 'ng-click' => 'toggleView($event)'}
+          %a.btn.btn-default.btn-xs{href: '#', 'ng-click' => 'toggleView($event)'}
             %i.fa.fa-arrows-h
             Switch View
         %li
-          %a.btn.btn-default.btn-sm{href: '#', 'data-toggle' => 'modal', "data-target" => "#upload-thumbnail"}
+          %a.btn.btn-default.btn-xs{href: '#', 'data-toggle' => 'modal', "data-target" => "#upload-thumbnail"}
             %i.fa.fa-upload
             Thumbnail
         %li
-          %a.btn.btn-default.btn-sm{href: history_path(@page)}
+          %a.btn.btn-default.btn-xs{href: history_path(@page)}
             %i.fa.fa-history
             History
         %li
-          %a.btn.btn-warning.btn-sm{href: '#', 'ng-click' => 'undo($event)', 'ng-disabled' => 'undoRedo.length === 0'}
+          %a.btn.btn-warning.btn-xs{href: '#', 'ng-click' => 'undo($event)', 'ng-disabled' => 'undoRedo.length === 0'}
             %i.fa.fa-undo
             Undo
       %h1
