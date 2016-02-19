@@ -3,6 +3,7 @@ module DocumentationEditor
     belongs_to :page
 
     def to_html(options = {})
+      options = defaulted(options)
       html = parse_document(options).to_html
       # resolve the variables
       html = resolve_variables(options, html)
@@ -15,6 +16,7 @@ module DocumentationEditor
     end
 
     def to_toc(options = {})
+      options = defaulted(options)
       roots = []
       levels = []
       h1 = nil
@@ -41,6 +43,7 @@ module DocumentationEditor
     end
 
     def section_title(options, section)
+      options = defaulted(options)
       doc = parse_document(options.merge(no_wrap: true))
       ids = id_generator(doc)
       doc.root.children.each do |child|
@@ -117,6 +120,11 @@ module DocumentationEditor
       text.gsub(/\[\[ *variable:(.+?) *\]\]/) do |m|
         ERB::Util.html_escape(variables[$1] || 'FIXME')
       end
+    end
+
+    def defaulted(options)
+      options[:language] = options[:language] || options['language'] || (page && page.languages.first)
+      options
     end
 
   end

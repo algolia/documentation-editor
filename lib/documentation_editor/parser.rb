@@ -6,7 +6,7 @@ require 'htmlentities'
 class Kramdown::Parser::BlockKramdown < Kramdown::Parser::Kramdown
 
   def initialize(source, options)
-    @language = options[:language] || options['language']
+    @language = options[:language]
     super
     @span_parsers.unshift(:block_tags)
   end
