@@ -8,6 +8,8 @@ module DocumentationEditor
 
     belongs_to :thumbnail, class_name: 'Image'
 
+    serialize :languages, Array
+
     after_create :add_first_revision
 
     def add_revision!(content, publish = false, author_id = nil)
@@ -24,6 +26,14 @@ module DocumentationEditor
 
     def thumbnail_url
       thumbnail.try(:image).try(:url)
+    end
+
+    def languages_raw
+      self.languages.join(',')
+    end
+
+    def languages_raw=(v)
+      self.languages = v.to_s.split(/\s*,\s*/).reject { |x| x.blank? }
     end
 
     private

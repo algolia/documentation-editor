@@ -32,11 +32,11 @@ module DocumentationEditor
     end
 
     def update
-      @page.position = params[:page][:position] || 0
+      @page.position = params[:page][:position] unless params[:page][:position].nil?
       @page.title = params[:page][:title] unless params[:page][:title].nil?
       @page.slug = params[:page][:slug] unless params[:page][:slug].nil?
       @page.description = params[:page][:description] unless params[:page][:description].nil?
-      @page.languages = params[:page][:languages] unless params[:page][:languages].nil?
+      @page.languages_raw = params[:page][:languages_raw] unless params[:page][:languages_raw].nil?
       @page.section = params[:page][:section] unless params[:page][:section].nil?
       @page.save!
       render nothing: true
@@ -53,7 +53,7 @@ module DocumentationEditor
       p.title = params[:page][:title]
       p.slug = params[:page][:slug]
       p.description = params[:page][:description]
-      p.languages = params[:page][:languages]
+      p.languages_raw = params[:page][:languages_raw]
       p.section = params[:page][:section]
       p.save!
       redirect_to edit_page_path(p)
