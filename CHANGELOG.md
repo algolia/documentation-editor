@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.7.2 Feb 24, 2016
+
+* Ensure angular attributes don't get escaped by any HAML anti-XSS libraries
+
 ### 0.7.1 Feb 19, 2016
 
 * If languages are set, use the first one as the default.
