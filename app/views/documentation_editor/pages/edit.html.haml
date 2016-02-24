@@ -44,12 +44,12 @@
       %textarea.markdown{"ng-if" => "rawView", "ng-model" => "$parent.source"}
       .section{"ng-repeat" => "section in sections track by $index", "ng-init" => "sectionIndex = $index", "ng-if" => "!rawView"}
         %pre.markdown{contenteditable: true, "ng-if" => "section.type === 'text'", "ng-model" => 'sections[sectionIndex].content' }
-        .alert{contenteditable: true, "ng-if" => "section.type === 'callout'", class: 'alert-{{ section.content.type }}', 'ng-model' => 'sections[sectionIndex].content.body' }
+        .alert{contenteditable: true, "ng-if" => "section.type === 'callout'", 'ng-class' => "'alert-' + section.content.type".html_safe, 'ng-model' => 'sections[sectionIndex].content.body' }
         .if{contenteditable: true, "ng-if" => "section.type === 'if'", 'ng-model' => 'sections[sectionIndex].content.condition' }
         .if.ifnot{contenteditable: true, "ng-if" => "section.type === 'ifnot'", 'ng-model' => 'sections[sectionIndex].content.condition' }
         .endif{"ng-if" => "section.type === 'endif'"} } //endif
         .image{"ng-if" => "section.type === 'image'"}
-          %img{"ng-src" => "{{ section.content.images[0].image[0] }}"}
+          %img{"ng-src" => "{{ section.content.images[0].image[0] }}".html_safe}
           .text-center
             %p
               Caption:
@@ -79,7 +79,7 @@
               %td{"ng-repeat" => "col in getIntegerIterator(section.content.cols)"}
                 %pre.markdown{contenteditable: true, 'ng-model' => "sections[sectionIndex].content.data[row + '-' + col]"}
             %tr
-              %td.text-right{"colspan" => "{{ section.content.cols }}"}
+              %td.text-right{"colspan" => "{{ section.content.cols }}".html_safe}
                 Rows:
                 %a{href: '#', 'ng-click' => 'addRow($event, section.id)'}>
                   %i.fa.fa-plus-circle
@@ -105,9 +105,9 @@
             %li{"ng-repeat" => "code in section.content.codes track by $index", "ng-class" => "{ active: ($index === 0) }"}
               %a{href: '#', 'ng-click' => 'deleteLanguage($event, section.id, $index)'}>
                 %i.fa.fa-remove>
-              %a{contenteditable: true, 'ng-href' => '#snippet_{{section.id}}_{{$index}}', 'data-toggle' => 'tab', 'ng-model' => 'sections[sectionIndex].content.codes[$index].language' }>
+              %a{contenteditable: true, 'ng-href' => '#snippet_{{section.id}}_{{$index}}'.html_safe, 'data-toggle' => 'tab', 'ng-model' => 'sections[sectionIndex].content.codes[$index].language' }>
           .tab-content
-            %pre.tab-pane{contenteditable: true, "ng-repeat" => "code in section.content.codes track by $index", "ng-class" => "{ 'in active': ($index === 0) }", id: 'snippet_{{section.id}}_{{$index}}', 'ng-model' => 'sections[sectionIndex].content.codes[$index].code'}
+            %pre.tab-pane{contenteditable: true, "ng-repeat" => "code in section.content.codes track by $index", "ng-class" => "{ 'in active': ($index === 0) }", id: 'snippet_{{section.id}}_{{$index}}'.html_safe, 'ng-model' => 'sections[sectionIndex].content.codes[$index].code'}
         .html{"ng-if" => "section.type === 'html'"}
           %pre{contenteditable: true, 'ng-model' => 'sections[sectionIndex].content.body'}
 
@@ -195,7 +195,7 @@
             %h4 Configure the page thumbnail
           .modal-body
             .text-center.images
-              %img{src: '{{ thumbnailUrl }}'}
+              %img{src: '{{ thumbnailUrl }}'.html_safe}
             .form
               .text-center.form-group
                 .btn.btn-success{"ngf-select" => true, "ng-model" => 'file', "ngf-multiple" => false} Select thumbnail
