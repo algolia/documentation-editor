@@ -21,7 +21,7 @@ class Kramdown::Parser::BlockKramdown < Kramdown::Parser::Kramdown
         code = content['codes'].detect { |code| code['language'] == @language || code['language'].end_with?("|#{@language}") }
         code ||= content['codes'].detect { |code| code['language'].end_with?("|*") }
         @tree.children << Element.new(:html_element, 'pre')
-        @tree.children.last.children << Element.new(:raw, code ? highlight(code['language'].split('|').first, code['code']) : "FIXME:#{@language}")
+        @tree.children.last.children << Element.new(:raw, code ? highlight(code['language'].split('|').first, code['code']) : "FIXME")
       elsif content['codes'].size == 1
         code = content['codes'].first
         @tree.children << Element.new(:html_element, 'pre')
