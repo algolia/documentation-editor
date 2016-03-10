@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.7.3 Mar 10, 2016
+
+* Fixed potential XSS if the :language option is dynamical.
+
 ### 0.7.2 Feb 24, 2016
 
 * Ensure angular attributes don't get escaped by any HAML anti-XSS libraries
