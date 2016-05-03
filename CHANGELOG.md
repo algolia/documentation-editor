@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.7.4 May 03, 2016
+
+* Ensure we're displaying all tabs using the `|*` (match all) syntax if there are multiple of them
+
 ### 0.7.3 Mar 10, 2016
 
 * Fixed potential XSS if the :language option is dynamical.
