@@ -16,6 +16,12 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.8.0 May 08, 2016
+
+* Ensure changes are well detected in the "Raw view" mode
+* Open the published version in a new tab rather than replacing the editor's one
+* Here and there look & feel improvements
+
 ### 0.7.4 May 03, 2016
 
 * Ensure we're displaying all tabs using the `|*` (match all) syntax if there are multiple of them
