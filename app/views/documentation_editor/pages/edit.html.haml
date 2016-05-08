@@ -107,7 +107,7 @@
                 %i.fa.fa-remove>
               %a{contenteditable: true, 'ng-href' => '#snippet_{{section.id}}_{{$index}}'.html_safe, 'data-toggle' => 'tab', 'ng-model' => 'sections[sectionIndex].content.codes[$index].language' }>
           .tab-content
-            %pre.tab-pane{contenteditable: true, "ng-repeat" => "code in section.content.codes track by $index", "ng-class" => "{ 'in active': ($index === 0) }", id: 'snippet_{{section.id}}_{{$index}}'.html_safe, 'ng-model' => 'sections[sectionIndex].content.codes[$index].code'}
+            %pre.tab-pane{contenteditable: true, "ng-repeat" => "code in section.content.codes track by $index", "ng-class" => "{ 'in active': ($index === 0) }",'ng-attr-id' => 'snippet_{{section.id}}_{{$index}}'.html_safe, 'ng-model' => 'sections[sectionIndex].content.codes[$index].code'}
         .html{"ng-if" => "section.type === 'html'"}
           %pre{contenteditable: true, 'ng-model' => 'sections[sectionIndex].content.body'}
 
