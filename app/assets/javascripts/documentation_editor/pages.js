@@ -247,7 +247,7 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
         content: {
           codes: [
             {
-              language: 'fixme',
+              language: 'FIXME:language|label',
               code: '// FIXME'
             }
           ]
