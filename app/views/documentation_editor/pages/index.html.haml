@@ -22,29 +22,35 @@
             %td
               - if p.thumbnail
                 = image_tag p.thumbnail_url
-            %td.nowrap= best_in_place p, :position, url: update_path(p)
-            %td.nowrap= best_in_place p, :title, url: update_path(p)
-            %td.nowrap= best_in_place p, :slug, url: update_path(p)
+            %td.nowrap
+              = best_in_place p, :position, url: update_path(p)
+              %i.fa.fa-pencil
+            %td.nowrap
+              = best_in_place p, :title, url: update_path(p)
+              %i.fa.fa-pencil
+            %td.nowrap
+              = best_in_place p, :slug, url: update_path(p)
+              %i.fa.fa-pencil
             %td
               %ul.list-unstyled
                 %li
                   %strong Description:
                   = best_in_place p, :description, url: update_path(p)
+                  %i.fa.fa-pencil
                 %li
                   %strong Languages:
                   = best_in_place p, :languages_raw, url: update_path(p)
+                  %i.fa.fa-pencil
                 %li
                   %strong Section:
                   = best_in_place p, :section, url: update_path(p)
+                  %i.fa.fa-pencil
                 %li
                   %strong Last modification:
                   = l p.created_at, format: :short
                 %li
                   %strong Published at:
                   = p.published_revision ? l(p.published_revision.created_at, format: :long) : ''
-                %li
-                  %strong Published by:
-                  = p.published_revision ? p.published_revision.author_id : ''
             %td.text-right.nowrap
               = link_to edit_page_path(p), class: 'btn btn-default btn-xs' do
                 %i.fa.fa-edit
