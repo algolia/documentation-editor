@@ -68,6 +68,26 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
       return data.join("\n");
     }
 
+    var sourceWatcher = null;
+    $scope.$watch('source', function(newValue, oldValue) {
+      if (newValue === oldValue) {
+        return;
+      }
+      if (sourceWatcher) {
+        clearTimeout(sourceWatcher);
+      }
+      sourceWatcher = setTimeout(function() {
+        $scope.$apply(function() {
+          $scope.undoRedo.push({
+            type: 'source',
+            data: {
+              source: newValue
+            }
+          });
+        });
+      }, 1000);
+    });
+
     $scope.init = function(id, slug, thumbnailUrl, path, published_revision_id, last_revision_id) {
       $scope.id = id;
       $scope.slug = slug;
@@ -104,6 +124,8 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
         $scope.sections = $.grep($scope.sections, function(e) { return e.id !== o.data.obj.id });
       } else if (o.type === 'deleteSection') {
         $scope.sections = o.data.sections;
+      } else if (o.type === 'source') {
+        $scope.source = o.data.source;
       } else if (o.type === 'text') {
         o.model.$setViewValue(o.data);
         o.model.$render();
