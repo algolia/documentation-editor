@@ -541,7 +541,7 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
       $event.preventDefault();
       if (confirm('Are you sure you want to publish this page?')) {
         save(false).then(function(content) {
-          $window.location.href = $scope.path + '/' + $scope.slug;
+          $window.open($scope.path + '/' + $scope.slug);
         });
       }
     }
