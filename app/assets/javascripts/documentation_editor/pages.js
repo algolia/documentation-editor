@@ -153,7 +153,7 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
         var index = getIndex(o.data.id);
         $scope.sections[index] = {
           id: $scope.sections[index].id,
-          type: 'parameters',
+          type: 'table',
           content: o.data.content
         };
       } else if (o.type === 'moveDown') {
@@ -496,7 +496,7 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
       $event.preventDefault();
       add(id, {
         id: getNextID(),
-        type: 'parameters',
+        type: 'table',
         content: {
           cols: 2,
           rows: 2,
