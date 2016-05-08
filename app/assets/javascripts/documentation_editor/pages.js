@@ -143,7 +143,7 @@ angular.module('documentationEditorApp', ['ngFileUpload'])
         var index = getIndex(o.data.id);
         var obj = {
           id: $scope.sections[index].id,
-          type: 'buttonse',
+          type: 'buttons',
           content: {
             buttons: o.data.buttons
           }
