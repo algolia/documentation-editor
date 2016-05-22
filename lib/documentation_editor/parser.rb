@@ -22,14 +22,14 @@ class Kramdown::Parser::BlockKramdown < Kramdown::Parser::Kramdown
         matchall_codes = content['codes'].select { |code| code['language'].end_with?("|*") }
         if code || matchall_codes.size == 1
           code ||= matchall_codes.first
-          @tree.children << Element.new(:html_element, 'pre')
+          @tree.children << Element.new(:html_element, 'pre', { class: 'highlight' })
           @tree.children.last.children << Element.new(:raw, code ? highlight(code['language'].split('|').first, code['code']) : "FIXME")
         else
           append_code_tabs matchall_codes
         end
       elsif content['codes'].size == 1
         code = content['codes'].first
-        @tree.children << Element.new(:html_element, 'pre')
+        @tree.children << Element.new(:html_element, 'pre', { class: 'highlight' })
         @tree.children.last.children << Element.new(:raw, highlight(code['language'].split('|').first, code['code']))
       else
         append_code_tabs(content['codes'])
@@ -154,7 +154,7 @@ class Kramdown::Parser::BlockKramdown < Kramdown::Parser::Kramdown
       ul.children << Element.new(:html_element, 'li', { class: ('active' if i == 0) })
       ul.children.last.children << Element.new(:html_element, 'a', { href: "##{id}", 'data-toggle' => 'tab' })
       ul.children.last.children.last.children << Element.new(:raw, label)
-      tab_content.children << Element.new(:html_element, 'pre', { class: "tab-pane#{' in active' if i == 0}", id: id })
+      tab_content.children << Element.new(:html_element, 'pre', { class: "highlight tab-pane#{' in active' if i == 0}", id: id })
       tab_content.children.last.children << Element.new(:raw, highlight(language, v['code']))
     end
     @tree.children << ul
