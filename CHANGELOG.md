@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.9.0 May 22, 2016
+
+* Ensure the highlighted snippet are wrapped with a `highlight` CSS class
+
 ### 0.8.0 May 08, 2016
 
 * Ensure changes are well detected in the "Raw view" mode
