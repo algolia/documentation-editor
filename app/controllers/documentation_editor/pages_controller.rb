@@ -111,6 +111,37 @@ module DocumentationEditor
       render inline: Diffy::Diff.new(Revision.find(params[:prev]).content, Revision.find(params[:cur]).content, context: 5, include_plus_and_minus_in_html: true, include_diff_info: true).to_s(:html)
     end
 
+    def export
+      pages = Page.all.map do |p|
+        {
+          slug: p.slug,
+          created_at: p.created_at,
+          title: p.title,
+          languages: p.languages,
+          description: p.description,
+          section: p.section,
+          position: p.position,
+          content: p.revisions.last.try(:content)
+        }
+      end
+      send_data JSON.pretty_generate(pages), type: :json, disposition: 'attachment', filename: "export-#{DateTime.now}.json"
+    end
+
+    def import
+      JSON.parse(params[:file][:content].read).each do |page|
+        p = Page.find_or_initialize_by(slug: params[:slug])
+        p.created_at = page['created_at']
+        p.title = page['title']
+        p.languages = page['langauges']
+        p.description = page['description']
+        p.section = page['section']
+        p.position = page['position']
+        p.save!
+        p.add_revision!(page['content'], true)
+      end
+      redirect_to :admin
+    end
+
     private
     def setup_page
       @page = Page.find(params[:id])

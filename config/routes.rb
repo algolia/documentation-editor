@@ -5,6 +5,9 @@ DocumentationEditor::Engine.routes.draw do
 
     post '/images', as: :upload_image, :controller => 'pages', :action => 'upload_image'
 
+    get '/export', as: :export, :controller => 'pages', :action => 'export'
+    post '/import', as: :import, :controller => 'pages', :action => 'import'
+
     get '/:id', :controller => 'pages', :action => 'source'
     get '/:id/edit', as: :edit_page, :controller => 'pages', :action => 'edit'
     put '/:id', as: :update, :controller => 'pages', :action => 'update'

@@ -3,9 +3,19 @@
     %h1 Edit documentation
 
   .editor-content
-    = link_to '#', class: 'btn btn-success pull-right', onclick: '$("#modal-new-page").modal("show"); return false;' do
-      %i.fa.fa-plus-circle
-      Add a new page
+    %ul.list-inline.pull-right
+      %li
+        = link_to '#', class: 'btn btn-success pull-right', onclick: '$("#modal-new-page").modal("show"); return false;' do
+          %i.fa.fa-plus-circle
+          Add a new page
+      %li
+        = link_to export_path, class: 'btn btn-default pull-right' do
+          %i.fa.fa-download
+          Export
+      %li
+        = link_to '#', class: 'btn btn-default pull-right', onclick: '$("#modal-import").modal("show"); return false;' do
+          %i.fa.fa-upload
+          Import
     %h3 Pages
     %table.table.table-striped.pages
       %thead
@@ -72,11 +82,25 @@
         %button.close{type: 'button', 'data-dismiss' => 'modal', 'aria-label' => 'Close'}
           %span{'aria-hidden' => true} &times;
         %h4.modal-title Create a new page
-      .modal-body
-        = form_for DocumentationEditor::Page.new, url: admin_path, html: { class: 'form' } do |f|
+      = form_for DocumentationEditor::Page.new, url: admin_path, html: { class: 'form' } do |f|
+        .modal-body
           %p= f.text_field :title, placeholder: 'Title', class: 'form-control'
           %p= f.text_field :slug, placeholder: 'Slug (ex: tutorials/my-tutorial)', class: 'form-control'
           %p= f.text_field :description, placeholder: 'Description', class: 'form-control'
           %p= f.text_field :languages_raw, placeholder: 'Languages (ex: ruby, php, python)', class: 'form-control'
           %p= f.text_field :section, placeholder: 'Section name (ex: getting-started)', class: 'form-control'
-          %p.text-center= f.submit 'Create', class: 'btn btn-success'
+        .modal-footer
+          = f.submit 'Create', class: 'btn btn-success'
+
+.modal.fade#modal-import
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{type: 'button', 'data-dismiss' => 'modal', 'aria-label' => 'Close'}
+          %span{'aria-hidden' => true} &times;
+        %h4.modal-title Import pages
+      = form_tag import_path, multipart: true, class: 'form' do
+        .modal-body
+          %p= file_field :file, :content, class: 'form-control'
+        .modal-footer
+          = submit_tag 'Upload', class: 'btn btn-success'
