@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.10.0 May 23, 2016
+
+* Add import/export features
+
 ### 0.9.0 May 22, 2016
 
 * Ensure the highlighted snippet are wrapped with a `highlight` CSS class
