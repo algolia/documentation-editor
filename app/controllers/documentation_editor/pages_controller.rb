@@ -129,7 +129,8 @@ module DocumentationEditor
 
     def import
       JSON.parse(params[:file][:content].read).each do |page|
-        p = Page.find_or_initialize_by(slug: params[:slug])
+        p = Page.where(slug: page['slug']).first || Page.new
+        p.slug = page['slug']
         p.created_at = page['created_at']
         p.title = page['title']
         p.languages = page['langauges']
