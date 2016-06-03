@@ -16,6 +16,14 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.10.2 June 03, 2016
+
+* Restore `parameters` backward compatibility
+
+### 0.10.1 May 23, 2016
+
+* Work-around mass-assignment gems
+
 ### 0.10.0 May 23, 2016
 
 * Add import/export features
