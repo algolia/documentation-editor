@@ -64,7 +64,7 @@
               %li
                 Width:
                 %input{"ng-model" => "sections[sectionIndex].content.width", type: 'number'}
-        %table.table.parameters{"ng-if" => "section.type === 'table'"}
+        %table.table.parameters{"ng-if" => "section.type === 'table' || section.type === 'parameters'"}
           %thead
             %tr
               %th{contenteditable: true, "ng-repeat" => "col in getIntegerIterator(section.content.cols)", 'ng-model' => "sections[sectionIndex].content.data['h-' + col]"}

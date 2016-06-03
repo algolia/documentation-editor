@@ -73,7 +73,7 @@ class Kramdown::Parser::BlockKramdown < Kramdown::Parser::Kramdown
       @tree.children << Element.new(:comment, "if NOT #{content['condition']}", { }, { start: true, condition: content['condition'], negation: true })
     when 'endif'
       @tree.children << Element.new(:comment, '/if', { }, { start: false, condition: content['condition'] })
-    when 'parameters'
+    when 'parameters', 'table'
       table = Element.new(:html_element, 'table', { class: 'table' })
       thead = Element.new(:html_element, 'thead')
       thead.children << Element.new(:html_element, 'tr')
