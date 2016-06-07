@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.11.0 June 07, 2016
+
+* Allow the language to be stored in the last part of the slug in case it contains a '/'
+
 ### 0.10.2 June 03, 2016
 
 * Restore `parameters` backward compatibility
