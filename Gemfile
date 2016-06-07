@@ -22,6 +22,7 @@ group :development do
   gem 'jquery-rails'
   gem 'therubyracer'
   gem 'font-awesome-rails'
+  gem 'libv8', '>= 3.16.14.15' # OS X El Capitan fixes
 end
 
 group :test do
