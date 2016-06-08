@@ -16,6 +16,11 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.11.1 June 08, 2016
+
+* Only accept HTML format
+* Missing 404 introduced in 0.11.0
+
 ### 0.11.0 June 07, 2016
 
 * Allow the language to be stored in the last part of the slug in case it contains a '/'
