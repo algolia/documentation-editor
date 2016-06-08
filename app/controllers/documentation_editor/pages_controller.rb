@@ -70,6 +70,7 @@ module DocumentationEditor
         @page = Page.find_by!(slug: params[:slug][0..(p - 1)])
         params[:language] = params[:slug][(p + 1)..-1]
       end
+      raise ActiveRecord::RecordNotFound.new if @page.nil?
       @revision = @page.published_revision
       raise ActiveRecord::RecordNotFound.new if @revision.nil?
 
