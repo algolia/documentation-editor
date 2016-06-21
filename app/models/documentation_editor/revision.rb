@@ -4,8 +4,9 @@ module DocumentationEditor
 
     def to_html(options = {})
       options = defaulted(options)
-      options[:lower_title_levels] = DocumentationEditor::Config.lower_title_levels
       html = parse_document(options).to_html
+      # lower titles
+      html.gsub!(/<h([1-6])/) { |m| "<h#{$1.to_i + 1}"  } if DocumentationEditor::Config.lower_title_levels
       # resolve the variables
       html = resolve_variables(options, html)
       # resolve the code condition block
@@ -56,8 +57,7 @@ module DocumentationEditor
 
     private
     def parse_document(options)
-      markdown_content = options[:lower_title_levels] ? content.gsub(/^#/, '##') : content
-      doc = Kramdown::Document.new(markdown_content, options.merge(input: 'BlockKramdown'))
+      doc = Kramdown::Document.new(content, options.merge(input: 'BlockKramdown'))
 
       # apply the /if filtering
       doc.root.children = apply_filtering(doc.root.children, options, [])
