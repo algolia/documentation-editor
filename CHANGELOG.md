@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.12.1 June 21, 2016
+
+* Ensure the lower_title_levels doesn't conflict with wrap_h1_with_sections
+
 ### 0.12.0 June 21, 2016
 
 * Add a new lower_title_levels option, to convert h1->h2, h2->h3, ...
