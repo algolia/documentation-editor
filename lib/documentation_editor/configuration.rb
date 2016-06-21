@@ -14,5 +14,8 @@ module DocumentationEditor
 
     # configure the before_filter used for the preview & show actions
     attr_accessor :before_filter
+
+    # lower title levels (h1 -> h2, h2 -> h3, ...)
+    attr_accessor :lower_title_levels
   end
 end

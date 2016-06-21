@@ -4,6 +4,7 @@ module DocumentationEditor
 
     def to_html(options = {})
       options = defaulted(options)
+      options[:lower_title_levels] = DocumentationEditor::Config.lower_title_levels
       html = parse_document(options).to_html
       # resolve the variables
       html = resolve_variables(options, html)
@@ -55,7 +56,8 @@ module DocumentationEditor
 
     private
     def parse_document(options)
-      doc = Kramdown::Document.new(content, options.merge(input: 'BlockKramdown'))
+      markdown_content = options[:lower_title_levels] ? content.gsub(/^#/, '##') : content
+      doc = Kramdown::Document.new(markdown_content, options.merge(input: 'BlockKramdown'))
 
       # apply the /if filtering
       doc.root.children = apply_filtering(doc.root.children, options, [])

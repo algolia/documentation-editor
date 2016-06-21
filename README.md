@@ -116,6 +116,9 @@ DocumentationEditor::Config.paperclip_options = {
 
 # to wrap your h1 sections with `<section>` tags
 DocumentationEditor::Config.wrap_h1_with_sections = true
+
+# to lower all title levels by 1 (h1 -> h2, h2 -> h3, ..)
+DocumentationEditor::Config.lower_title_levels = true
 ```
 
 ## Extensions
