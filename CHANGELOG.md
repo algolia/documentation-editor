@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.12.2 July 13, 2016
+
+* Fixed typo in the import action (languages not imported)
+
 ### 0.12.1 June 21, 2016
 
 * Ensure the lower_title_levels doesn't conflict with wrap_h1_with_sections
