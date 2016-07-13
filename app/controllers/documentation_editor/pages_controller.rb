@@ -138,7 +138,7 @@ module DocumentationEditor
         p.slug = page['slug']
         p.created_at = page['created_at']
         p.title = page['title']
-        p.languages = page['langauges']
+        p.languages = page['languages']
         p.description = page['description']
         p.section = page['section']
         p.position = page['position']
