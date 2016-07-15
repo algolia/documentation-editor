@@ -6,7 +6,7 @@ module DocumentationEditor
       options = defaulted(options)
       html = parse_document(options).to_html
       # lower titles
-      html.gsub!(/<h([1-6])/) { |m| "<h#{$1.to_i + 1}"  } if DocumentationEditor::Config.lower_title_levels
+      html.gsub!(/<(\/?)h([1-6])/) { |m| "<#{$1}h#{$2.to_i + 1}"  } if DocumentationEditor::Config.lower_title_levels
       # resolve the variables
       html = resolve_variables(options, html)
       # resolve the code condition block
