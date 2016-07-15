@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.12.3 July 13, 2016
+
+* Fixed closing tag level lowering
+
 ### 0.12.2 July 13, 2016
 
 * Fixed typo in the import action (languages not imported)
