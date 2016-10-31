@@ -16,6 +16,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ---
 
+### 0.13.0 October 31, 2016
+
+* Put anchor before text in tables
+
 ### 0.12.3 July 13, 2016
 
 * Fixed closing tag level lowering
