@@ -23,6 +23,7 @@ group :development do
   gem 'therubyracer'
   gem 'font-awesome-rails'
   gem 'libv8', '>= 3.16.14.15' # OS X El Capitan fixes
+  gem 'rb-readline'
 end
 
 group :test do

@@ -89,7 +89,7 @@ class Kramdown::Parser::BlockKramdown < Kramdown::Parser::Kramdown
           md = content['data']["#{row - 1}-#{col - 1}"]
           id = generate_id("param #{md}")
           anchor = col == 1 ? "\n<a href=\"##{id}\" class=\"anchor\"><i class=\"fa fa-link\"></i></a>" : ''
-          html = parse_cached("#{md}#{anchor}")
+          html = parse_cached("#{anchor}#{md}")
           tbody.children.last.children << Element.new(:html_element, 'td', col == 1 ? { id: id } : nil)
           tbody.children.last.children.last.children << Element.new(:raw, html)
         end
